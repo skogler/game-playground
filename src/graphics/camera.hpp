@@ -1,21 +1,29 @@
 #ifndef CAMERA_INC
 #define CAMERA_INC
 #include <glm/glm.hpp>
+#include <GL/glew.h>
 #include "../utils/definitions.hpp"
 
+/**
+ * Provides an interface for a camera, manages matrices and calculates an MVP matrix
+ * that can be used in the global vertex shader.
+ */
 class Camera {
 public:
     Camera ();
     virtual ~Camera ();
 
-    inline void setAspectRatio(const float aspectRatio);
-    inline void setHorizontalAngle(const float horizontalAngle);
-    inline void setVerticalAngle(const float verticalAngle);
-    inline void setPosition(const glm::vec3 position);
+    void upload();
+    void lookAt(const glm::vec3 target);
 
-    inline glm::mat4 getMVPMatrix() const { return mvpMatrix; }
+    inline glm::mat4 get_mvpMatrix() const { return mvpMatrix; }
 
-private:
+    inline void set_aspectRatio(const float aspectRatio) { this->aspectRatio = aspectRatio; }
+    inline void set_horizontalAngle(const float horizontalAngle) { this->horizontalAngle = horizontalAngle; }
+    inline void set_verticalAngle(const float verticalAngle) { this->verticalAngle = verticalAngle; }
+    inline void set_position(const glm::vec3 position) { this->position = position; }
+
+protected:
     float aspectRatio;
     float horizontalAngle;
     float verticalAngle;
@@ -25,6 +33,8 @@ private:
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
     glm::mat4 mvpMatrix;
+
+    GLuint mvpMatrixGLID;
 };
 
 #endif /* end of include guard: CAMERA_INC */

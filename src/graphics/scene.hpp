@@ -10,7 +10,7 @@ public:
     Scene ();
     virtual ~Scene ();
 
-    inline list<Entity>& getEntities()
+    inline list<Entity>& getEntities() const
     {
         return &entities;
     }

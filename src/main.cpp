@@ -2,10 +2,11 @@
 #include <sstream>
 
 #include <SFML/Graphics.hpp>
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 #include "utils/config.h"
 #include "graphics/mesh.hpp"
+#include "graphics/shadermanager.hpp"
 using namespace std;
 
 int main()
@@ -14,24 +15,26 @@ int main()
     sf::ContextSettings contextSettings(24, 8, 4, 4, 2);
     sf::RenderWindow window(sf::VideoMode(800, 600, 32), PROJECT_NAME, sf::Style::Close, contextSettings);
     window.setFramerateLimit(60);
-    string filename = "test.m42";
+
+    GLenum err = glewInit();
+    if (GLEW_OK != err)
+    {
+        return 1;
+    }
+
+    string filename = "resources/models/test/test.m42";
     Mesh m(filename);
+    m.upload();
+    ShaderManager shaderManager(string("resources/shaders"));
+
+    GLuint vertexShader = shaderManager.loadVertexShader("default");
+    GLuint fragmentShader = shaderManager.loadFragmentShader("default");
+    GLuint program = shaderManager.createProgramFromShaders(vertexShader, fragmentShader);
+    glUseProgram(program);
 
     while (window.isOpen())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-        }
-
+        m.draw();
         window.display();
     }
 

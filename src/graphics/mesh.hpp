@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <glm/glm.hpp>
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 class Mesh
 {
@@ -22,8 +22,8 @@ protected:
     std::vector<int> faces;
 
     bool uploaded;
-    GLuint vboId;
-    GLuint indexVboId;
+    GLuint vbo;
+    GLuint indexVbo;
 
     void load(std::string& filename);
 
