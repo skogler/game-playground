@@ -5,16 +5,20 @@
 #include <GL/glew.h>
 
 #include "utils/config.h"
-#include "graphics/mesh.hpp"
-#include "graphics/shadermanager.hpp"
+#include "graphics/camera.hpp"
+#include "graphics/scene.hpp"
+
+
+#include <glm/glm.hpp>
+#include <iostream>
 using namespace std;
 
 int main()
 {
     //OpenGL Context settings: depthBits, stencilBits, AA, major & minor version
     sf::ContextSettings contextSettings(24, 8, 4, 4, 2);
-    sf::RenderWindow window(sf::VideoMode(800, 600, 32), PROJECT_NAME, sf::Style::Close, contextSettings);
-    window.setFramerateLimit(60);
+    sf::RenderWindow window(sf::VideoMode(1024, 768, 32), PROJECT_NAME, sf::Style::Close, contextSettings);
+    window.setFramerateLimit(40);
 
     GLenum err = glewInit();
     if (GLEW_OK != err)
@@ -22,19 +26,20 @@ int main()
         return 1;
     }
 
-    string filename = "resources/models/test/test.m42";
-    Mesh m(filename);
-    m.upload();
-    ShaderManager shaderManager(string("resources/shaders"));
-
-    GLuint vertexShader = shaderManager.loadVertexShader("default");
-    GLuint fragmentShader = shaderManager.loadFragmentShader("default");
-    GLuint program = shaderManager.createProgramFromShaders(vertexShader, fragmentShader);
-    glUseProgram(program);
+    Camera * camera = new Camera();
+    camera->move(-20.0f);
+    Scene scene(camera);
 
     while (window.isOpen())
     {
-        m.draw();
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        scene.render();
         window.display();
     }
 

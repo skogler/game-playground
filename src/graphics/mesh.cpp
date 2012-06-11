@@ -10,9 +10,10 @@
 #include "../utils/definitions.hpp"
 using namespace std;
 
-Mesh::Mesh(string& filename) :
-    vbo(0),
-    indexVbo(0),
+Mesh::Mesh(const string& filename) :
+    vertexBuffer(0),
+    faceBuffer(0),
+    normalBuffer(0),
     uploaded(false)
 {
     load(filename);
@@ -29,35 +30,68 @@ Mesh::~Mesh()
 
 void Mesh::upload()
 {
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+
+    glGenBuffers(1, &faceBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size() * sizeof(unsigned int), &faces[0], GL_STATIC_DRAW);
+
+    glGenBuffers(1, &normalBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 }
 
 void Mesh::release()
 {
-    //glDeleteBuffers(1, vbo);
+    glDeleteBuffers(1, &vertexBuffer);
+    glDeleteBuffers(1, &faceBuffer);
+    glDeleteBuffers(1, &normalBuffer);
 }
 
 
-void Mesh::draw()
+void Mesh::render()
 {
+    // index 0 => vertices
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glVertexAttribPointer(
-            0,
-            3,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void*)0
+            0,                               // attribute
+            3,                               // size
+            GL_FLOAT,                        // type
+            GL_FALSE,                        // normalized?
+            0,                               // stride
+            (void*)0                         // array buffer offset
             );
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
+    // index 2 => normals
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+    glVertexAttribPointer(
+            2,                                // attribute
+            3,                                // size
+            GL_FLOAT,                         // type
+            GL_FALSE,                         // normalized?
+            0,                                // stride
+            (void*)0                          // array buffer offset
+            );
+
+    //FIXME: PERF: use short instead of int
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceBuffer);
+    glDrawElements(
+            GL_TRIANGLES,
+            faces.size(),
+            GL_UNSIGNED_INT,
+            (void*)0);
+
     glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 }
 
 
-void Mesh::load(string& filename)
+void Mesh::load(const string& filename)
 {
     ifstream f(filename.c_str());
     if(f.is_open())
@@ -136,9 +170,9 @@ void Mesh::load(string& filename)
                                          try
                                          {
                                              //parse values (indices of vertices)
-                                             int a = boost::lexical_cast<int>(parts[0]);
-                                             int b = boost::lexical_cast<int>(parts[1]);
-                                             int c = boost::lexical_cast<int>(parts[2]);
+                                             unsigned int a = boost::lexical_cast<unsigned int>(parts[0]);
+                                             unsigned int b = boost::lexical_cast<unsigned int>(parts[1]);
+                                             unsigned int c = boost::lexical_cast<unsigned int>(parts[2]);
                                              //add face to list
                                              faces.push_back(a);
                                              faces.push_back(b);
