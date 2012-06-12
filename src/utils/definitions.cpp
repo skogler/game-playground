@@ -5,6 +5,6 @@
 
 void error(std::string &message)
 {
-    std::cerr << message << std::endl;
-    exit(EXIT_FAILURE);
+	std::cerr << message << std::endl;
+	exit(EXIT_FAILURE);
 }

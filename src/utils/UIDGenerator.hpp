@@ -10,15 +10,21 @@
 
 class UIDGenerator
 {
-    public:
-        static UIDGenerator * instance ();
-        inline int next () { return uid++; }
+public:
+	static UIDGenerator * instance();
+	inline int next()
+	{
+		return uid++;
+	}
 
-    private:
-        UIDGenerator () : uid(0) {}
+private:
+	UIDGenerator() :
+			uid(0)
+	{
+	}
 
-        static UIDGenerator * uidGen;
-        int uid;
+	static UIDGenerator * uidGen;
+	int uid;
 };
 
 #endif /* UIDGENERATOR_H_ */

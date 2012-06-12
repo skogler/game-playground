@@ -9,8 +9,10 @@
 
 UIDGenerator* UIDGenerator::uidGen = 0;
 
-UIDGenerator* UIDGenerator::instance() {
-	if (!uidGen) {
+UIDGenerator* UIDGenerator::instance()
+{
+	if (!uidGen)
+	{
 		uidGen = new UIDGenerator();
 	}
 	return uidGen;

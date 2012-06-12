@@ -4,32 +4,29 @@
 #include <string>
 #include "camera.hpp"
 #include "mesh.hpp"
-#include "RenderedEntity.hpp"
+#include "renderedentity.hpp"
 
 class Scene
 {
 public:
-    explicit Scene (Camera * camera);
-    virtual ~Scene ();
+	explicit Scene(Camera * camera);
+	virtual ~Scene();
 
-    void render() const;
+	void render() const;
 
-    inline std::list<RenderedEntity*>& getEntities()
-    {
-        return entities;
-    }
+	inline std::list<RenderedEntity*>& getEntities()
+	{
+		return entities;
+	}
 
 private:
-    Camera * camera;
-    std::string name;
-    std::list<RenderedEntity *> entities;
+	Camera * camera;
+	std::string name;
+	std::list<RenderedEntity *> entities;
 
-    GLuint modelMatrix;
-    GLuint viewMatrix;
-    GLuint projectionMatrix;
-
-    glm::mat4 vm;
-    glm::mat4 mm;
+	GLuint modelMatrix;
+	GLuint viewMatrix;
+	GLuint projectionMatrix;
 };
 
 #endif /* end of include guard: SCENE_INC */
