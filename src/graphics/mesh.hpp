@@ -9,25 +9,33 @@
 class Mesh
 {
 public:
-    Mesh (std::string &filename);
-    virtual ~Mesh ();
-    void upload();
-    void release();
-    void draw();
+	Mesh(const std::string& filename);
 
-    inline bool isUploaded() const { return uploaded; }
-protected:
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec3> normals;
-    std::vector<int> faces;
+	virtual ~Mesh();
+	void upload();
+	void release();
+	void render();
 
 
     bool uploaded;
     GLuint vbo;
     GLuint indexVbo;
 
-    void load(std::string& filename);
+    inline bool isUploaded() const
+	{
+		return uploaded;
+	}
+protected:
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec3> normals;
+	std::vector<unsigned int> faces;
 
+	bool uploaded;
+	GLuint vertexBuffer;
+	GLuint faceBuffer;
+	GLuint normalBuffer;
+
+	void load(const std::string& filename);
 };
 
 #endif /* end of include guard: MESH_INC */

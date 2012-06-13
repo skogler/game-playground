@@ -3,8 +3,6 @@
 #include <iostream>
 #include <string>
 
-
 extern void error(std::string &message);
-
 
 #endif /* end of include guard: DEFINITIONS_INC */

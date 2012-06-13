@@ -21,3 +21,6 @@
 
 bin/*
 tags
+
+.project
+.cproject

@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 2.6)
 set(PROJECT_NAME game-playground)
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 0)
+set(LOG_DEBUG 1)
+set(LOG_INFO 1)
 
 project(${PROJECT_NAME})
 
@@ -13,7 +15,7 @@ endif()
 
 configure_file(
     "${PROJECT_SOURCE_DIR}/src/utils/config.h.in"
-    "${PROJECT_BINARY_DIR}/src/utils/config.h"
+    "${PROJECT_SOURCE_DIR}/src/utils/config.h"
     )
 include_directories("${PROJECT_BINARY_DIR}")
 

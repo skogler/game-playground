@@ -4,14 +4,14 @@
 class Window
 {
 public:
-    Window ();
-    virtual ~Window ();
+	Window();
+	virtual ~Window();
 
 private:
-    void render() const;
-    void clear() const;
+	void render() const;
+	void clear() const;
 
-    Scene * renderedScene;
+	Scene * renderedScene;
 };
 
 #endif /* end of include guard: WINDOW_INC */
