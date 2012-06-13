@@ -1,9 +1,8 @@
 #ifndef STATE_INC
 #define STATE_INC
 #include <string>
-#include <SFML/System.hpp>
+#include <SFML/Window/Event.hpp>
 using std::string;
-
 class State
 {
 public:

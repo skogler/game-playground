@@ -21,6 +21,7 @@ protected:
     std::vector<glm::vec3> normals;
     std::vector<int> faces;
 
+
     bool uploaded;
     GLuint vbo;
     GLuint indexVbo;

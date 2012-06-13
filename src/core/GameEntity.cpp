@@ -6,9 +6,11 @@
  */
 
 #include "GameEntity.hpp"
+#include "../utils/UIDGenerator.hpp"
+
 
 GameEntity::GameEntity() {
-	uid = UIDGenerator::instance()->next();
+	uid =UIDGenerator::instance()->next();
 }
 
 GameEntity::~GameEntity() {

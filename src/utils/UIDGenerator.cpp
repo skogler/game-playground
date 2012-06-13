@@ -5,7 +5,7 @@
  *      Author: zeheron
  */
 
-#include "UIDGenerator.h"
+#include "UIDGenerator.hpp"
 
 UIDGenerator* UIDGenerator::uidGen = 0;
 

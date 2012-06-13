@@ -8,7 +8,6 @@
 #ifndef GAMEENTITY_HPP_
 #define GAMEENTITY_HPP_
 
-#include "../utils/UIDGenerator.h"
 
 class GameEntity {
 public:
@@ -20,8 +19,6 @@ public:
 
 private:
 	 int uid;
-//   Vector3f position;
-//	 Vector3f orientation;
 
 };
 

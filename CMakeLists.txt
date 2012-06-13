@@ -49,11 +49,21 @@ endif()
 
 # boost
 #set(Boost_ADDITIONAL_VERSIONS "1.78" "1.78.0" "1.79" "1.79.0")
-find_package(Boost 1.49.0 REQUIRED system filesystem)
+
+#find_package(Boost 1.49.0 REQUIRED system filesystem)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries(${EXECUTABLE_NAME} ${Boost_LIBRARIES})
+else()
+	set(Boost_INCLUDE_DIR /usr/local/boost_1_49_0)
+	set(Boost_LIBRARY_DIR /usr/local/boost_1_49_0/stage/lib)
+	find_package(Boost 1.49.0 REQUIRED system filesystem chrono thread)
+	if(Boost_FOUND)
+ 	 include_directories(${Boost_INCLUDE_DIRS})
+ 	 target_link_libraries(${EXECUTABLE_NAME} ${Boost_LIBRARIES})
+	endif()
 endif()
+
 
 include_directories("/usr/include/glm")
 
