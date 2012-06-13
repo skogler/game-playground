@@ -2,7 +2,6 @@
 #define CAMERA_INC
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "../utils/definitions.hpp"
 #include "../core/gameentity.hpp"
 
 /**

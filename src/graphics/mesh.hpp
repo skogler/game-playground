@@ -30,7 +30,6 @@ protected:
 	std::vector<glm::vec3> normals;
 	std::vector<unsigned int> faces;
 
-	bool uploaded;
 	GLuint vertexBuffer;
 	GLuint faceBuffer;
 	GLuint normalBuffer;
