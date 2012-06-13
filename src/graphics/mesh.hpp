@@ -16,7 +16,12 @@ public:
 	void release();
 	void render();
 
-	inline bool isUploaded() const
+
+    bool uploaded;
+    GLuint vbo;
+    GLuint indexVbo;
+
+    inline bool isUploaded() const
 	{
 		return uploaded;
 	}

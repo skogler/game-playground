@@ -8,19 +8,16 @@
 #ifndef UIDGENERATOR_H_
 #define UIDGENERATOR_H_
 
-class UIDGenerator
-{
+class UIDGenerator {
 public:
 	static UIDGenerator * instance();
-	inline int next()
-	{
+	inline int next() {
 		return uid++;
 	}
 
 private:
 	UIDGenerator() :
-			uid(0)
-	{
+			uid(0) {
 	}
 
 	static UIDGenerator * uidGen;

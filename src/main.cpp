@@ -5,6 +5,8 @@
 #include <GL/glew.h>
 
 #include "utils/config.h"
+#include "graphics/mesh.hpp"
+#include "graphics/shadermanager.hpp"
 #include "graphics/camera.hpp"
 #include "graphics/scene.hpp"
 

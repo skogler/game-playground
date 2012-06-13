@@ -6,6 +6,12 @@
 # Compiled Dynamic libraries
 *.so
 
+#Project
+*.cproject
+*.project
+*CMakeLists*
+*.gitignore*
+
 # Compiled Static libraries
 *.lai
 *.la
