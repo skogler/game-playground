@@ -7,7 +7,6 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <glm/glm.hpp>
-#include "../utils/definitions.hpp"
 #include "../utils/logger.hpp"
 using namespace std;
 
@@ -132,7 +131,6 @@ void Mesh::load(const string& filename)
 									//FIXME handle errors properly
 									string message = "Invalid model file ";
 									message.append(filename);
-									error(message);
 								}
 
 							}
@@ -154,7 +152,6 @@ void Mesh::load(const string& filename)
 									//FIXME handle errors properly
 									string message = "Invalid model file ";
 									message.append(filename);
-									error(message);
 								}
 
 							}
@@ -179,7 +176,6 @@ void Mesh::load(const string& filename)
 									//FIXME handle errors properly
 									string message = "Invalid model file ";
 									message.append(filename);
-									error(message);
 								}
 
 							}
@@ -196,7 +192,6 @@ void Mesh::load(const string& filename)
 	{
 		string message = "Invalid model file ";
 		message.append(filename);
-		error(message);
 	}
 }
 
