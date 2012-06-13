@@ -2,7 +2,7 @@
 #define LOGGER_HPP_
 
 #include <string>
-#include <auto_ptr.h>
+#include <boost/scoped_ptr.hpp>
 
 #include "loggingadapter.hpp"
 #include "consoleloggingadapter.hpp"
@@ -47,7 +47,7 @@ public:
 	}
 
 private:
-	static std::auto_ptr<LoggingAdapter> adapter;
+	static boost::scoped_ptr<LoggingAdapter> adapter;
 
 protected:
 	Logger() {};

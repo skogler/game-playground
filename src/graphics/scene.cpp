@@ -6,6 +6,7 @@
 #include <list>
 using std::string;
 using std::list;
+using boost::shared_ptr;
 
 Scene::Scene(Camera * camera) :
 		camera(camera), modelMatrix(0), viewMatrix(0), projectionMatrix(0)
@@ -15,7 +16,7 @@ Scene::Scene(Camera * camera) :
 	Mesh * mesh = new Mesh(filename);
 	mesh->upload();
 
-	RenderedEntity * monkey = new RenderedEntity();
+	shared_ptr<RenderedEntity> monkey(new RenderedEntity());
 	monkey->set_mesh(mesh);
 	entities.push_back(monkey);
 
@@ -33,10 +34,6 @@ Scene::Scene(Camera * camera) :
 
 Scene::~Scene()
 {
-	if (camera != 0)
-	{
-		delete camera;
-	}
 }
 
 void Scene::render() const
@@ -47,7 +44,7 @@ void Scene::render() const
 	// set the projection matrix
 	glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &camera->get_projectionMatrix()[0][0]);
 
-	for (list<RenderedEntity*>::const_iterator i = entities.begin(); i != entities.end(); ++i)
+	for (list< shared_ptr<RenderedEntity> >::const_iterator i = entities.begin(); i != entities.end(); ++i)
 	{
 		// set the model matrix for each rendered entity
 		glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, &(*i)->get_modelMatrix()[0][0]);
