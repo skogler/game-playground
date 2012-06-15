@@ -9,12 +9,13 @@
 #define INPUTLISTENER_HPP_
 
 #include <SFML/Window/Event.hpp>
+#include "inputevent.hpp"
 
 class InputListener {
 
 public:
 
-	virtual void handleinput(sf::Event *inputEvent ) = 0;
+	virtual void handleinput(InputEvent*inputEvent ) = 0;
 
 
 	InputListener() {  }

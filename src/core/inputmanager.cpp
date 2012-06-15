@@ -5,7 +5,7 @@
  *      Author: zeheron
  */
 
-#include "InputManager.hpp"
+#include "inputmanager.hpp"
 
 InputManager* InputManager::imInstance = NULL;
 
@@ -27,7 +27,6 @@ InputManager* InputManager::instance()
 }
 
 void InputManager::addListener(InputListener* listener) {
-
 	vListeners.push_back(listener);
 }
 
@@ -35,7 +34,7 @@ void InputManager::removeListener(InputListener* listener) {
 	vListeners.remove(listener);
 }
 
-void InputManager::handleUserInput(sf::Event *inEvent) {
+void InputManager::handleUserInput(InputEvent*inEvent) {
 	std::list<InputListener*>::iterator it;
 	for( it = vListeners.begin(); it != vListeners.end() ;it++)
 	{

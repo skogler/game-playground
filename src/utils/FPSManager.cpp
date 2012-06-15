@@ -6,6 +6,7 @@
  */
 
 #include "FPSManager.hpp"
+#include <iostream>
 
 /*
  * Initializes a FPSManger with a starting delta of 22ms
@@ -13,6 +14,7 @@
  */
 FPSManager::FPSManager() {
 	delta = 22;
+	avarageCalculationFrameCount = 10;
 	frameTimeCiBuffer.set_capacity(avarageCalculationFrameCount);
 	for (int i = 0; i < avarageCalculationFrameCount; i++)
 		frameTimeCiBuffer.push_back(delta);
@@ -22,9 +24,9 @@ FPSManager::FPSManager() {
 /*
  * Initializes a FPSManager with the default averageFrameTimeStartValue specified ( milliseconds )
  */
-FPSManager::FPSManager(unsigned short int averageFrameTimeStartValue) {
+FPSManager::FPSManager(int startDelta) {
 	frameTimeCiBuffer.set_capacity(avarageCalculationFrameCount);
-	delta = averageFrameTimeStartValue;
+	delta = startDelta;
 	for (int i = 0; i < avarageCalculationFrameCount; i++)
 		frameTimeCiBuffer.push_back(delta);
 }
@@ -49,7 +51,7 @@ void FPSManager::markEndPoint() {
 	unsigned short int avarage = 0;
 	for (int i = 0; i < avarageCalculationFrameCount; i++)
 		avarage += frameTimeCiBuffer[i];
-	delta = avarage / 10;
+	delta = avarage / avarageCalculationFrameCount;
 
 }
 
@@ -65,6 +67,10 @@ void FPSManager::markFixedRateEndPoint() {
 
 }
 
+/*
+ * Sets the governed frame rate and take the fps as milliseconds per frame.
+ *
+ */
 void FPSManager::setFixedFrameRate(unsigned short int fixedFrameRate) {
 	this->fixedFrameRate = fixedFrameRate;
 }

@@ -9,39 +9,89 @@
 #include "graphics/camera.hpp"
 #include "graphics/scene.hpp"
 #include <glm/glm.hpp>
-
 #include <iostream>
+#include "utils/FPSManager.hpp"
+#include <boost/thread.hpp>
+#include "state/GameStateEngine.hpp"
+#include "core/inputmanager.hpp"
+
 using namespace std;
 
-int main()
-{
-	//OpenGL Context settings: depthBits, stencilBits, AA, major & minor version
-	sf::ContextSettings contextSettings(24, 8, 4, 4, 2);
-	sf::RenderWindow window(sf::VideoMode(1024, 768, 32), PROJECT_NAME, sf::Style::Close, contextSettings);
-	window.setFramerateLimit(40);
+int main() {
 
-	GLenum err = glewInit();
-	if (GLEW_OK != err)
+	GameStateEngine gse;
+	FPSManager* fps = new FPSManager();
+
+
+	if(!gse.init())
 	{
+		//TODO error handling
+		cout << "glew init failed" << endl;
 		return 1;
 	}
 
-	Camera * camera = new Camera();
-	camera->move(-20.0f);
-	Scene scene(camera);
 
-	while (window.isOpen())
+	while(gse.isRunning())
 	{
+		fps->markStartPoint();
+
+		gse.handleInput();
+		gse.update();
+		gse.render();
+
+		fps->markStartPoint();
+		cout << "Delta: " << fps->getDelta() << endl;
+	}
+
+	gse.cleanup();
+/*
+	while(window.isOpen())
+	{
+		fps->markStartPoint();
+
+		//InputHandling
 		sf::Event event;
-		while (window.pollEvent(event))
+		while(window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+			gse->handleEvents();
 		}
 
-		scene.render();
-		window.display();
+		//Update -> Render flow
+		gse->update();
+		gse->render();
+
+
+
+		fps->markEndPoint();
 	}
+	/*
+
+	 Camera * camera = new Camera();
+	 camera->move(-20.0f);
+	 Scene scene(camera);
+
+	 while (window.isOpen())
+	 {
+	 fps->markStartPoint();
+
+	 camera->turn(0.2, 0.0);
+
+	 fps->markEndPoint();
+	 cout << fps->getDelta() << endl;
+
+	 sf::Event event;
+	 while (window.pollEvent(event))
+	 {
+	 if (event.type == sf::Event::Closed)
+	 window.close();
+	 }
+
+	 scene.render();
+	 window.display();
+	 }
+
+
+	 */
 
 	return 0;
 }

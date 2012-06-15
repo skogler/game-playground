@@ -29,7 +29,7 @@ private:
 
 public:
 	FPSManager();
-	FPSManager(unsigned short int averageFrameTimeStartValue);
+	FPSManager(int startDelta);
 	virtual ~FPSManager();
 
 	void markStartPoint();

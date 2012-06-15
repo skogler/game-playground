@@ -9,7 +9,7 @@
 #define INPUTMANAGER_HPP_
 
 #include <SFML/Window/Event.hpp>
-#include "InputListener.hpp"
+#include "inputlistener.hpp"
 #include <list>
 #include <iostream>
 
@@ -25,7 +25,7 @@ public:
 	static InputManager* instance();
 	void addListener(InputListener* listener);
 	void removeListener(InputListener* listener);
-	void handleUserInput(sf::Event *inEvent);
+	void handleUserInput(InputEvent *inEvent);
 
 
 	//Getter and setter

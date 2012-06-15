@@ -9,6 +9,7 @@
 #define GAMESTATE_HPP_
 
 #include "GameStateEngine.hpp"
+#include "../core/inputevent.hpp"
 
 class GameState {
 
@@ -19,7 +20,7 @@ public:
 	virtual void pause() = 0;
 	virtual void Resume() = 0;
 
-	virtual void handleEvents(GameStateEngine* game) = 0;
+	virtual void handleEvents(InputEvent* inputEvent) = 0;
 	virtual void update(GameStateEngine* game) = 0;
 	virtual void render(GameStateEngine* game) = 0;
 

@@ -6,10 +6,11 @@
  */
 
 #include "GameStateEngine.hpp"
-#include "GameState.hpp"
+#include "gamestate.hpp"
+
+
 
 GameStateEngine::GameStateEngine() {
-	// TODO Auto-generated constructor stub
 
 }
 
@@ -17,8 +18,30 @@ GameStateEngine::~GameStateEngine() {
 	// TODO Auto-generated destructor stub
 }
 
-void GameStateEngine::init() {
-	// TODO Initalize
+/**
+ * Initializes the GameStateEngine
+ */
+bool GameStateEngine::init() {
+	running = true;
+	inputManager = InputManager::instance();
+
+	//OpenGL Context settings: depthBits, stencilBits, AA, major & minor version
+	contextSettings.depthBits = 24;
+	contextSettings.stencilBits = 8;
+	contextSettings.antialiasingLevel = 4;
+	contextSettings.majorVersion = 4;
+	contextSettings.minorVersion = 2;
+	window.create(sf::VideoMode(1024, 768, 32), "game-playground",
+			sf::Style::Close, contextSettings);
+
+	window.setFramerateLimit(70);
+
+	//Glew error checking
+	GLenum err = glewInit();
+	if (GLEW_OK != err) {
+		return false;
+	}
+	return true;
 }
 
 void GameStateEngine::cleanup() {
@@ -26,7 +49,7 @@ void GameStateEngine::cleanup() {
 }
 
 void GameStateEngine::changeGameState(GameState* state) {
-
+	//TODO: update stack in a appropriate manner
 }
 
 /*
@@ -44,11 +67,16 @@ void GameStateEngine::popState() {
 }
 
 /*
- * This function will execute the event handling of the last state in the vector.
+ * This function will execute the input event handling of the last state in the vector.
  */
-void GameStateEngine::handleEvents() {
+void GameStateEngine::handleInput() {
+	sf::Event event;
 	GameState* gstate = states.back();
-	gstate->update(this);
+	while (window.pollEvent(event)) {
+		inputMapper->mapInputEvent(event);
+	}
+	gstate->handleEvents(inputMapper->retrieveInputEvent());
+
 
 }
 
@@ -65,6 +93,6 @@ void GameStateEngine::update() {
  */
 void GameStateEngine::render() {
 	GameState* gstate = states.back();
-	gstate->update(this);
+	gstate->render(this);
 }
 
