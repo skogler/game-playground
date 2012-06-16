@@ -14,7 +14,7 @@
 #include <boost/thread.hpp>
 #include "state/GameStateEngine.hpp"
 #include "core/inputmanager.hpp"
-
+#include "state/core_states/gamestateactive.hpp"
 using namespace std;
 
 int main() {
@@ -30,13 +30,16 @@ int main() {
 		return 1;
 	}
 
-
+	gse.setRunning(true);
+	gse.pushState(new GameStateActive());
 	while(gse.isRunning())
 	{
 		fps->markStartPoint();
-
+		cout << "input" << endl;
 		gse.handleInput();
+		cout << "update" << endl;
 		gse.update();
+		cout << "render" << endl;
 		gse.render();
 
 		fps->markStartPoint();

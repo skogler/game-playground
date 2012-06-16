@@ -9,6 +9,13 @@
 #define GAMESTATEACTIVE_HPP_
 
 #include "../gamestate.hpp"
+#include <list>
+#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+#include "../../graphics/camera.hpp"
+#include "../../core/gameentity.hpp"
+#include "../../graphics/mesh.hpp"
+#include "../../graphics/renderedentity.hpp"
 
 class GameStateActive: public GameState {
 public:
@@ -27,6 +34,13 @@ public:
 
 private:
 	InputManager* inputManager;
+	Camera * camera;
+	std::list< boost::shared_ptr<RenderedEntity> > entities;
+
+	GLuint modelMatrix;
+	GLuint viewMatrix;
+	GLuint projectionMatrix;
+
 
 };
 

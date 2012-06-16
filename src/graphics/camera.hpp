@@ -3,13 +3,14 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include "../core/gameentity.hpp"
+#include "../core/inputlistener.hpp"
 
 /**
  * Provides an interface for a camera, extends entity and has a
  * position and orientation. Also provides the projection matrix
  * to be used in the shader.
  */
-class Camera: public GameEntity
+class Camera: public GameEntity , public InputListener
 {
 public:
 	Camera();
@@ -24,9 +25,13 @@ public:
 		return projectionMatrix;
 	}
 
+	void handleinput(InputEvent*inputEvent );
+
+
 	virtual void update()
 	{
 	}
+
 protected:
 	float aspectRatio;
 	glm::mat4 projectionMatrix;

@@ -7,6 +7,7 @@
 
 #include "GameStateEngine.hpp"
 #include "gamestate.hpp"
+#include <iostream>
 
 
 
@@ -24,6 +25,7 @@ GameStateEngine::~GameStateEngine() {
 bool GameStateEngine::init() {
 	running = true;
 	inputManager = InputManager::instance();
+	inputMapper = new InputMapper();
 
 	//OpenGL Context settings: depthBits, stencilBits, AA, major & minor version
 	contextSettings.depthBits = 24;
@@ -50,6 +52,7 @@ void GameStateEngine::cleanup() {
 
 void GameStateEngine::changeGameState(GameState* state) {
 	//TODO: update stack in a appropriate manner
+	this->pushState(state);
 }
 
 /*
@@ -57,6 +60,7 @@ void GameStateEngine::changeGameState(GameState* state) {
  */
 void GameStateEngine::pushState(GameState* state) {
 	states.push_back(state);
+	states.back()->init();
 }
 
 /*
@@ -73,9 +77,11 @@ void GameStateEngine::handleInput() {
 	sf::Event event;
 	GameState* gstate = states.back();
 	while (window.pollEvent(event)) {
+		std::cout<< "input poll event" << std::endl;
 		inputMapper->mapInputEvent(event);
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());
+
 
 
 }

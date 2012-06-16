@@ -11,7 +11,7 @@
 *.project
 *CMakeLists*
 *.gitignore*
-*cmake_modules*
+
 
 # Compiled Static libraries
 *.lai

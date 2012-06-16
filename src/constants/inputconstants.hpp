@@ -13,6 +13,9 @@ namespace input_constants
 
 	enum Action
 	{
+		ACTION_DEFAULT,
+		ACTION_CAMERA_MOVE_LEFT,
+		ACTION_CAMERA_MOVE_RIGHT,
 		ACTION_CAMERA_TURN_LEFT,
 		ACTION_CAMERA_TURN_RIGHT,
 		ACTION_CAMERA_ZOOM_OUT,
@@ -22,6 +25,7 @@ namespace input_constants
 
 	enum State
 	{
+		STATE_DEFAULT,
 		STATE_PLAYER_RUNNING,
 		STATE_CAMERA_RUNNING
 	};
