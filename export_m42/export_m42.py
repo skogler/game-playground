@@ -111,13 +111,13 @@ def writeMesh(file, mesh):
 def writeMaterial(file, mat):
     file.write("material " + mat.name)
     ts = mat.texture_slots[0]
-    if ts.texture.type == 'IMAGE':
-        file.write(" type img\n")
-        file.write("img " + ts.texture.image.name + "\n")
-    else:
+    if ts == None:
         file.write(" type color\n")
         c = mat.diffuse_color
         file.write("diffuse " + "{0:.6f} {1:.6f} {2:.6f}\n".format(c.r, c.g, c.b))
+    elif ts.texture.type == 'IMAGE':
+        file.write(" type img\n")
+        file.write("img " + ts.texture.image.name + "\n")
 
 
 def export(filename, entire_scene):
