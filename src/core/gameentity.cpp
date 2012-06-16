@@ -1,6 +1,5 @@
 #include "gameentity.hpp"
 #include <glm/glm.hpp>
-
 GameEntity::GameEntity() :
 		modelMatrix(1.0f), horizontalAngle(0.0f), verticalAngle(0.0f), movementSpeed(1), turnSpeed(1), position(0.0f, 0.0f, 0.0f), orientation(
 				0.0f, 0.0f, 0.0f), orientationUp(0.0f, 0.0f, 0.0f), orientationRight(0.0f, 0.0f, 0.0f)

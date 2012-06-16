@@ -19,6 +19,7 @@ GameStateActive::GameStateActive() {
 	inputManager = InputManager::instance();
 	camera = new Camera();
 	camera->move(-20.0f);
+	inputManager->addListener(camera);
 	init();
 }
 

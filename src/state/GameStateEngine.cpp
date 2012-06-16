@@ -77,8 +77,8 @@ void GameStateEngine::handleInput() {
 	sf::Event event;
 	GameState* gstate = states.back();
 	while (window.pollEvent(event)) {
-		std::cout<< "input poll event" << std::endl;
 		inputMapper->mapInputEvent(event);
+
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());
 
@@ -101,4 +101,9 @@ void GameStateEngine::render() {
 	GameState* gstate = states.back();
 	gstate->render(this);
 }
+
+void GameStateEngine::updateWindow() {
+	window.display();
+}
+
 
