@@ -14,7 +14,7 @@
 #include <boost/shared_ptr.hpp>
 #include "../../graphics/camera.hpp"
 #include "../../core/gameentity.hpp"
-#include "../../graphics/mesh.hpp"
+#include "../../graphics/resources/mesh.hpp"
 #include "../../graphics/renderedentity.hpp"
 
 class GameStateActive: public GameState {

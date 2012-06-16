@@ -1,6 +1,6 @@
 #include "scene.hpp"
-#include "mesh.hpp"
-#include "shader.hpp"
+#include "resources/mesh.hpp"
+#include "resources/shader.hpp"
 #include <string>
 #include <iostream>
 #include <list>
@@ -44,7 +44,7 @@ void Scene::render() const
 	// set the projection matrix
 	glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &camera->get_projectionMatrix()[0][0]);
 
-	for (list< shared_ptr<RenderedEntity> >::const_iterator i = entities.begin(); i != entities.end(); ++i)
+	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin(); i != entities.end(); ++i)
 	{
 		// set the model matrix for each rendered entity
 		glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, &(*i)->get_modelMatrix()[0][0]);

@@ -2,7 +2,7 @@
 #define RENDEREDENTITY_INC
 
 #include "../core/gameentity.hpp"
-#include "mesh.hpp"
+#include "resources/mesh.hpp"
 
 class RenderedEntity: public GameEntity
 {

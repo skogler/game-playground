@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 
 #include "utils/config.h"
-#include "graphics/mesh.hpp"
+#include "graphics/resources/mesh.hpp"
 #include "graphics/camera.hpp"
 #include "graphics/scene.hpp"
 #include <glm/glm.hpp>
@@ -42,7 +42,7 @@ int main() {
 		cout << "render" << endl;
 		gse.render();
 
-		fps->markStartPoint();
+		fps->markEndPoint();
 		cout << "Delta: " << fps->getDelta() << endl;
 	}
 

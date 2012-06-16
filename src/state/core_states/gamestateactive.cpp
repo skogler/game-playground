@@ -7,7 +7,7 @@
 
 #include "gamestateactive.hpp"
 #include "../../core/inputmanager.hpp"
-#include "../../graphics/shader.hpp"
+#include "../../graphics/resources/shader.hpp"
 using std::string;
 using std::list;
 using boost::shared_ptr;

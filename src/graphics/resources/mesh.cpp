@@ -7,7 +7,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <glm/glm.hpp>
-#include "../utils/logger.hpp"
+#include "../../utils/logger.hpp"
 using namespace std;
 
 Mesh::Mesh(const string& filename) :

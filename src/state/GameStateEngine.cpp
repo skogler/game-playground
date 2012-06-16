@@ -43,6 +43,8 @@ bool GameStateEngine::init() {
 	if (GLEW_OK != err) {
 		return false;
 	}
+
+	window.display();
 	return true;
 }
 

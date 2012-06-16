@@ -7,7 +7,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include "camera.hpp"
-#include "mesh.hpp"
+#include "resources/mesh.hpp"
 #include "renderedentity.hpp"
 
 class Scene

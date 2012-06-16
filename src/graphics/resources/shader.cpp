@@ -1,7 +1,10 @@
 #include "shader.hpp"
 
-#include "../utils/logger.hpp"
+#include "../../utils/logger.hpp"
 
+#include <string>
+#include <boost/filesystem.hpp>
+#include <GL/glew.h>
 #include <fstream>
 #include <streambuf>
 
