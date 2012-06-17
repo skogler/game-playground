@@ -16,16 +16,14 @@ InputMapper::InputMapper() {
 	keyboardActionMap[sf::Keyboard::A] = ACTION_CAMERA_MOVE_LEFT;
 	keyboardActionMap[sf::Keyboard::D] = ACTION_CAMERA_MOVE_RIGHT;
 	keyboardActionMap[sf::Keyboard::Right] = ACTION_CAMERA_TURN_RIGHT;
+	keyboardActionMap[sf::Keyboard::Left] = ACTION_CAMERA_TURN_LEFT;
+
 	keyboardActionMap[sf::Keyboard::Up] = ACTION_CAMERA_ZOOM_IN;
 	keyboardActionMap[sf::Keyboard::Down] = ACTION_CAMERA_ZOOM_OUT;
 
-	keyboardStateMap[sf::Keyboard::W] = STATE_CAMERA_RUNNING;
+	keyboardStateMap[sf::Keyboard::W] = STATE_CAMERA_RUNNING_FORWARD;
+	keyboardStateMap[sf::Keyboard::S] = STATE_CAMERA_RUNNING_BACK;
 
-	actionSet.insert(ACTION_DEFAULT);
-	stateSet.insert(STATE_DEFAULT);
-
-	std::cout << actionSet.empty() << std::endl;
-	std::cout << stateSet.empty() << std::endl;
 
 }
 
@@ -34,8 +32,8 @@ InputMapper::~InputMapper() {
 }
 
 InputEvent* InputMapper::retrieveInputEvent() {
-	actionSet.insert(ACTION_DEFAULT);
 	currentInputEvent = new InputEvent(actionSet,stateSet);
+	actionSet.clear();
 	return currentInputEvent;
 }
 

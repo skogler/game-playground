@@ -52,6 +52,7 @@ public:
 	void handleInput();
 	void update();
 	void render();
+	void updateWindow();
 
 	//Getters and Setters
 
