@@ -42,9 +42,11 @@ public:
 	{
 		return position;
 	}
-	inline void set_position(glm::vec3& position)
+
+	inline void set_position(glm::vec3 & position)
 	{
 		this->position = position;
+		updateValues();
 	}
 
 	inline const glm::mat4& get_modelMatrix() const
@@ -72,7 +74,7 @@ protected:
 	glm::vec3 orientationRight;
 	glm::vec3 orientationUp;
 
-	void updateValues();
+	virtual void updateValues();
 };
 
 #endif /* GAMEENTITY_HPP_ */

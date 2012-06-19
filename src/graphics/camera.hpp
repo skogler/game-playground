@@ -33,6 +33,7 @@ public:
 	}
 
 protected:
+	void updateValues();
 	float aspectRatio;
 	glm::mat4 projectionMatrix;
 };

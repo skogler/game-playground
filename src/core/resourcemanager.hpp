@@ -5,6 +5,7 @@
 #include <list>
 #include <map>
 #include <boost/shared_ptr.hpp>
+#include <boost/filesystem.hpp>
 
 #include "../graphics/resources/shader.hpp"
 #include "../graphics/resources/texture.hpp"
@@ -26,14 +27,18 @@ public:
 	boost::shared_ptr<Mesh> getMesh(const std::string & name);
 	boost::shared_ptr<Material> getMaterial(const std::string & name);
 protected:
-	std::string resourceDirectory;
-
+	boost::filesystem::path resourceDirectory;
+	std::vector<boost::filesystem::path> resourceList;
 
 	std::map<std::string, boost::shared_ptr<Shader> > loadedShaders;
 	std::map<std::string, boost::shared_ptr<Texture> > loadedTextures;
 	std::map<std::string, boost::shared_ptr<Terrain> > loadedTerrains;
 	std::map<std::string, boost::shared_ptr<Mesh> > loadedMeshes;
 	std::map<std::string, boost::shared_ptr<Material> > loadedMaterials;
+
+	boost::filesystem::path shaderDir;
+
+	void createResourceList();
 };
 
 #endif /* RESOURCEMANAGER_HPP_ */
