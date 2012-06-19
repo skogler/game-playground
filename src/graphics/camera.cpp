@@ -22,11 +22,23 @@ void Camera::handleinput(InputEvent* inputEvent) {
 		this->move(-0.3);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_RIGHT)) {
-		this->turn(0.3,0);
+		this->turn(-0.02f,0);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_LEFT)) {
-		this->turn(-0.3,0);
+		this->turn(0.02f,0);
 	}
-
 }
 
+void Camera::updateValues()
+{
+	orientation = glm::vec3(cos(verticalAngle) * sin(horizontalAngle),
+							sin(verticalAngle),
+							cos(verticalAngle) * cos(horizontalAngle));
+	orientationRight = glm::vec3(sin(horizontalAngle - 3.1415926f / 2.0f), 0, cos(horizontalAngle - 3.1415926f / 2.0f));
+	orientationUp = glm::cross(orientationRight, orientation);
+
+	modelMatrix = glm::mat4(1.0f);
+	modelMatrix = glm::rotate(modelMatrix, -(horizontalAngle * 180.0f / 3.1415926f), glm::vec3(0.0f, 1.0f, 0.0f));
+	modelMatrix = glm::rotate(modelMatrix, -(verticalAngle * 180.0f / 3.1415926f), glm::vec3(1.0f, 0.0f, 0.0f));
+	modelMatrix = glm::translate(modelMatrix, position);
+}

@@ -1,5 +1,12 @@
 #include "gameentity.hpp"
 #include <glm/glm.hpp>
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+
+
 GameEntity::GameEntity() :
 		modelMatrix(1.0f), horizontalAngle(0.0f), verticalAngle(0.0f), movementSpeed(1), turnSpeed(1), position(0.0f, 0.0f, 0.0f), orientation(
 				0.0f, 0.0f, 0.0f), orientationUp(0.0f, 0.0f, 0.0f), orientationRight(0.0f, 0.0f, 0.0f)
@@ -29,10 +36,11 @@ void GameEntity::turn(float amountHorizontal, float amountVertical)
 
 void GameEntity::updateValues()
 {
-	orientation = glm::vec3(cos(verticalAngle) * sin(horizontalAngle), sin(verticalAngle), cos(verticalAngle) * cos(horizontalAngle));
-
+	orientation = glm::vec3(cos(verticalAngle) * sin(horizontalAngle),
+							sin(verticalAngle),
+							cos(verticalAngle) * cos(horizontalAngle));
+	orientation = glm::normalize(orientation);
 	orientationRight = glm::vec3(sin(horizontalAngle - 3.1415926f / 2.0f), 0, cos(horizontalAngle - 3.1415926f / 2.0f));
-
 	orientationUp = glm::cross(orientationRight, orientation);
 
 	modelMatrix = glm::mat4(1.0f);

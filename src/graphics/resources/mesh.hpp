@@ -16,7 +16,6 @@ public:
 	void release();
 	void render();
 
-
     bool uploaded;
     GLuint vbo;
     GLuint indexVbo;

@@ -1,16 +1,11 @@
 #include "renderedentity.hpp"
 
-RenderedEntity::RenderedEntity() :
-		mesh(0)
+RenderedEntity::RenderedEntity()
 {
 }
 
 RenderedEntity::~RenderedEntity()
 {
-	if (mesh != 0)
-	{
-		delete mesh;
-	}
 }
 
 void RenderedEntity::render() const

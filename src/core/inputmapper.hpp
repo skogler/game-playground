@@ -36,11 +36,6 @@ public:
 	InputEvent* retrieveInputEvent();
 
 	void mapInputEvent(sf::Event event);
-
-
-
-}
-
-;
+};
 
 #endif /* INPUTMAPPER_HPP_ */

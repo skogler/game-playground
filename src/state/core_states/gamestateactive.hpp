@@ -36,6 +36,9 @@ private:
 	InputManager* inputManager;
 	Camera * camera;
 	std::list< boost::shared_ptr<RenderedEntity> > entities;
+	boost::shared_ptr<RenderedEntity> m1;
+	boost::shared_ptr<RenderedEntity> m2;
+
 
 	GLuint modelMatrix;
 	GLuint viewMatrix;
