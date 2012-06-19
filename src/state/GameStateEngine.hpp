@@ -37,6 +37,7 @@ private:
 	//OpenGL context-settings and window
 	sf::ContextSettings contextSettings;
 	sf::RenderWindow window;
+	sf::RenderWindow * rw;
 
 public:
 	GameStateEngine();
@@ -54,8 +55,11 @@ public:
 	void render();
 	void updateWindow();
 
-	//Getters and Setters
+	sf::RenderWindow* getRw() const {
+		return rw;
+	}
 
+	//Getters and Setters
 	InputManager* getInputManager() const {
 		return inputManager;
 	}
@@ -71,10 +75,10 @@ public:
 	bool isRunning() {
 		return running;
 	}
+
 	void Quit() {
 		running = false;
 	}
-
 };
 
 #endif /* GAMESTATEENGINE_HPP_ */

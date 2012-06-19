@@ -12,14 +12,15 @@
 #include <list>
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
-#include "../../graphics/camera.hpp"
+#include "../../graphics/cameras/freemovementcam.hpp"
+
 #include "../../core/gameentity.hpp"
 #include "../../graphics/resources/mesh.hpp"
 #include "../../graphics/renderedentity.hpp"
 
 class GameStateActive: public GameState {
 public:
-	GameStateActive();
+	GameStateActive(sf::RenderWindow* renderWindow);
 	virtual ~GameStateActive();
 
 	void init();
@@ -31,15 +32,19 @@ public:
 	void handleEvents(InputEvent* inputEvent);
 	void update(GameStateEngine* game);
 	void render(GameStateEngine* game);
+	void drawGround();
+
 
 private:
 	InputManager* inputManager;
-	Camera * camera;
+	FreeMovementCam * freeCam;
 	std::list< boost::shared_ptr<RenderedEntity> > entities;
 
 	GLuint modelMatrix;
 	GLuint viewMatrix;
 	GLuint projectionMatrix;
+
+
 
 
 };

@@ -15,11 +15,11 @@ using boost::shared_ptr;
 #include <iostream>
 
 
-GameStateActive::GameStateActive() {
+GameStateActive::GameStateActive(sf::RenderWindow* renderWindow) {
 	inputManager = InputManager::instance();
-	camera = new Camera();
-	camera->move(-20.0f);
-	inputManager->addListener(camera);
+	freeCam = new FreeMovementCam(renderWindow);
+	freeCam->move(-20.0);
+	inputManager->addListener(freeCam);
 	init();
 }
 
@@ -71,10 +71,10 @@ void GameStateActive::render(GameStateEngine* game) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// set the view matrix = model matrix of the camera
 	glUniformMatrix4fv(viewMatrix, 1, GL_FALSE,
-			&camera->get_modelMatrix()[0][0]);
+			&freeCam->get_modelMatrix()[0][0]);
 	// set the projection matrix
 	glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE,
-			&camera->get_projectionMatrix()[0][0]);
+			&freeCam->get_projectionMatrix()[0][0]);
 
 	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin();
 			i != entities.end(); ++i) {
@@ -83,6 +83,37 @@ void GameStateActive::render(GameStateEngine* game) {
 				&(*i)->get_modelMatrix()[0][0]);
 		(*i)->render();
 	}
+	//draw ground is only for testing
+	drawGround();
+}
+
+/**
+ * This method is only here for testing purpose
+ *
+ */
+void GameStateActive::drawGround()
+{
+	//TODO: remvoe this method
+    GLfloat extent      = 600.0f; // How far on the Z-Axis and X-Axis the ground extends
+    GLfloat stepSize    = 20.0f;  // The size of the separation between points
+    GLfloat groundLevel = -5.0f;   // Where on the Y-Axis the ground is drawn
+
+    // Set colour to white
+    glColor3ub(255, 255, 255);
+
+    // Draw our ground grid
+    glBegin(GL_LINES);
+    for (GLint loop = -extent; loop < extent; loop += stepSize)
+    {
+        // Draw lines along Z-Axis
+        glVertex3f(loop, groundLevel,  extent);
+        glVertex3f(loop, groundLevel, -extent);
+
+        // Draw lines across X-Axis
+        glVertex3f(-extent, groundLevel, loop);
+        glVertex3f(extent,  groundLevel, loop);
+    }
+    glEnd();
 
 }
 

@@ -31,7 +31,7 @@ int main() {
 	}
 
 	gse.setRunning(true);
-	gse.pushState(new GameStateActive());
+	gse.pushState(new GameStateActive(gse.getRw()));
 	while(gse.isRunning())
 	{
 		fps->markStartPoint();
@@ -40,7 +40,7 @@ int main() {
 		gse.render();
 		gse.updateWindow();
 		fps->markEndPoint();
-		//cout << "Delta: " << fps->getDelta() << endl;
+		cout << "Delta: " << fps->getDelta() << endl;
 	}
 
 	gse.cleanup();

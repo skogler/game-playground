@@ -9,8 +9,6 @@
 #include "gamestate.hpp"
 #include <iostream>
 
-
-
 GameStateEngine::GameStateEngine() {
 
 }
@@ -45,6 +43,8 @@ bool GameStateEngine::init() {
 	}
 
 	window.display();
+	rw = &window;
+
 	return true;
 }
 
@@ -79,13 +79,13 @@ void GameStateEngine::handleInput() {
 	sf::Event event;
 	GameState* gstate = states.back();
 	while (window.pollEvent(event)) {
+		//TODO: remove check for exit
+		if (event.key.code == sf::Keyboard::Escape)
+			running = false;
 		inputMapper->mapInputEvent(event);
 
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());
-
-
-
 }
 
 /*
@@ -107,5 +107,4 @@ void GameStateEngine::render() {
 void GameStateEngine::updateWindow() {
 	window.display();
 }
-
 
