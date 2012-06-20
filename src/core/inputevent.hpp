@@ -20,13 +20,18 @@ private:
 	//Iterators
 	std::set<Action>::iterator itActionSet;
 	std::set<State>::iterator itStateSet;
+	bool mouseMoved;
 
 public:
-	InputEvent(std::set<Action> actionSet,std::set<State> stateSet);
+	InputEvent(std::set<Action> actionSet,std::set<State> stateSet, bool mouseMoved);
 	virtual ~InputEvent();
 
 	bool containsAction(Action action);
 	bool containsState(State state);
+
+	bool isMouseMoved() const {
+		return mouseMoved;
+	}
 
 	void setStateSet(std::set<State> stateSet) {
 		this->stateSet = stateSet;

@@ -10,9 +10,9 @@
 
 InputMapper::InputMapper() {
 
-	// TODO: Refactor this shit so the assignments are read from a config file.
-	// for testing purpose its is EXTREMELY imports that state and action have no redundant keybindings
-	// otherwise IMPENDING DOOM
+	// TODO: Refactor this  so the assignments are read from a config file.
+	// for testing purpose its is EXTREMELY important that state and action have no redundant keybindings
+
 	keyboardActionMap[sf::Keyboard::A] = ACTION_CAMERA_MOVE_LEFT;
 	keyboardActionMap[sf::Keyboard::D] = ACTION_CAMERA_MOVE_RIGHT;
 	keyboardActionMap[sf::Keyboard::Right] = ACTION_CAMERA_TURN_RIGHT;
@@ -21,8 +21,12 @@ InputMapper::InputMapper() {
 	keyboardActionMap[sf::Keyboard::Up] = ACTION_CAMERA_ZOOM_IN;
 	keyboardActionMap[sf::Keyboard::Down] = ACTION_CAMERA_ZOOM_OUT;
 
-	keyboardStateMap[sf::Keyboard::W] = STATE_CAMERA_RUNNING_FORWARD;
-	keyboardStateMap[sf::Keyboard::S] = STATE_CAMERA_RUNNING_BACK;
+	//Important
+	keyboardStateMap[sf::Keyboard::W] = STATE_CAMERA_MOVING_FORWARD;
+	keyboardStateMap[sf::Keyboard::S] = STATE_CAMERA_MOVING_BACK;
+	keyboardStateMap[sf::Keyboard::A] = STATE_CAMERA_MOVE_LEFT;
+	keyboardStateMap[sf::Keyboard::D] = STATE_CAMERA_MOVE_RIGHT;
+
 
 
 }
@@ -32,7 +36,7 @@ InputMapper::~InputMapper() {
 }
 
 InputEvent* InputMapper::retrieveInputEvent() {
-	currentInputEvent = new InputEvent(actionSet,stateSet);
+	currentInputEvent = new InputEvent(actionSet,stateSet,mouseMoved);
 	actionSet.clear();
 	return currentInputEvent;
 }
@@ -63,5 +67,7 @@ void InputMapper::mapInputEvent(sf::Event event) {
 				stateSet.erase(itStateSet);
 		}
 	}
+	if(event.type == sf::Event::MouseMoved)
+		actionSet.insert(ACTION_MOUSE_MOVED);
 }
 

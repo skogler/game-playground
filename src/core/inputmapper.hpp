@@ -21,6 +21,7 @@ private:
 
 	std::set<Action> actionSet;
 	std::set<State> stateSet;
+	bool mouseMoved;
 	InputEvent* currentInputEvent;
 
 	//Iterators

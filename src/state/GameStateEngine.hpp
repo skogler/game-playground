@@ -41,6 +41,7 @@ private:
 	//OpenGL context-settings and window
 	sf::ContextSettings contextSettings;
 	sf::RenderWindow window;
+	sf::RenderWindow * rw;
 
 public:
 	GameStateEngine();
@@ -65,8 +66,11 @@ public:
 
 	inline boost::shared_ptr<InputManager> getInputManager()
 	{
-		return inputManager;
+
+	sf::RenderWindow* getRw() const {
+		return rw;
 	}
+
 
 	//Getters and Setters
 	inline void setRunning(bool running)
@@ -88,7 +92,6 @@ public:
 	{
 		running = false;
 	}
-
 };
 
 #endif /* GAMESTATEENGINE_HPP_ */
