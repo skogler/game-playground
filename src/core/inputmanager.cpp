@@ -7,40 +7,32 @@
 
 #include "inputmanager.hpp"
 
-InputManager* InputManager::imInstance = NULL;
-
-InputManager::InputManager() {
-	// TODO gonna be deleted
-}
-
-InputManager::~InputManager() {
-	// TODO Auto-generated destructor stub
-}
-
-
-InputManager* InputManager::instance()
+InputManager::InputManager()
 {
-  if (imInstance == NULL)
-	  imInstance = new InputManager();
 
-  return imInstance;
 }
 
-void InputManager::addListener(InputListener* listener) {
+InputManager::~InputManager()
+{
+
+}
+
+void InputManager::addListener(InputListener* listener)
+{
 	vListeners.push_back(listener);
 }
 
-void InputManager::removeListener(InputListener* listener) {
+void InputManager::removeListener(InputListener* listener)
+{
 	vListeners.remove(listener);
 }
 
-void InputManager::handleUserInput(InputEvent*inEvent) {
+void InputManager::handleUserInput(InputEvent*inEvent)
+{
 	std::list<InputListener*>::iterator it;
-	for( it = vListeners.begin(); it != vListeners.end() ;it++)
+	for (it = vListeners.begin(); it != vListeners.end(); it++)
 	{
-		 (*it)->handleinput(inEvent);
+		(*it)->handleinput(inEvent);
 	}
-
 }
-
 

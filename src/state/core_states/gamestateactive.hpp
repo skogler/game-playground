@@ -14,7 +14,6 @@
 #include <boost/shared_ptr.hpp>
 #include "../../graphics/camera.hpp"
 #include "../../core/gameentity.hpp"
-#include "../../graphics/resources/mesh.hpp"
 #include "../../graphics/renderedentity.hpp"
 
 class GameStateActive: public GameState {
@@ -33,7 +32,7 @@ public:
 	void render(GameStateEngine* game);
 
 private:
-	InputManager* inputManager;
+	boost::shared_ptr<InputManager> inputManager;
 	Camera * camera;
 	std::list< boost::shared_ptr<RenderedEntity> > entities;
 	boost::shared_ptr<RenderedEntity> m1;

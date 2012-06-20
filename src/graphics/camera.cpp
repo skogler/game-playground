@@ -22,10 +22,10 @@ void Camera::handleinput(InputEvent* inputEvent) {
 		this->move(-0.3);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_RIGHT)) {
-		this->turn(-0.02f,0);
+		this->turn(0.00f,-0.02f);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_LEFT)) {
-		this->turn(0.02f,0);
+		this->turn(0.00f,0.02f);
 	}
 }
 

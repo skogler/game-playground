@@ -2,43 +2,25 @@
 #define RESOURCEMANAGER_HPP_
 
 #include <string>
-#include <list>
-#include <map>
-#include <boost/shared_ptr.hpp>
 #include <boost/filesystem.hpp>
 
-#include "../graphics/resources/shader.hpp"
-#include "../graphics/resources/texture.hpp"
-#include "../graphics/resources/terrain.hpp"
-#include "../graphics/resources/mesh.hpp"
-#include "../graphics/resources/material.hpp"
+#include "resourcecache.hpp"
+#include "resources/material.hpp"
+#include "resources/mesh.hpp"
+#include "resources/shader.hpp"
+#include "resources/texture.hpp"
 
 class ResourceManager
 {
 public:
-	ResourceManager(const std::string & resourceDirectory);
+	ResourceManager(const boost::filesystem::path & resourceDirectory);
 	virtual ~ResourceManager();
 
-	void setResourceDirectory(const std::string & resourceDirectory);
-
-	boost::shared_ptr<Shader> getShader(const std::string & name);
-	boost::shared_ptr<Texture> getTexture(const std::string & name);
-	boost::shared_ptr<Terrain> getTerrain(const std::string & name);
-	boost::shared_ptr<Mesh> getMesh(const std::string & name);
-	boost::shared_ptr<Material> getMaterial(const std::string & name);
-protected:
-	boost::filesystem::path resourceDirectory;
-	std::vector<boost::filesystem::path> resourceList;
-
-	std::map<std::string, boost::shared_ptr<Shader> > loadedShaders;
-	std::map<std::string, boost::shared_ptr<Texture> > loadedTextures;
-	std::map<std::string, boost::shared_ptr<Terrain> > loadedTerrains;
-	std::map<std::string, boost::shared_ptr<Mesh> > loadedMeshes;
-	std::map<std::string, boost::shared_ptr<Material> > loadedMaterials;
-
-	boost::filesystem::path shaderDir;
-
-	void createResourceList();
+	//Resource Caches
+	ResourceCache<Texture> textureCache;
+	ResourceCache<Shader> shaderCache;
+	ResourceCache<Mesh> meshCache;
+	ResourceCache<Material> materialCache;
 };
 
 #endif /* RESOURCEMANAGER_HPP_ */

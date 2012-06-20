@@ -2,7 +2,7 @@
 #define RENDEREDENTITY_INC
 
 #include "../core/gameentity.hpp"
-#include "resources/mesh.hpp"
+#include "../core/resources/mesh.hpp"
 #include <boost/shared_ptr.hpp>
 
 class RenderedEntity: public GameEntity

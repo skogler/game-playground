@@ -6,12 +6,19 @@
  */
 
 #include "GameStateEngine.hpp"
+
 #include "gamestate.hpp"
+#include "../core/resourcemanager.hpp"
+
 #include <iostream>
+#include <boost/filesystem.hpp>
 
 
-
-GameStateEngine::GameStateEngine() {
+GameStateEngine::GameStateEngine() :
+		inputManager(new InputManager),
+		inputMapper(new InputMapper),
+		resourceManager(new ResourceManager(boost::filesystem::path("resources")))
+{
 
 }
 
@@ -24,8 +31,6 @@ GameStateEngine::~GameStateEngine() {
  */
 bool GameStateEngine::init() {
 	running = true;
-	inputManager = InputManager::instance();
-	inputMapper = new InputMapper();
 
 	//OpenGL Context settings: depthBits, stencilBits, AA, major & minor version
 	contextSettings.depthBits = 24;
@@ -62,7 +67,6 @@ void GameStateEngine::changeGameState(GameState* state) {
  */
 void GameStateEngine::pushState(GameState* state) {
 	states.push_back(state);
-	states.back()->init();
 }
 
 /*
@@ -83,9 +87,6 @@ void GameStateEngine::handleInput() {
 
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());
-
-
-
 }
 
 /*

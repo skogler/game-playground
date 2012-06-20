@@ -1,27 +1,23 @@
 #include <iostream>
-#include <sstream>
 
 #include <SFML/Graphics.hpp>
 #include <GL/glew.h>
-
-#include "utils/config.h"
-#include "graphics/resources/mesh.hpp"
-#include "graphics/camera.hpp"
-#include "graphics/scene.hpp"
 #include <glm/glm.hpp>
-#include <iostream>
-#include "utils/FPSManager.hpp"
-#include <boost/thread.hpp>
-#include "state/GameStateEngine.hpp"
+
 #include "core/inputmanager.hpp"
+#include "state/GameStateEngine.hpp"
 #include "state/core_states/gamestateactive.hpp"
+#include "utils/config.h"
+#include "utils/FPSManager.hpp"
+
 using namespace std;
 
-int main() {
+int main()
+{
+	//ResourceManager res("resources");
 
 	GameStateEngine gse;
 	FPSManager* fps = new FPSManager();
-
 
 	if(!gse.init())
 	{

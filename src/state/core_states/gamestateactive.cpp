@@ -7,16 +7,16 @@
 
 #include "gamestateactive.hpp"
 #include "../../core/inputmanager.hpp"
-#include "../../graphics/resources/shader.hpp"
+#include "../../core/resources/shader.hpp"
+#include "../../core/resources/mesh.hpp"
 using std::string;
 using std::list;
 using boost::shared_ptr;
 
 #include <iostream>
 
-GameStateActive::GameStateActive()
+GameStateActive::GameStateActive()  //FIXME pass input manager
 {
-	inputManager = InputManager::instance();
 	camera = new Camera();
 	camera->move(-20.0f);
 	inputManager->addListener(camera);
@@ -37,14 +37,14 @@ void GameStateActive::init()
 	shared_ptr<Mesh> mesh(new Mesh(filename));
 	mesh->upload();
 
-	m1 = boost::shared_ptr<RenderedEntity>(new RenderedEntity());
+	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m1->set_mesh(mesh);
 	glm::vec3 position(10.0f, 0.0f, 0.0f);
 	m1->set_position(position);
 
 	entities.push_back(m1);
 
-	m2 = boost::shared_ptr<RenderedEntity>(new RenderedEntity());
+	m2 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m2->set_mesh(mesh);
 
 	entities.push_back(m2);

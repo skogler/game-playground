@@ -1,6 +1,6 @@
 # Goals
 
- * Export basic models from blender
+ * Export basic models from blender -DONE
  * Load models into the game
  * Camera that can follow game objects (3rd person)
  * Render models

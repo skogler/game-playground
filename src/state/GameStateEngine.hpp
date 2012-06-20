@@ -21,18 +21,22 @@
 #include "../utils/FPSManager.hpp"
 #include "../core/inputmanager.hpp"
 #include "../core/inputmapper.hpp"
-
+#include "../core/resourcemanager.hpp"
 
 class GameState;
-class GameStateEngine {
+class GameStateEngine
+{
 private:
 	bool running;
 	// the stack of states
 	std::vector<GameState*> states;
 
 	//Input
-	InputManager* inputManager;
-	InputMapper* inputMapper;
+	boost::shared_ptr<InputManager> inputManager;
+	boost::scoped_ptr<InputMapper> inputMapper;
+
+	// Resource Manager
+	boost::shared_ptr<ResourceManager> resourceManager;
 
 	//OpenGL context-settings and window
 	sf::ContextSettings contextSettings;
@@ -54,24 +58,34 @@ public:
 	void render();
 	void updateWindow();
 
-	//Getters and Setters
+	inline boost::shared_ptr<ResourceManager> getResourceManager()
+	{
+		return resourceManager;
+	}
 
-	InputManager* getInputManager() const {
+	inline boost::shared_ptr<InputManager> getInputManager()
+	{
 		return inputManager;
 	}
 
-	void setRunning(bool running) {
+	//Getters and Setters
+	inline void setRunning(bool running)
+	{
 		this->running = running;
 	}
 
-	std::vector<GameState*> getStates() const {
+	inline const std::vector<GameState*> & getStates() const
+	{
 		return states;
 	}
 
-	bool isRunning() {
+	inline bool isRunning() const
+	{
 		return running;
 	}
-	void Quit() {
+
+	inline void quit()
+	{
 		running = false;
 	}
 

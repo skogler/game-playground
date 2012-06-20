@@ -15,24 +15,19 @@
 
 class InputManager {
 
-private:
+public:
 	InputManager();
 	virtual ~InputManager();
-	static InputManager *imInstance;
-	std::list<InputListener*> vListeners;
-
-public:
-	static InputManager* instance();
 	void addListener(InputListener* listener);
 	void removeListener(InputListener* listener);
 	void handleUserInput(InputEvent *inEvent);
-
 
 	//Getter and setter
 	std::list<InputListener*> getListeners() const {
 		return vListeners;
 	}
-
+private:
+	std::list<InputListener*> vListeners;
 };
 
 #endif /* INPUTMANAGER_HPP_ */
