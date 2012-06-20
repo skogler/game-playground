@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include <SFML/Graphics.hpp>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -27,7 +26,7 @@ int main()
 	}
 
 	gse.setRunning(true);
-	gse.pushState(new GameStateActive(gse.getRw()));
+	gse.pushState(new GameStateActive(&gse));
 	while(gse.isRunning())
 	{
 		fps->markStartPoint();

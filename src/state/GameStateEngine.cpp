@@ -85,7 +85,7 @@ void GameStateEngine::handleInput() {
 	GameState* gstate = states.back();
 	while (window.pollEvent(event)) {
 		//TODO: remove check for exit
-		if (event.key.code == sf::Keyboard::Escape)
+		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 			running = false;
 		inputMapper->mapInputEvent(event);
 
@@ -98,7 +98,7 @@ void GameStateEngine::handleInput() {
  */
 void GameStateEngine::update() {
 	GameState* gstate = states.back();
-	gstate->update(this);
+	gstate->update();
 }
 
 /*
@@ -106,7 +106,7 @@ void GameStateEngine::update() {
  */
 void GameStateEngine::render() {
 	GameState* gstate = states.back();
-	gstate->render(this);
+	gstate->render();
 }
 
 void GameStateEngine::updateWindow() {

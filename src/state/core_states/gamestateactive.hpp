@@ -19,7 +19,7 @@
 
 class GameStateActive: public GameState {
 public:
-	GameStateActive(sf::RenderWindow* renderWindow);
+	GameStateActive(GameStateEngine* game);
 	virtual ~GameStateActive();
 
 	void init();
@@ -29,8 +29,8 @@ public:
 	void Resume();
 
 	void handleEvents(InputEvent* inputEvent);
-	void update(GameStateEngine* game);
-	void render(GameStateEngine* game);
+	void update();
+	void render();
 	void drawGround();
 
 
