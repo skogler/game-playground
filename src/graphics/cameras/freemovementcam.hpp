@@ -20,11 +20,14 @@ public:
 
 
 
-private:
+protected:
 	sf::RenderWindow* rwindow;
+	float lastX;
+	float lastY;
 	int windowXhalf;
 	int windowYhalf;
 	void handleMouseMovement(int y, int x);
+	void updateValues();
 
 };
 

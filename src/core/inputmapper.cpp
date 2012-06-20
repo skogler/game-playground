@@ -11,15 +11,15 @@
 InputMapper::InputMapper() {
 
 	// TODO: Refactor this  so the assignments are read from a config file.
-	// for testing purpose its is EXTREMELY important that state and action have no redundant keybindings
+
 
 	keyboardActionMap[sf::Keyboard::A] = ACTION_CAMERA_MOVE_LEFT;
 	keyboardActionMap[sf::Keyboard::D] = ACTION_CAMERA_MOVE_RIGHT;
+
 	keyboardActionMap[sf::Keyboard::Right] = ACTION_CAMERA_TURN_RIGHT;
 	keyboardActionMap[sf::Keyboard::Left] = ACTION_CAMERA_TURN_LEFT;
-
-	keyboardActionMap[sf::Keyboard::Up] = ACTION_CAMERA_ZOOM_IN;
-	keyboardActionMap[sf::Keyboard::Down] = ACTION_CAMERA_ZOOM_OUT;
+	keyboardActionMap[sf::Keyboard::Up] = ACTION_CAMERA_TURN_UP;
+	keyboardActionMap[sf::Keyboard::Down] = ACTION_CAMERA_TURN_DOWN;
 
 	//Important
 	keyboardStateMap[sf::Keyboard::W] = STATE_CAMERA_MOVING_FORWARD;

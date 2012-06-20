@@ -7,7 +7,6 @@
 #include "utils/config.h"
 #include "graphics/resources/mesh.hpp"
 #include "graphics/camera.hpp"
-#include "graphics/scene.hpp"
 #include <glm/glm.hpp>
 #include <iostream>
 #include "utils/FPSManager.hpp"
@@ -22,7 +21,6 @@ int main() {
 	GameStateEngine gse;
 	FPSManager* fps = new FPSManager();
 
-
 	if(!gse.init())
 	{
 		//TODO error handling
@@ -31,7 +29,7 @@ int main() {
 	}
 
 	gse.setRunning(true);
-	gse.pushState(new GameStateActive(gse.getRw()));
+	gse.pushState(new GameStateActive(&gse));
 	while(gse.isRunning())
 	{
 		fps->markStartPoint();
