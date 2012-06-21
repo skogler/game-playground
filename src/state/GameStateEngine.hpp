@@ -22,8 +22,8 @@
 #include "../core/inputmanager.hpp"
 #include "../core/inputmapper.hpp"
 #include "../core/resourcemanager.hpp"
+#include "gamestate.hpp"
 
-class GameState;
 class GameStateEngine
 {
 private:
@@ -40,8 +40,7 @@ private:
 
 	//OpenGL context-settings and window
 	sf::ContextSettings contextSettings;
-	sf::RenderWindow window;
-	sf::RenderWindow * rw;
+	boost::shared_ptr<sf::RenderWindow> window;
 
 public:
 	GameStateEngine();
@@ -66,18 +65,15 @@ public:
 
 	inline boost::shared_ptr<InputManager> getInputManager()
 	{
-
-	sf::RenderWindow* getRw() const {
-		return rw;
+		return inputManager;
 	}
 
+	inline boost::shared_ptr<sf::RenderWindow> getWindow()
+	{
+		return window;
+	}
 
 	//Getters and Setters
-	inline void setRunning(bool running)
-	{
-		this->running = running;
-	}
-
 	inline const std::vector<GameState*> & getStates() const
 	{
 		return states;
@@ -86,6 +82,11 @@ public:
 	inline bool isRunning() const
 	{
 		return running;
+	}
+
+	inline void start()
+	{
+		running = true;
 	}
 
 	inline void quit()

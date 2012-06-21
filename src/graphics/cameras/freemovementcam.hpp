@@ -10,24 +10,20 @@
 
 #include "../camera.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <boost/shared_ptr.hpp>
 
 class FreeMovementCam: public Camera {
 public:
-	FreeMovementCam(sf::RenderWindow* rwindow);
+	FreeMovementCam(boost::shared_ptr<sf::RenderWindow> rwindow);
 	virtual ~FreeMovementCam();
 
-	void handleinput(InputEvent*inputEvent );
-
-
+	virtual void handleinput(InputEvent* inputEvent );
 
 protected:
-	sf::RenderWindow* rwindow;
-	float lastX;
-	float lastY;
+	boost::shared_ptr<sf::RenderWindow> window;
 	int windowXhalf;
 	int windowYhalf;
 	void handleMouseMovement(int y, int x);
-	void updateValues();
 
 };
 

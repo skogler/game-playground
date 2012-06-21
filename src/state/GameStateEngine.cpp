@@ -14,21 +14,23 @@
 #include <boost/filesystem.hpp>
 
 GameStateEngine::GameStateEngine() :
-		inputManager(new InputManager),
-		inputMapper(new InputMapper),
-		resourceManager(new ResourceManager(boost::filesystem::path("resources")))
+				inputManager(new InputManager),
+				inputMapper(new InputMapper),
+				resourceManager(new ResourceManager(boost::filesystem::path("resources"))),
+				window(new sf::RenderWindow())
 {
-
 }
 
-GameStateEngine::~GameStateEngine() {
+GameStateEngine::~GameStateEngine()
+{
 	// TODO Auto-generated destructor stub
 }
 
 /**
  * Initializes the GameStateEngine
  */
-bool GameStateEngine::init() {
+bool GameStateEngine::init()
+{
 	running = true;
 
 	//OpenGL Context settings: depthBits, stencilBits, AA, major & minor version
@@ -37,28 +39,29 @@ bool GameStateEngine::init() {
 	contextSettings.antialiasingLevel = 4;
 	contextSettings.majorVersion = 4;
 	contextSettings.minorVersion = 2;
-	window.create(sf::VideoMode(1024, 768, 32), "game-playground",
-			sf::Style::Close, contextSettings);
+	window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Close, contextSettings);
 
-	window.setFramerateLimit(70);
+	window->setFramerateLimit(60);
 
 	//Glew error checking
 	GLenum err = glewInit();
-	if (GLEW_OK != err) {
-		return false;
+	if (GLEW_OK != err)
+	{
+		throw std::runtime_error("Error initializing OpenGL(GLEW), maybe because of no/old video driver.");
 	}
 
-	window.display();
-	rw = &window;
+	window->display();
 
 	return true;
 }
 
-void GameStateEngine::cleanup() {
+void GameStateEngine::cleanup()
+{
 	// TODO Clean up after awesomeness
 }
 
-void GameStateEngine::changeGameState(GameState* state) {
+void GameStateEngine::changeGameState(GameState* state)
+{
 	//TODO: update stack in a appropriate manner
 	this->pushState(state);
 }
@@ -66,29 +69,33 @@ void GameStateEngine::changeGameState(GameState* state) {
 /*
  * Adds a new state to the vector stack
  */
-void GameStateEngine::pushState(GameState* state) {
+void GameStateEngine::pushState(GameState* state)
+{
+	state->init();
 	states.push_back(state);
 }
 
 /*
  * Removes the last state
  */
-void GameStateEngine::popState() {
+void GameStateEngine::popState()
+{
 	states.pop_back();
 }
 
 /*
  * This function will execute the input event handling of the last state in the vector.
  */
-void GameStateEngine::handleInput() {
+void GameStateEngine::handleInput()
+{
 	sf::Event event;
 	GameState* gstate = states.back();
-	while (window.pollEvent(event)) {
+	while (window->pollEvent(event))
+	{
 		//TODO: remove check for exit
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-			running = false;
+			quit();
 		inputMapper->mapInputEvent(event);
-
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());
 }
@@ -96,7 +103,8 @@ void GameStateEngine::handleInput() {
 /*
  * This function will execute the world update of the last state in the vector.
  */
-void GameStateEngine::update() {
+void GameStateEngine::update()
+{
 	GameState* gstate = states.back();
 	gstate->update();
 }
@@ -104,12 +112,14 @@ void GameStateEngine::update() {
 /*
  * This function will execute the rendering of the last state in the vector.
  */
-void GameStateEngine::render() {
+void GameStateEngine::render()
+{
 	GameState* gstate = states.back();
 	gstate->render();
 }
 
-void GameStateEngine::updateWindow() {
-	window.display();
+void GameStateEngine::updateWindow()
+{
+	window->display();
 }
 

@@ -12,23 +12,31 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <boost/mem_fn.hpp>
+
 using std::string;
 using std::list;
 using boost::shared_ptr;
 
 #include <iostream>
 
-GameStateActive::GameStateActive(GameStateEngine* game) {
-	freeCam = new FreeMovementCam(game->getRw());
-	freeCam->move(-20.0);
+GameStateActive::GameStateActive(GameStateEngine* game) :
+				inputManager(game->getInputManager()),
+				freeCam(new FreeMovementCam(game->getWindow()))
+{
+	glm::vec3 cameraPos(0.0f, 0.0f, 20.0f);
+	freeCam->setPosition(cameraPos);
+//	freeCam->turn(3.14f, 0.0f);
 	inputManager->addListener(freeCam);
 }
 
-GameStateActive::~GameStateActive() {
+GameStateActive::~GameStateActive()
+{
 	// TODO Auto-generated destructor stub
 }
 
-void GameStateActive::init() {
+void GameStateActive::init()
+{
 	modelMatrix = 0;
 	viewMatrix = 0;
 	projectionMatrix = 0;
@@ -38,9 +46,20 @@ void GameStateActive::init() {
 
 	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m1->set_mesh(mesh);
-	glm::vec3 position(10.0f, 0.0f, 0.0f);
-	m1->set_position(position);
+	glm::vec3 position(5.0f, 0.0f, 0.0f);
+	m1->setPosition(position);
+	entities.push_back(m1);
 
+	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
+	m1->set_mesh(mesh);
+	position = glm::vec3(0.0f, 5.0f, 0.0f);
+	m1->setPosition(position);
+	entities.push_back(m1);
+
+	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
+	m1->set_mesh(mesh);
+	position = glm::vec3(0.0f, 0.0f, -5.0f);
+	m1->setPosition(position);
 	entities.push_back(m1);
 
 	m2 = shared_ptr<RenderedEntity>(new RenderedEntity());
@@ -61,52 +80,57 @@ void GameStateActive::init() {
 	glDepthFunc(GL_LESS);
 }
 
-void GameStateActive::cleanup() {
+void GameStateActive::cleanup()
+{
 }
 
-void GameStateActive::pause() {
+void GameStateActive::pause()
+{
 }
 
-void GameStateActive::Resume() {
+void GameStateActive::resume()
+{
 }
 
-void GameStateActive::handleEvents(InputEvent* inputEvent) {
+void GameStateActive::handleEvents(InputEvent* inputEvent)
+{
 	inputManager->handleUserInput(inputEvent);
 }
 
-void GameStateActive::update() {
+void GameStateActive::update()
+{
 	//m2->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
 	//m1->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
-
 	//m1->move(20.0f * 3.1415926535897f / 300.0f);
+	std::for_each(entities.begin(), entities.end(), boost::mem_fn(&GameEntity::update));
 }
 
-void GameStateActive::render() {
+void GameStateActive::render()
+{
+	freeCam->update();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// set the view matrix = model matrix of the camera
 
-	glUniformMatrix4fv(viewMatrix, 1, GL_FALSE,
-			&freeCam->get_modelMatrix()[0][0]);
+	glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, &freeCam->getModelMatrix()[0][0]);
 	// set the projection matrix
-	glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE,
-			&freeCam->get_projectionMatrix()[0][0]);
+	glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &freeCam->get_projectionMatrix()[0][0]);
 
-	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin();
-			i != entities.end(); ++i) {
+	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin(); i != entities.end(); ++i)
+	{
 		// set the model matrix for each rendered entity
-		glUniformMatrix4fv(modelMatrix, 1, GL_FALSE,
-				&(*i)->get_modelMatrix()[0][0]);
+		glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, &(*i)->getModelMatrix()[0][0]);
 		(*i)->render();
 	}
 	//draw ground is only for testing
-	drawGround();
+	//drawGround();
 }
 
 /**
  * This method is only here for testing purpose
  *
  */
-void GameStateActive::drawGround() {
+void GameStateActive::drawGround()
+{
 	modelMatrix = 0;
 
 	//TODO: remvoe this method
@@ -119,7 +143,8 @@ void GameStateActive::drawGround() {
 
 	// Draw our ground grid
 	glBegin(GL_LINES);
-	for (GLint loop = -extent; loop < extent; loop += stepSize) {
+	for (GLint loop = -extent; loop < extent; loop += stepSize)
+	{
 		// Draw lines along Z-Axis
 		glVertex3f(loop, groundLevel, extent);
 		glVertex3f(loop, groundLevel, -extent);

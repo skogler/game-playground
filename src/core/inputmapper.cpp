@@ -8,11 +8,9 @@
 #include "inputmapper.hpp"
 #include <iostream>
 
-InputMapper::InputMapper() {
-
+InputMapper::InputMapper()
+{
 	// TODO: Refactor this  so the assignments are read from a config file.
-
-
 	keyboardActionMap[sf::Keyboard::A] = ACTION_CAMERA_MOVE_LEFT;
 	keyboardActionMap[sf::Keyboard::D] = ACTION_CAMERA_MOVE_RIGHT;
 
@@ -26,17 +24,16 @@ InputMapper::InputMapper() {
 	keyboardStateMap[sf::Keyboard::S] = STATE_CAMERA_MOVING_BACK;
 	keyboardStateMap[sf::Keyboard::A] = STATE_CAMERA_MOVE_LEFT;
 	keyboardStateMap[sf::Keyboard::D] = STATE_CAMERA_MOVE_RIGHT;
-
-
-
 }
 
-InputMapper::~InputMapper() {
+InputMapper::~InputMapper()
+{
 	// TODO Auto-generated destructor stub
 }
 
-InputEvent* InputMapper::retrieveInputEvent() {
-	currentInputEvent = new InputEvent(actionSet,stateSet,mouseMoved);
+InputEvent* InputMapper::retrieveInputEvent()
+{
+	currentInputEvent = new InputEvent(actionSet, stateSet, mouseMoved);
 	actionSet.clear();
 	return currentInputEvent;
 }
@@ -45,29 +42,35 @@ InputEvent* InputMapper::retrieveInputEvent() {
  * This function takes the SFML Event and  creates the current InputEvent
  * out of the extracted data.
  */
-void InputMapper::mapInputEvent(sf::Event event) {
+void InputMapper::mapInputEvent(sf::Event event)
+{
 	//TODO handle mouse input
-	if (event.type == sf::Event::KeyPressed) {
+	if (event.type == sf::Event::KeyPressed)
+	{
 		//States
 		itKStateMap = keyboardStateMap.find(event.key.code);
 		if (itKStateMap != keyboardStateMap.end())
 			stateSet.insert(itKStateMap->second);
-		else {
+		else
+		{
 			//Actions
 			itKActionMap = keyboardActionMap.find(event.key.code);
 			if (itKActionMap != keyboardActionMap.end())
 				actionSet.insert(itKActionMap->second);
 		}
 
-	} else if (event.type == sf::Event::KeyReleased) {  // Handle state release
+	}
+	else if (event.type == sf::Event::KeyReleased)
+	{  // Handle state release
 		itKStateMap = keyboardStateMap.find(event.key.code);
-		if (itKStateMap != keyboardStateMap.end()) {
+		if (itKStateMap != keyboardStateMap.end())
+		{
 			itStateSet = stateSet.find(itKStateMap->second);
 			if (itKStateMap != keyboardStateMap.end())
 				stateSet.erase(itStateSet);
 		}
 	}
-	if(event.type == sf::Event::MouseMoved)
+	if (event.type == sf::Event::MouseMoved)
 		actionSet.insert(ACTION_MOUSE_MOVED);
 }
 

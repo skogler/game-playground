@@ -9,25 +9,29 @@
 #define INPUTMANAGER_HPP_
 
 #include <SFML/Window/Event.hpp>
-#include "inputlistener.hpp"
 #include <list>
 #include <iostream>
+#include <boost/shared_ptr.hpp>
 
-class InputManager {
+#include "inputlistener.hpp"
+
+class InputManager
+{
 
 public:
 	InputManager();
 	virtual ~InputManager();
-	void addListener(InputListener* listener);
-	void removeListener(InputListener* listener);
+	void addListener(boost::shared_ptr<InputListener> listener);
+	void removeListener(boost::shared_ptr<InputListener> listener);
 	void handleUserInput(InputEvent *inEvent);
 
 	//Getter and setter
-	std::list<InputListener*> getListeners() const {
+	std::list< boost::shared_ptr<InputListener> > getListeners() const
+	{
 		return vListeners;
 	}
 private:
-	std::list<InputListener*> vListeners;
+	std::list< boost::shared_ptr<InputListener> > vListeners;
 };
 
 #endif /* INPUTMANAGER_HPP_ */

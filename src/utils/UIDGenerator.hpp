@@ -17,7 +17,8 @@ public:
 
 private:
 	UIDGenerator() :
-			uid(0) {
+			uid(0)
+	{
 	}
 
 	static UIDGenerator * uidGen;

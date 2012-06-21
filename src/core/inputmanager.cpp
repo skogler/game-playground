@@ -6,6 +6,7 @@
  */
 
 #include "inputmanager.hpp"
+using boost::shared_ptr;
 
 InputManager::InputManager()
 {
@@ -17,19 +18,19 @@ InputManager::~InputManager()
 
 }
 
-void InputManager::addListener(InputListener* listener)
+void InputManager::addListener(shared_ptr<InputListener> listener)
 {
 	vListeners.push_back(listener);
 }
 
-void InputManager::removeListener(InputListener* listener)
+void InputManager::removeListener(shared_ptr<InputListener> listener)
 {
 	vListeners.remove(listener);
 }
 
-void InputManager::handleUserInput(InputEvent*inEvent)
+void InputManager::handleUserInput(InputEvent* inEvent)
 {
-	std::list<InputListener*>::iterator it;
+	std::list<shared_ptr<InputListener> >::iterator it;
 	for (it = vListeners.begin(); it != vListeners.end(); it++)
 	{
 		(*it)->handleinput(inEvent);

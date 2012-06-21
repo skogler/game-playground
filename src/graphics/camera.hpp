@@ -25,16 +25,12 @@ public:
 		return projectionMatrix;
 	}
 
-	void handleinput(InputEvent*inputEvent );
-
-
-	virtual void update()
-	{
-	}
+	virtual void handleinput(InputEvent* inputEvent );
 
 protected:
-	void updateValues();
+	virtual void updateModelMatrix();
 	float aspectRatio;
+	float fov;
 	glm::mat4 projectionMatrix;
 };
 

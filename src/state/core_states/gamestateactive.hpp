@@ -15,7 +15,10 @@
 #include "../../graphics/cameras/freemovementcam.hpp"
 
 #include "../../core/gameentity.hpp"
+#include "../../core/inputmanager.hpp"
+#include "../../state/GameStateEngine.hpp"
 #include "../../graphics/renderedentity.hpp"
+
 
 class GameStateActive: public GameState {
 public:
@@ -26,7 +29,7 @@ public:
 	void cleanup();
 
 	void pause();
-	void Resume();
+	void resume();
 
 	void handleEvents(InputEvent* inputEvent);
 	void update();
@@ -36,7 +39,7 @@ public:
 
 private:
 	boost::shared_ptr<InputManager> inputManager;
-	FreeMovementCam * freeCam;
+	boost::shared_ptr<FreeMovementCam> freeCam;
 	std::list< boost::shared_ptr<RenderedEntity> > entities;
 	boost::shared_ptr<RenderedEntity> m1;
 	boost::shared_ptr<RenderedEntity> m2;
