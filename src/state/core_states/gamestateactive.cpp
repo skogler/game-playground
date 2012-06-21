@@ -122,7 +122,7 @@ void GameStateActive::render()
 		(*i)->render();
 	}
 	//draw ground is only for testing
-	//drawGround();
+	drawGround();
 }
 
 /**
@@ -134,7 +134,7 @@ void GameStateActive::drawGround()
 	modelMatrix = 0;
 
 	//TODO: remvoe this method
-	GLfloat extent = 600.0f; // How far on the Z-Axis and X-Axis the ground extends
+	GLfloat extent = 1000.0f; // How far on the Z-Axis and X-Axis the ground extends
 	GLfloat stepSize = 20.0f; // The size of the separation between points
 	GLfloat groundLevel = -5.0f; // Where on the Y-Axis the ground is drawn
 

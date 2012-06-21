@@ -12,7 +12,7 @@ Camera::Camera() :
 				aspectRatio(1.3333f),
 				fov(60.0f)
 {
-	projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 100.0f);
+	projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
 }
 
 Camera::~Camera()

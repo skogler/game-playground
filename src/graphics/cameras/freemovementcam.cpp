@@ -29,19 +29,19 @@ void FreeMovementCam::handleinput(InputEvent* inputEvent)
 {
 	if (inputEvent->containsState(STATE_CAMERA_MOVING_FORWARD))
 	{
-		this->move(0.3);
+		this->moveForward(0.3);
 	}
 	if (inputEvent->containsState(STATE_CAMERA_MOVING_BACK))
 	{
-		this->move(-0.3);
+		this->moveForward(-0.3);
 	}
 	if (inputEvent->containsState(STATE_CAMERA_MOVE_RIGHT))
 	{
-		this->strafe(0.3);
+		this->moveRight(0.3);
 	}
 	if (inputEvent->containsState(STATE_CAMERA_MOVE_LEFT))
 	{
-		this->strafe(-0.3);
+		this->moveRight(-0.3);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_LEFT))
 	{
@@ -78,5 +78,4 @@ void FreeMovementCam::handleMouseMovement(int x, int y)
 	rotateX(vertMovement);
 
 	sf::Mouse::setPosition(sf::Vector2<int>(windowXhalf, windowYhalf), *window);
-
 }

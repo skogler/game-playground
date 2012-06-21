@@ -13,7 +13,6 @@ struct Transform
 	glm::vec3 translation;
 };
 
-
 class GameEntity
 {
 public:
@@ -64,11 +63,12 @@ public:
 	}
 
 	// Movement functions
-	void move(float amount);
-	void strafe(float amount);
-	void rotateX(float angleRadians);
-	void rotateY(float angleRadians);
-	void rotateZ(float angleRadians);
+	void moveForward(const float amount);
+	void moveRight(const float amount);
+	void moveUp(const float amount);
+	void rotateX(const float angleRadians);
+	void rotateY(const float angleRadians);
+	void rotateZ(const float angleRadians);
 	void lookAt(const glm::vec3& target);
 
 protected:
