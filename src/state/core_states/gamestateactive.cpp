@@ -21,8 +21,8 @@ using boost::shared_ptr;
 #include <iostream>
 
 GameStateActive::GameStateActive(GameStateEngine* game) :
-				inputManager(game->getInputManager()),
-				freeCam(new FreeMovementCam(game->getWindow()))
+		inputManager(game->getInputManager()), freeCam(
+				new FreeMovementCam(game->getWindow()))
 {
 	glm::vec3 cameraPos(0.0f, 0.0f, 20.0f);
 	freeCam->setPosition(cameraPos);
@@ -44,6 +44,11 @@ void GameStateActive::init()
 	shared_ptr<Mesh> mesh(new Mesh(filename));
 	mesh->upload();
 
+	//Terrain init
+	terrain = shared_ptr<Terrain>(new Terrain());
+	terrain->loadRawFile("resources/maps/heightField.raw", 1024, 1024);
+
+	//Monkey heads
 	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m1->set_mesh(mesh);
 	glm::vec3 position(5.0f, 0.0f, 0.0f);
@@ -102,7 +107,8 @@ void GameStateActive::update()
 	//m2->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
 	//m1->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
 	//m1->move(20.0f * 3.1415926535897f / 300.0f);
-	std::for_each(entities.begin(), entities.end(), boost::mem_fn(&GameEntity::update));
+	std::for_each(entities.begin(), entities.end(),
+			boost::mem_fn(&GameEntity::update));
 }
 
 void GameStateActive::render()
@@ -111,17 +117,22 @@ void GameStateActive::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// set the view matrix = model matrix of the camera
 
-	glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, &freeCam->getModelMatrix()[0][0]);
+	glUniformMatrix4fv(viewMatrix, 1, GL_FALSE,
+			&freeCam->getModelMatrix()[0][0]);
 	// set the projection matrix
-	glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &freeCam->get_projectionMatrix()[0][0]);
+	glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE,
+			&freeCam->get_projectionMatrix()[0][0]);
 
-	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin(); i != entities.end(); ++i)
+	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin();
+			i != entities.end(); ++i)
 	{
 		// set the model matrix for each rendered entity
-		glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, &(*i)->getModelMatrix()[0][0]);
+		glUniformMatrix4fv(modelMatrix, 1, GL_FALSE,
+				&(*i)->getModelMatrix()[0][0]);
 		(*i)->render();
 	}
-	//draw ground is only for testing
+	// only for testing
+	glDepthFunc(GL_LEQUAL);
 	drawGround();
 }
 
@@ -133,8 +144,8 @@ void GameStateActive::drawGround()
 {
 	modelMatrix = 0;
 
-	//TODO: remove this method
-	GLfloat extent = 600.0f; // How far on the Z-Axis and X-Axis the ground extends
+	//TODO: remvoe this method
+	GLfloat extent = 1000.0f; // How far on the Z-Axis and X-Axis the ground extends
 	GLfloat stepSize = 20.0f; // The size of the separation between points
 	GLfloat groundLevel = -5.0f; // Where on the Y-Axis the ground is drawn
 
@@ -154,5 +165,7 @@ void GameStateActive::drawGround()
 		glVertex3f(extent, groundLevel, loop);
 	}
 	glEnd();
+	terrain->render();
+
 }
 

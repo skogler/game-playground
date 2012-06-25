@@ -18,9 +18,10 @@
 #include "../../core/inputmanager.hpp"
 #include "../../state/GameStateEngine.hpp"
 #include "../../graphics/renderedentity.hpp"
+#include "../../core/resources/terrain.hpp"
 
-
-class GameStateActive: public GameState {
+class GameStateActive: public GameState
+{
 public:
 	GameStateActive(GameStateEngine* game);
 	virtual ~GameStateActive();
@@ -36,13 +37,16 @@ public:
 	void render();
 	void drawGround();
 
-
 private:
 	boost::shared_ptr<InputManager> inputManager;
 	boost::shared_ptr<FreeMovementCam> freeCam;
-	std::list< boost::shared_ptr<RenderedEntity> > entities;
+	std::list<boost::shared_ptr<RenderedEntity> > entities;
+
+	//Test start
 	boost::shared_ptr<RenderedEntity> m1;
 	boost::shared_ptr<RenderedEntity> m2;
+	boost::shared_ptr<Terrain> terrain;
+	//Test end
 
 	GLuint modelMatrix;
 	GLuint viewMatrix;

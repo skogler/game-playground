@@ -12,7 +12,7 @@ using std::endl;
 
 GameEntity::GameEntity() :
 				modelMatrix(1.0f),
-				movementSpeed(1),
+				movementSpeed(10),
 				turnSpeed(1),
 				position(0.0f, 0.0f, 0.0f),
 				positionModified(false),
@@ -26,7 +26,7 @@ GameEntity::GameEntity() :
 	updateModelMatrix();
 }
 
-void GameEntity::move(float amount)
+void GameEntity::moveForward(float amount)
 {
 	if (rotationModified)
 	{
@@ -36,7 +36,7 @@ void GameEntity::move(float amount)
 	positionModified = true;
 }
 
-void GameEntity::strafe(float amount)
+void GameEntity::moveRight(float amount)
 {
 	if (rotationModified)
 	{
@@ -46,17 +46,27 @@ void GameEntity::strafe(float amount)
 	positionModified = true;
 }
 
-void GameEntity::rotateX(float angleRadians)
+void GameEntity::moveUp(float amount)
+{
+	if (rotationModified)
+	{
+		updateDirections();
+	}
+	position += up * amount * static_cast<float>(movementSpeed);
+	positionModified = true;
+}
+
+void GameEntity::rotateX(const float angleRadians)
 {
 	rotate(angleRadians, UNIT_X);
 }
 
-void GameEntity::rotateY(float angleRadians)
+void GameEntity::rotateY(const float angleRadians)
 {
 	rotate(angleRadians, UNIT_Y);
 }
 
-void GameEntity::rotateZ(float angleRadians)
+void GameEntity::rotateZ(const float angleRadians)
 {
 	rotate(angleRadians, UNIT_Z);
 }
