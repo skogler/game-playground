@@ -46,8 +46,7 @@ void GameStateActive::init()
 
 	//Terrain init
 	terrain = shared_ptr<Terrain>(new Terrain());
-	terrain->loadRawFile("resources/maps/heightField.raw", 1024, 1024);
-
+	terrain->init();
 	//Monkey heads
 	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m1->set_mesh(mesh);
@@ -165,7 +164,8 @@ void GameStateActive::drawGround()
 		glVertex3f(extent, groundLevel, loop);
 	}
 	glEnd();
-	terrain->render();
+	//terrain->render();
+	terrain->renderTest();
 
 }
 

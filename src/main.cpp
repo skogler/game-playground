@@ -38,7 +38,7 @@ int main()
 
 		//Logger::debug((boost::format("Delta: %d") % fps->getDelta()).str());
 	}
-
+	Logger::debug((boost::format("Delta: %d") % fps->getDelta()).str());
 	gse.cleanup();
 
 	return 0;
