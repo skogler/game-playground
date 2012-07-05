@@ -7,24 +7,33 @@
 #include <GL/glew.h>
 #include "../../utils/tgaloader.hpp"
 
+//testing struct will be removed shortly
 struct STGA
 {
-        STGA()
-        {
-                data = (unsigned char*)0;
-                width = 0;
-                height = 0;
-                byteCount = 0;
-        }
+	STGA()
+	{
+		data = (unsigned char*) 0;
+		width = 0;
+		height = 0;
+		byteCount = 0;
+	}
 
-	~STGA() { delete[] data; data = 0; }
+	~STGA()
+	{
+		delete[] data;
+		data = 0;
+	}
 
-	void destroy() { delete[] data; data = 0; }
+	void destroy()
+	{
+		delete[] data;
+		data = 0;
+	}
 
-        int width;
+	int width;
 	int height;
-        unsigned char byteCount;
-        unsigned char* data;
+	unsigned char byteCount;
+	unsigned char* data;
 };
 
 class Terrain
@@ -41,12 +50,11 @@ public:
 	void createVerticeData();
 	void renderTest();
 	void render();
-	void loadRawFile(std::string filename,  int width, int height);
+	void loadRawFile(std::string filename, int width, int height);
 	void loadImageFile(std::string filename);
 	void createVerticeDataFromTGA();
 	bool loadTGA(const char * filename);
-	float rgbHeight( int nX, int nY );
-
+	float rgbHeight(int nX, int nY);
 
 private:
 	GLubyte *heighmap;
@@ -54,13 +62,8 @@ private:
 
 	int retreiveHeight(int x, int y);
 
-
-	//
-
+	//To be removed
 	STGA tgaFile;
-
-
-
 
 	//Heighfield vars
 	float yOffset;
