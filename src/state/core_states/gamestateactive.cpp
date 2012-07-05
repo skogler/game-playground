@@ -146,7 +146,7 @@ void GameStateActive::drawGround()
 	//TODO: remvoe this method
 	GLfloat extent = 1000.0f; // How far on the Z-Axis and X-Axis the ground extends
 	GLfloat stepSize = 20.0f; // The size of the separation between points
-	GLfloat groundLevel = -5.0f; // Where on the Y-Axis the ground is drawn
+	GLfloat groundLevel = -0.0f; // Where on the Y-Axis the ground is drawn
 
 	// Set colour to white
 	glColor3ub(255, 255, 255);

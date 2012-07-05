@@ -8,8 +8,11 @@
 #include <glm/glm.hpp>
 #include "../../utils/logger.hpp"
 #include <SFML/Graphics/Image.hpp>
-
 using namespace std;
+
+
+#define MESH_RESOLUTION 4.0f									// Pixels Per Vertex
+#define MESH_HEIGHTSCALE 1.0f
 
 Terrain::Terrain()
 {
@@ -18,6 +21,7 @@ Terrain::Terrain()
 	yOffset = 0.0f;
 	xOffset = 0.0f;
 	zOffset = 0.0f;
+	heighmap = NULL;
 }
 
 Terrain::~Terrain()
@@ -29,17 +33,21 @@ Terrain::~Terrain()
  */
 void Terrain::init()
 {
-	loadRawFile("resources/maps/heightField.raw", 1024, 1024);
-	createVerticeData();
+	//loadRawFile("resources/maps/Terrain.raw", 1024, 1024);
+	//createVerticeData();
 	//loadImageFile("resources/maps/testMap.tga");
 	//createVerticeDataFromTGA();
 	//createVerticeData();
+
+	loadHeightMapFromTGA("resources/maps/cloud1.tga");
 
 
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3),
 			&vertices[0], GL_STATIC_DRAW);
+
+
 }
 
 void Terrain::cleanup()
@@ -59,19 +67,21 @@ void Terrain::renderTest()
 			0, // stride
 			(void*) 0 // array buffer offset
 			);
+	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glDisableVertexAttribArray(0);
 }
 
 /**
- * Creates the vertice data formt the height map
+ * Creates the vertice data from the height map
  */
 void Terrain::createVerticeData()
 {
 
-	for (int hMapX = 0; hMapX < hWidth; hMapX += 1)
+	for (int hMapX = 0; hMapX < hWidth; hMapX += 2)
 	{
-		for (int hMapZ = 0; hMapZ < hHeight; hMapZ += 1)
+		for (int hMapZ = 0; hMapZ < hHeight; hMapZ += 2)
 		{
 			vertices.push_back(
 					glm::vec3(hMapX, heightMap[hMapX][hMapZ], hMapZ));
@@ -158,6 +168,142 @@ void Terrain::render()
 
 }
 
+
+
+bool Terrain::loadTGA(const char *filename)
+{
+	FILE *file;
+	unsigned char type[4];
+	unsigned char info[6];
+
+        file = fopen(filename, "rb");
+
+        if (!file)
+		return false;
+
+	fread (&type, sizeof (char), 3, file);
+	fseek (file, 12, SEEK_SET);
+	fread (&info, sizeof (char), 6, file);
+
+	//image type either 2 (color) or 3 (greyscale)
+	if (type[1] != 0 || (type[2] != 2 && type[2] != 3))
+	{
+		fclose(file);
+		return false;
+	}
+
+	tgaFile.width = info[0] + info[1] * 256;
+	tgaFile.height = info[2] + info[3] * 256;
+	tgaFile.byteCount = info[4] / 8;
+
+	if (tgaFile.byteCount != 3 && tgaFile.byteCount != 4) {
+		fclose(file);
+		return false;
+	}
+
+	long imageSize = tgaFile.width * tgaFile.height
+ * tgaFile.width * tgaFile.byteCount;
+
+	//allocate memory for image data
+	tgaFile.data = new unsigned char[imageSize];
+
+	//read in image data
+	fread(tgaFile.data, sizeof(unsigned char), imageSize, file);
+
+	//close file
+	fclose(file);
+
+	return true;
+}
+
+/**
+ * Loads the heightmap data from a tga file
+ */
+void Terrain::loadHeightMapFromTGA(std::string filename)
+{
+	int STEP_SIZE = 4;
+	TgaLoader tl;
+
+	if (tl.loadTGAFile(filename))
+	{
+		heighmap = tl.getImageData();
+		tgaInf = tl.getTga();
+	}
+
+	int flX, flZ;
+	for (int y = 0; y < tgaInf.height; y += STEP_SIZE)
+	{
+		for(int x = 0; x < tgaInf.width; x += STEP_SIZE)
+		{
+
+			for(int nTri = 0; nTri < 6; nTri++ )
+						{
+							// Using This Quick Hack, Figure The X,Z Position Of The Point
+							flX = (float) x + ( ( nTri == 1 || nTri == 2 || nTri == 5 ) ?  MESH_RESOLUTION: 0.0f );
+							flZ = (float) y + ( ( nTri == 2 || nTri == 4 || nTri == 5 ) ? MESH_RESOLUTION : 0.0f );
+
+							// Set The Data, Using PtHeight To Obtain The Y Value
+							int xx  = flX - ( tgaInf.width / 2 );
+							int yy  = rgbHeight( (int) flX, (int) flZ ) *  MESH_HEIGHTSCALE;
+							int zz = flZ - ( tgaInf.height / 2 );
+
+							vertices.push_back(glm::vec3(xx,yy,zz));
+
+						}
+		}
+	}
+
+
+/*
+	int X = 0, Y = 0;
+
+	for (X = 0; X < tgaInf.width; X += STEP_SIZE)
+		for (Y = 0; Y < tgaInf.height; Y += STEP_SIZE)
+		{
+			vertices.push_back(glm::vec3(X, heighmap[Y + (X * tgaInf.width)], Y));
+
+			vertices.push_back(glm::vec3(X, retreiveHeight(X, Y), Y));
+
+			vertices.push_back(
+					glm::vec3(X + STEP_SIZE,
+							retreiveHeight(X + STEP_SIZE, Y + STEP_SIZE),
+							Y + STEP_SIZE));
+			vertices.push_back(
+					glm::vec3(X + STEP_SIZE,
+							retreiveHeight(X + STEP_SIZE, Y + STEP_SIZE),
+							Y + STEP_SIZE));
+			vertices.push_back(
+					glm::vec3(X + STEP_SIZE, retreiveHeight(X + STEP_SIZE, Y),
+							Y));
+
+		}
+	std::cout << tgaInf.width << "   "<< tgaInf.height << std::endl;
+	std::cout << "vert: " << vertices.size() << std::endl;
+
+	*/
+}
+
+float Terrain::rgbHeight( int nX, int nY )
+{
+	// Calculate The Position In The Texture, Careful Not To Overflow
+	int nPos = ( ( nX % tgaInf.width )  + ( ( nY % tgaInf.height ) * tgaInf.width ) ) * 3;
+	float flR = (float) heighmap[ nPos ];			// Get The Red Component
+	float flG = (float)heighmap[ nPos + 1 ];		// Get The Green Component
+	float flB = (float) heighmap[ nPos + 2 ];		// Get The Blue Component
+	return ( 0.299f * flR + 0.587f * flG + 0.114f * flB );		// Calculate The Height Using The Luminance Algorithm
+}
+
+
+int Terrain::retreiveHeight(int x, int y)
+{
+	x = x % tgaInf.width;
+	y = y % tgaInf.height;
+
+	if (!heighmap)
+		return 0;
+	return heighmap[x + (y * tgaInf.width)];
+
+}
 void Terrain::createVerticeDataFromTGA()
 {
 	std::cout << "start create vertice" << endl;
@@ -180,18 +326,18 @@ void Terrain::createVerticeDataFromTGA()
 	}
 
 	std::cout << "start loop" << endl;
-	for (int i = 0; i < hHeight - 1; i+= 15)
+	for (int i = 0; i < hHeight - 1; i += 15)
 	{
-		for (int j = 0; j < hWidth; j+= 15)
+		for (int j = 0; j < hWidth; j += 15)
 		{
-			 vertices.push_back(
-			 glm::vec3(startW + j + xOffset,
-			 terrainHeights[(i) * hWidth + j] + yOffset,
-			 startL - i + zOffset));
+			vertices.push_back(
+					glm::vec3(startW + j + xOffset,
+							terrainHeights[(i) * hWidth + j] + yOffset,
+							startL - i + zOffset));
 
-			 std::cout  << startW + j + xOffset << " || " <<
-			 terrainHeights[(i) * hWidth + j] + yOffset << " || " <<
-			 startL - i + zOffset << std::endl;
+			std::cout << startW + j + xOffset << " || "
+					<< terrainHeights[(i) * hWidth + j] + yOffset << " || "
+					<< startL - i + zOffset << std::endl;
 
 		}
 

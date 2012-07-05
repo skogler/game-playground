@@ -5,6 +5,27 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
+#include "../../utils/tgaloader.hpp"
+
+struct STGA
+{
+        STGA()
+        {
+                data = (unsigned char*)0;
+                width = 0;
+                height = 0;
+                byteCount = 0;
+        }
+
+	~STGA() { delete[] data; data = 0; }
+
+	void destroy() { delete[] data; data = 0; }
+
+        int width;
+	int height;
+        unsigned char byteCount;
+        unsigned char* data;
+};
 
 class Terrain
 {
@@ -14,15 +35,33 @@ public:
 
 	void init();
 	void cleanup();
+
+	void loadHeightMapFromTGA(std::string filename);
+
 	void createVerticeData();
 	void renderTest();
 	void render();
 	void loadRawFile(std::string filename,  int width, int height);
 	void loadImageFile(std::string filename);
 	void createVerticeDataFromTGA();
+	bool loadTGA(const char * filename);
+	float rgbHeight( int nX, int nY );
 
 
 private:
+	GLubyte *heighmap;
+	TGAInfo tgaInf;
+
+	int retreiveHeight(int x, int y);
+
+
+	//
+
+	STGA tgaFile;
+
+
+
+
 	//Heighfield vars
 	float yOffset;
 	float xOffset;
