@@ -11,16 +11,18 @@
 #include "../gamestate.hpp"
 #include <list>
 #include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include "../../core/definitions.hpp"
 #include "../../graphics/cameras/freemovementcam.hpp"
 
 #include "../../core/gameentity.hpp"
 #include "../../core/inputmanager.hpp"
 #include "../../state/GameStateEngine.hpp"
 #include "../../graphics/renderedentity.hpp"
+#include "../../graphics/renderer.hpp"
+#include "../../graphics/light.hpp"
 
-
-class GameStateActive: public GameState {
+class GameStateActive: public GameState
+{
 public:
 	GameStateActive(GameStateEngine* game);
 	virtual ~GameStateActive();
@@ -36,17 +38,16 @@ public:
 	void render();
 	void drawGround();
 
-
 private:
-	boost::shared_ptr<InputManager> inputManager;
-	boost::shared_ptr<FreeMovementCam> freeCam;
-	std::list< boost::shared_ptr<RenderedEntity> > entities;
-	boost::shared_ptr<RenderedEntity> m1;
-	boost::shared_ptr<RenderedEntity> m2;
+	shared_ptr<InputManager> inputManager;
+	shared_ptr<ResourceManager> resourceManager;
+	shared_ptr<FreeMovementCam> freeCam;
+	shared_ptr<Renderer> renderer;
+	std::list<shared_ptr<RenderedEntity> > entities;
+	std::vector<shared_ptr<Light> > lights;
 
-	GLuint modelMatrix;
-	GLuint viewMatrix;
-	GLuint projectionMatrix;
+	shared_ptr<RenderedEntity> m1;
+	shared_ptr<RenderedEntity> m2;
 };
 
 #endif /* GAMESTATEACTIVE_HPP_ */

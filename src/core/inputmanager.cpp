@@ -6,7 +6,7 @@
  */
 
 #include "inputmanager.hpp"
-using boost::shared_ptr;
+
 
 InputManager::InputManager()
 {

@@ -8,16 +8,15 @@
 class Texture
 {
 public:
-	Texture(const std::string& name);
+	Texture(const boost::filesystem::path& path);
 	virtual ~Texture();
 	inline GLuint get_id() { return id; }
 
 protected:
 	GLuint id;
 
-	void loadFromFile(const std::string& filename);
-private:
-	static boost::filesystem::path searchDirectory;
+	void loadFromFile(const boost::filesystem::path& path);
+
 };
 
 #endif /* TEXTURE_HPP_ */

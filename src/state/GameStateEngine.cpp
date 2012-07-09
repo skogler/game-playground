@@ -13,11 +13,12 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 
-GameStateEngine::GameStateEngine() :
+GameStateEngine::GameStateEngine(shared_ptr<FPSManager> fpsManager) :
 				inputManager(new InputManager),
 				inputMapper(new InputMapper),
 				resourceManager(new ResourceManager(boost::filesystem::path("resources"))),
-				window(new sf::RenderWindow())
+				window(new sf::RenderWindow()),
+				fpsManager(fpsManager)
 {
 }
 
@@ -41,7 +42,7 @@ bool GameStateEngine::init()
 	contextSettings.minorVersion = 2;
 	window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Close, contextSettings);
 
-	window->setFramerateLimit(60);
+	window->setFramerateLimit(50);
 
 	//Glew error checking
 	GLenum err = glewInit();

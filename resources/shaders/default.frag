@@ -1,8 +1,15 @@
 #version 330 core
 
-out vec3 color;
+//uniform sampler2D texture0;
+
+uniform vec4 diffuseColor;
+//uniform vec4 specularColor;
+//uniform vec4 ambientColor;
+//uniform vec2 textureCoord;
+
+out vec4 color;
 
 void main()
 {
-    color = vec3(0,0,1);
+    color = diffuseColor;// * texture(texture0, textureCoord).rgb;
 }

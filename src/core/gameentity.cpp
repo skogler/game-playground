@@ -12,7 +12,7 @@ using std::endl;
 
 GameEntity::GameEntity() :
 				modelMatrix(1.0f),
-				movementSpeed(10),
+				movementSpeed(3),
 				turnSpeed(1),
 				position(0.0f, 0.0f, 0.0f),
 				positionModified(false),

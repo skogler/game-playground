@@ -4,32 +4,35 @@
 #include <string>
 #include <list>
 #include <map>
-#include <boost/shared_ptr.hpp>
 #include <boost/filesystem.hpp>
+
+#include "definitions.hpp"
 namespace fs = boost::filesystem;
 
 template<class T>
 class ResourceCache
 {
 public:
-	ResourceCache(const boost::filesystem::path & baseDirectory);
+	ResourceCache(const boost::filesystem::path & baseDirectory, const std::string & fileEnding);
 	virtual ~ResourceCache();
 	void setBaseDirectory(const std::string & baseDirectory);
 
-	boost::shared_ptr<T> get(const std::string & name);
+	shared_ptr<T> get(const std::string & name);
 	bool load(const std::string & name);
 
 protected:
 	fs::path baseDirectory;
-//	std::vector<fs::path> resourceList;
-	std::map<std::string, boost::shared_ptr<T> > loadedResources;
+	std::string fileEnding;
+	std::map<std::string, shared_ptr<T> > loadedResources;
 
-	//void createResourceList();
+//	std::vector<fs::path> resourceList;
+//	void createResourceList();
 };
 
 template<class T>
-ResourceCache<T>::ResourceCache(const fs::path & baseDirectory) :
-		baseDirectory(baseDirectory)
+ResourceCache<T>::ResourceCache(const fs::path & baseDirectory, const std::string & fileEnding) :
+		baseDirectory(baseDirectory),
+		fileEnding(fileEnding)
 {
 	if (!(fs::exists(this->baseDirectory) && fs::is_directory(this->baseDirectory)))
 	{
@@ -43,21 +46,21 @@ ResourceCache<T>::~ResourceCache()
 }
 
 template<class T>
-boost::shared_ptr<T> ResourceCache<T>::get(const std::string& name)
+shared_ptr<T> ResourceCache<T>::get(const std::string& name)
 {
-	typedef typename std::map<std::string, boost::shared_ptr<T> >::iterator It;
+	typedef typename std::map<std::string, shared_ptr<T> >::iterator It;
 	It iter = loadedResources.find(name);
 
 	if (iter == loadedResources.end())
 	{
-		fs::path filename = baseDirectory / name;
-		boost::shared_ptr<T> resource = (new T(filename));
+		fs::path filename = baseDirectory / (name + "." + fileEnding) ;
+		shared_ptr<T> resource(new T(filename));
 		loadedResources[name] = resource;
 		return resource;
 	}
 	else
 	{
-		return iter->second();
+		return iter->second;
 	}
 }
 

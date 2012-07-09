@@ -32,18 +32,20 @@ private:
 	std::vector<GameState*> states;
 
 	//Input
-	boost::shared_ptr<InputManager> inputManager;
+	shared_ptr<InputManager> inputManager;
 	boost::scoped_ptr<InputMapper> inputMapper;
 
 	// Resource Manager
-	boost::shared_ptr<ResourceManager> resourceManager;
+	shared_ptr<ResourceManager> resourceManager;
 
 	//OpenGL context-settings and window
 	sf::ContextSettings contextSettings;
-	boost::shared_ptr<sf::RenderWindow> window;
+	shared_ptr<sf::RenderWindow> window;
+
+	shared_ptr<FPSManager> fpsManager;
 
 public:
-	GameStateEngine();
+	GameStateEngine(shared_ptr<FPSManager> fpsManager);
 	virtual ~GameStateEngine();
 
 	bool init();
@@ -58,17 +60,17 @@ public:
 	void render();
 	void updateWindow();
 
-	inline boost::shared_ptr<ResourceManager> getResourceManager()
+	inline shared_ptr<ResourceManager> getResourceManager()
 	{
 		return resourceManager;
 	}
 
-	inline boost::shared_ptr<InputManager> getInputManager()
+	inline shared_ptr<InputManager> getInputManager()
 	{
 		return inputManager;
 	}
 
-	inline boost::shared_ptr<sf::RenderWindow> getWindow()
+	inline shared_ptr<sf::RenderWindow> getWindow()
 	{
 		return window;
 	}

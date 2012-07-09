@@ -14,10 +14,8 @@ using namespace std;
 
 int main()
 {
-	//ResourceManager res("resources");
-
-	GameStateEngine gse;
-	FPSManager* fps = new FPSManager();
+	shared_ptr<FPSManager> fps(new FPSManager);
+	GameStateEngine gse(fps);
 
 	if(!gse.init())
 	{
@@ -35,7 +33,6 @@ int main()
 		gse.render();
 		gse.updateWindow();
 		fps->markEndPoint();
-
 		//Logger::debug((boost::format("Delta: %d") % fps->getDelta()).str());
 	}
 

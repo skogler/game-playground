@@ -11,7 +11,7 @@
 #include <map>
 #include <SFML/Window/Event.hpp>
 #include "inputevent.hpp"
-#include <boost/shared_ptr.hpp>
+#include "definitions.hpp"
 
 class InputMapper {
 

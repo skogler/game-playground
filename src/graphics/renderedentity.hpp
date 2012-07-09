@@ -3,7 +3,7 @@
 
 #include "../core/gameentity.hpp"
 #include "../core/resources/mesh.hpp"
-#include <boost/shared_ptr.hpp>
+#include "../core/definitions.hpp"
 
 class RenderedEntity: public GameEntity
 {
@@ -11,15 +11,20 @@ public:
 	explicit RenderedEntity();
 	virtual ~RenderedEntity();
 
-	virtual void render() const;
 	virtual void update();
-	inline void set_mesh(const boost::shared_ptr<Mesh> mesh)
+
+	inline void setMesh(const shared_ptr<Mesh> mesh)
 	{
 
 		this->mesh = mesh;
 	}
+
+	inline shared_ptr<Mesh> getMesh()
+	{
+		return mesh;
+	}
 protected:
-	boost::shared_ptr<Mesh> mesh;
+	shared_ptr<Mesh> mesh;
 };
 
 #endif /* end of include guard: RENDEREDENTITY_INC */

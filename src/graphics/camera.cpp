@@ -8,11 +8,9 @@
 
 #define PI 3.1415926f
 
-Camera::Camera() :
-				aspectRatio(1.3333f),
-				fov(60.0f)
+Camera::Camera()
 {
-	projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
+
 }
 
 Camera::~Camera()

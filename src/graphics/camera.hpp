@@ -16,22 +16,9 @@ public:
 	Camera();
 	virtual ~Camera();
 
-	inline void set_aspectRatio(const float aspectRatio)
-	{
-		this->aspectRatio = aspectRatio;
-	}
-	inline const glm::mat4& get_projectionMatrix() const
-	{
-		return projectionMatrix;
-	}
-
 	virtual void handleinput(InputEvent* inputEvent );
-
 protected:
 	virtual void updateModelMatrix();
-	float aspectRatio;
-	float fov;
-	glm::mat4 projectionMatrix;
 };
 
 #endif /* end of include guard: CAMERA_INC */

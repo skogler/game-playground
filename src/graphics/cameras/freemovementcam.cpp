@@ -10,7 +10,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 
-FreeMovementCam::FreeMovementCam(boost::shared_ptr<sf::RenderWindow> window) :
+FreeMovementCam::FreeMovementCam(shared_ptr<sf::RenderWindow> window) :
 				window(window)
 {
 	windowXhalf = window->getSize().x / 2;

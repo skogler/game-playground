@@ -16,6 +16,13 @@ public:
 	ResourceManager(const boost::filesystem::path & resourceDirectory);
 	virtual ~ResourceManager();
 
+	shared_ptr<Mesh>     getMesh(const std::string & name);
+	shared_ptr<Material> getMaterial(const std::string & name);
+	shared_ptr<Texture>  getTexture(const std::string & name);
+	shared_ptr<Shader>   getShader(const std::string & name);
+
+
+protected:
 	//Resource Caches
 	ResourceCache<Texture> textureCache;
 	ResourceCache<Shader> shaderCache;

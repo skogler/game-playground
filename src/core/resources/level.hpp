@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <glm/glm.hpp>
-#include <boost/shared_ptr.hpp>
+#include "../definitions.hpp"
 
 #include "terrain.hpp"
 
@@ -18,7 +18,7 @@ public:
 	Level(const std::string & filename);
 	virtual ~Level();
 protected:
-	boost::shared_ptr<Terrain> terrain;
+	shared_ptr<Terrain> terrain;
 	std::vector<glm::vec2> spawnPoints;
 	std::vector<std::string> resourceList;
 };
