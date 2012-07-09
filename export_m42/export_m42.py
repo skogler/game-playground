@@ -3,6 +3,8 @@ from bpy_extras.io_utils import ExportHelper
 from bpy.props import StringProperty, BoolProperty, EnumProperty
 from bpy.types import Operator
 
+import os.path
+
 bl_info = {
         'name': 'M42 model format',
         'author': 'Samuel Kogler',
@@ -61,13 +63,31 @@ def save(filename, meshes):
         materials.extend(mesh.materials)
         writeMesh(file, mesh)
 
-    for mat in materials:
-        writeMaterial(file, mat)
+    # Try to put material files in ../materials
+    meshdir = os.path.dirname(filename)
+    matdir = os.path.join(meshdir, os.pardir, "materials")
+    if not os.path.exists(matdir):
+        matdir = meshdir
 
+    # Try to put texture files in ../textures
+    meshdir = os.path.dirname(filename)
+    texdir = os.path.join(meshdir, os.pardir, "textures")
+    if not os.path.exists(texdir):
+        texdir = texdir
+
+    textures = []
+    for mat in materials:
+        mfilename = os.path.join(matdir, mat.name.lower().strip() + ".m42mat")
+        mfile = open(mfilename, "w", newline="\n")
+        writeMaterial(mfile, mat, texdir)
+        mfile.flush()
+        mfile.close()
+
+    file.flush()
     file.close()
 
 def writeMesh(file, mesh):
-    file.write("\nmesh " + mesh.name + "\n")
+    file.write("\nmesh " + mesh.name.lower().strip() + "\n")
 
     file.write ("v\n")
     for v in mesh.vertices:
@@ -77,7 +97,7 @@ def writeMesh(file, mesh):
     mesh.update(calc_tessface=True)
     facemap = dict()
     for face in mesh.polygons:
-        key = face.material_index
+        key = mesh.materials[face.material_index].name.lower().strip()
         try:
             facemap[key].append(face)
         except KeyError:
@@ -85,19 +105,11 @@ def writeMesh(file, mesh):
 
     uvlayer = mesh.uv_layers.active.data
     for mat in facemap:
-        file.write("usemat {0:1d}\n".format(mat))
+        file.write("usemat " + mat + "\n")
         for face in facemap[mat]:
             v = face.vertices
             if len(v) == 3:
-                uvco = []
-                for index in face.loop_indices:
-                    uvco.append(uvlayer[index].uv)
-
-                # Export UV coordinates for each vertex on the face with v inverted (1 -v)
-                file.write ("{0}/{1:.6f}/{2:.6f} {3}/{4:.6f}/{5:.6f} {6}/{7:.6f}/{8:.6f}\n" .format(
-                            v[0], uvco[0][0], 1 - uvco[0][1],
-                            v[1], uvco[1][0], 1 - uvco[1][1],
-                            v[2], uvco[2][0], 1 - uvco[2][1] ))
+                file.write("{0} {1} {2}\n".format(v[0], v[1], v[2]))
             else:
                 raise Exception("Mesh has non-triangle faces. " +
                         "Convert to triangles in edit mode before exporting!")
@@ -108,17 +120,28 @@ def writeMesh(file, mesh):
         file.write ("{0:.6f} {1:.6f} {2:.6f}\n".format(n.x, n.y, n.z))
 
 
-def writeMaterial(file, mat):
-    file.write("material " + mat.name)
-    ts = mat.texture_slots[0]
-    if ts == None:
-        file.write(" type color\n")
-        c = mat.diffuse_color
-        file.write("diffuse " + "{0:.6f} {1:.6f} {2:.6f}\n".format(c.r, c.g, c.b))
-    elif ts.texture.type == 'IMAGE':
-        file.write(" type img\n")
-        file.write("img " + ts.texture.image.name + "\n")
+    file.write("uv\n")
+    for l in uvlayer:
+        file.write("{0:.6f} {1:.6f}\n".format(l.uv[0], 1 - l.uv[1]))
 
+def writeMaterial(file, mat, texdir):
+    file.write("#M42 MAT\n")
+    ts = mat.texture_slots[0]
+    file.write("type ");
+    if ts == None or ts.texture.type == 'NONE':
+        file.write("color\n")
+        c = mat.diffuse_color
+        file.write("diffuse " + "{0:.6f} {1:.6f} {2:.6f} {3:6f}\n".format(c.r, c.g, c.b, mat.diffuse_intensity))
+        c = mat.specular_color
+        file.write("specular " + "{0:.6f} {1:.6f} {2:.6f} {3:6f}\n".format(c.r, c.g, c.b, mat.specular_intensity))
+    elif ts.texture.type == 'IMAGE':
+        file.write("texture\n")
+        file.write("img " + ts.texture.image.name + "\n")
+        writeTexture(texdir, ts.texture)
+
+def writeTexture(texdir, tex):
+    filename = os.path.split(tex.image.filepath)[1]
+    tex.image.save_render(os.path.join(texdir, filename))
 
 def export(filename, entire_scene):
     print("--------------------------------------------------")
@@ -141,5 +164,5 @@ def export(filename, entire_scene):
     return {'FINISHED'}
 
 if __name__ == "__main__":
-    export('/home/daasdingo/nyancat.m42', True)
+    export('/home/daasdingo/workspace/games/game-playground/resources/models/pirate.m42', True)
 
