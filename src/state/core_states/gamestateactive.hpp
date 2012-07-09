@@ -20,6 +20,7 @@
 #include "../../graphics/renderedentity.hpp"
 #include "../../graphics/renderer.hpp"
 #include "../../graphics/light.hpp"
+#include "../../core/resources/terrain.hpp"
 
 class GameStateActive: public GameState
 {
@@ -46,8 +47,12 @@ private:
 	std::list<shared_ptr<RenderedEntity> > entities;
 	std::vector<shared_ptr<Light> > lights;
 
+	//Test start
 	shared_ptr<RenderedEntity> m1;
 	shared_ptr<RenderedEntity> m2;
+	shared_ptr<Terrain> terrain;
+	//Test end
+
 };
 
 #endif /* GAMESTATEACTIVE_HPP_ */

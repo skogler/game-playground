@@ -15,7 +15,8 @@ FreeMovementCam::FreeMovementCam(shared_ptr<sf::RenderWindow> window) :
 {
 	windowXhalf = window->getSize().x / 2;
 	windowYhalf = window->getSize().y / 2;
-	//sf::Mouse::setPosition(sf::Vector2<int>(windowXhalf, windowYhalf));
+	sf::Mouse::setPosition(sf::Vector2<int>(windowXhalf, windowYhalf));
+	window->setMouseCursorVisible(false);
 }
 
 FreeMovementCam::~FreeMovementCam()

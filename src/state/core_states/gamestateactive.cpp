@@ -43,6 +43,10 @@ void GameStateActive::init()
 	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
 	mesh->upload();
 
+	//Terrain init
+	terrain = shared_ptr<Terrain>(new Terrain());
+	terrain->init();
+	//Monkey heads
 	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m1->setMesh(mesh);
 	glm::vec3 position(5.0f, 0.0f, 0.0f);
@@ -90,7 +94,8 @@ void GameStateActive::update()
 	//m2->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
 	//m1->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
 	//m1->move(20.0f * 3.1415926535897f / 300.0f);
-	std::for_each(entities.begin(), entities.end(), boost::mem_fn(&GameEntity::update));
+	std::for_each(entities.begin(), entities.end(),
+			boost::mem_fn(&GameEntity::update));
 }
 
 void GameStateActive::render()
@@ -98,12 +103,12 @@ void GameStateActive::render()
 	freeCam->update();
 	renderer->startFrame();
 
-	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin(); i != entities.end(); ++i)
+	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin();
+			i != entities.end(); ++i)
 	{
 		renderer->renderEntity(*i);
 	}
-	//draw ground is only for testing
 	renderer->endFrame();
+	//terrain->render();
+	terrain->renderTest();
 }
-
-

@@ -17,7 +17,7 @@ Camera::~Camera()
 {
 }
 
-void Camera::handleinput(InputEvent* inputEvent)
+ void Camera::handleinput(InputEvent* inputEvent)
 {
 
 }

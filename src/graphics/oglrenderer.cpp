@@ -135,6 +135,10 @@ void OGLRenderer::drawDebugGrid()
 	glDrawArrays(GL_LINES, 0, debugGridVertices.size());
 }
 
+void OGLRenderer::renderTerrain(shared_ptr<Terrain> terrain)
+{
+}
+
 void OGLRenderer::initDebugGrid()
 {
 	GLfloat extent = 1000.0f; // How far on the Z-Axis and X-Axis the ground extends

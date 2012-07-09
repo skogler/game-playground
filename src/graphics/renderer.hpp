@@ -3,6 +3,7 @@
 
 
 #include "../core/resources/mesh.hpp"
+#include "../core/resources/terrain.hpp"
 #include "../core/definitions.hpp"
 #include "../core/resources/shader.hpp"
 #include "renderedentity.hpp"
@@ -16,6 +17,7 @@ public:
 	// Render functions
 	virtual void renderEntity(shared_ptr<RenderedEntity> entity) = 0;
 	virtual void renderMesh(shared_ptr<Mesh> mesh) = 0;
+	virtual void renderTerrain(shared_ptr<Terrain> terrain) = 0;
 
 	virtual void startFrame() = 0;
 	virtual void endFrame() = 0;

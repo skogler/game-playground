@@ -16,6 +16,7 @@ public:
 	// Render functions
 	virtual void renderEntity(shared_ptr<RenderedEntity> entity);
 	virtual void renderMesh(shared_ptr<Mesh> mesh);
+	virtual void renderTerrain(shared_ptr<Terrain> terrain);
 
 	virtual void startFrame();
 	virtual void endFrame();
