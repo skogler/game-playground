@@ -64,7 +64,7 @@ void Terrain::renderTest()
 			0, // stride
 			(void*) 0 // array buffer offset
 			);
-	glDrawArrays(GL_LINES, 0, vertices.size());
+	glDrawArrays(GL_POINTS, 0, vertices.size());
 	glDisableVertexAttribArray(0);
 }
 

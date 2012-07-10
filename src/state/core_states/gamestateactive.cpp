@@ -67,9 +67,21 @@ void GameStateActive::init()
 
 	m2 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m2->setMesh(mesh);
-
 	entities.push_back(m2);
 
+	glm::vec3 lightPos(0.0f, 100.0f, 0.0f);
+	Light li(lightPos);
+	glm::vec3 lightColor(1.0f, 182.0f/255.0f, 36.0f/255.0f);
+	li.setColor(lightColor);
+	li.setIntensity(1.0f);
+	renderer->addLight(li);
+	glm::vec3 l2Color(0.0f, 1.0f, 0.0f);
+	glm::vec3 l2Position(10.0f, -10.0f, 0.0f);
+	Light l2(l2Position);
+	l2.setColor(l2Color);
+	renderer->addLight(l2);
+
+	renderer->enableDebugGrid(false);
 }
 
 void GameStateActive::cleanup()
@@ -110,5 +122,5 @@ void GameStateActive::render()
 	}
 	renderer->endFrame();
 	//terrain->render();
-	terrain->renderTest();
+	//terrain->renderTest();
 }

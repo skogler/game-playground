@@ -30,6 +30,7 @@ OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager, shared_ptr
 
 OGLRenderer::~OGLRenderer()
 {
+	glDeleteBuffers(1, &debugGridId);
 }
 
 void OGLRenderer::renderEntity(shared_ptr<RenderedEntity> entity)
@@ -52,10 +53,10 @@ void OGLRenderer::renderMesh(shared_ptr<Mesh> mesh)
 			(void*) 0                         // array buffer offset
 			);
 
-	// index 2 => normals
-	glEnableVertexAttribArray(2);
+	// index 1 => normals
+	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->getNormalBuffer());
-	glVertexAttribPointer(2,                                // attribute
+	glVertexAttribPointer(1,                                // attribute
 			3,                                // size
 			GL_FLOAT,                         // type
 			GL_FALSE,                         // normalized?
@@ -81,7 +82,7 @@ void OGLRenderer::useMaterial(shared_ptr<Material> material)
 	shader->setDiffuseColor(material->getDiffuse());
 }
 
-void OGLRenderer::showDebugGrid(const bool show)
+void OGLRenderer::enableDebugGrid(const bool show)
 {
 	debugGridEnabled = show;
 }
@@ -137,6 +138,33 @@ void OGLRenderer::drawDebugGrid()
 
 void OGLRenderer::renderTerrain(shared_ptr<Terrain> terrain)
 {
+}
+
+void OGLRenderer::addLight(const Light& light)
+{
+	shader->addLight(light);
+}
+
+void OGLRenderer::enableLighting(const bool enable)
+{
+	// TODO implement
+}
+
+void OGLRenderer::enableWireframe(const bool enable)
+{
+	if(enable)
+	{
+		glPolygonMode(GL_FRONT, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT, GL_FILL);
+	}
+}
+
+void OGLRenderer::enableTextures(const bool enable)
+{
+	// TODO implement
 }
 
 void OGLRenderer::initDebugGrid()

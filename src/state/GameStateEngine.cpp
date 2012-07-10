@@ -40,7 +40,9 @@ bool GameStateEngine::init()
 	contextSettings.antialiasingLevel = 4;
 	contextSettings.majorVersion = 4;
 	contextSettings.minorVersion = 2;
-	window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Close, contextSettings);
+
+	window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
+//	window->create(sf::VideoMode::getFullscreenModes()[0], "game-playground", sf::Style::Close | sf::Style::Fullscreen, contextSettings);
 
 	window->setFramerateLimit(50);
 

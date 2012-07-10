@@ -18,12 +18,21 @@ public:
 	virtual void renderMesh(shared_ptr<Mesh> mesh);
 	virtual void renderTerrain(shared_ptr<Terrain> terrain);
 
+	virtual void addLight(const Light& light);
+
 	virtual void startFrame();
 	virtual void endFrame();
 
 	// State changes
 	virtual void useMaterial(shared_ptr<Material> material);
-	virtual void showDebugGrid(const bool show);
+
+
+	// Debug functions
+	virtual void enableDebugGrid(const bool show);
+	virtual void enableLighting(const bool enable);
+	virtual void enableWireframe(const bool enable);
+	virtual void enableTextures(const bool enable);
+
 
 	virtual void setWindowSize(const unsigned int width, const unsigned int height);
 

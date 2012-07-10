@@ -17,7 +17,7 @@ int main()
 	shared_ptr<FPSManager> fps(new FPSManager);
 	GameStateEngine gse(fps);
 
-	if(!gse.init())
+	if (!gse.init())
 	{
 		//TODO error handling
 		cout << "glew init failed" << endl;
@@ -25,17 +25,23 @@ int main()
 	}
 
 	gse.pushState(new GameStateActive(&gse));
-	while(gse.isRunning())
+	int count = 0;
+	while (gse.isRunning())
 	{
+		// Log Delta every second
+		count++;
+		if (count == 50)
+		{
+			Logger::debug((boost::format("Delta: %d") % (fps->getDelta())).str());
+			count = 0;
+		}
 		fps->markStartPoint();
 		gse.handleInput();
 		gse.update();
 		gse.render();
 		gse.updateWindow();
 		fps->markEndPoint();
-		//Logger::debug((boost::format("Delta: %d") % fps->getDelta()).str());
 	}
-	Logger::debug((boost::format("Delta: %d") % fps->getDelta()).str());
 	gse.cleanup();
 
 	return 0;

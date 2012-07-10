@@ -7,6 +7,7 @@
 #include "../core/definitions.hpp"
 #include "../core/resources/shader.hpp"
 #include "renderedentity.hpp"
+#include "light.hpp"
 
 class Renderer
 {
@@ -19,12 +20,20 @@ public:
 	virtual void renderMesh(shared_ptr<Mesh> mesh) = 0;
 	virtual void renderTerrain(shared_ptr<Terrain> terrain) = 0;
 
+	virtual void addLight(const Light& light) = 0;
+//	virtual void deleteLight(const UID lightUID) = 0;
+
 	virtual void startFrame() = 0;
 	virtual void endFrame() = 0;
 
 	// State changes
 	virtual void useMaterial(shared_ptr<Material> material) = 0;
-	virtual void showDebugGrid(const bool show) = 0;
+
+	// Debug functions
+	virtual void enableDebugGrid(const bool enable) = 0;
+	virtual void enableLighting(const bool enable) = 0;
+	virtual void enableWireframe(const bool enable) = 0;
+	virtual void enableTextures(const bool enable) = 0;
 
 	virtual void setWindowSize(const unsigned int width, const unsigned int height) = 0;
 

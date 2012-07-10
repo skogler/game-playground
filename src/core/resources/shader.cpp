@@ -4,6 +4,7 @@
 
 #include <string>
 #include <boost/filesystem.hpp>
+#include <boost/format.hpp>
 #include <GL/glew.h>
 #include <fstream>
 #include <streambuf>
@@ -15,7 +16,7 @@ using namespace std;
 Shader::Shader(fs::path basePath) :
 				fragmentShader(0),
 				vertexShader(0),
-				program(0),
+				programId(0),
 				modelMatrixName("modelMatrix"),
 				viewMatrixName("viewMatrix"),
 				projectionMatrixName("projectionMatrix")
@@ -26,14 +27,14 @@ Shader::Shader(fs::path basePath) :
 	loadFragmentShader(basePath);
 	loadVertexShader(basePath);
 	createProgram();
-	allocateMatriceIds();
+	allocateUniforms();
 }
 
 Shader::~Shader()
 {
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
-	glDeleteProgram(program);
+	glDeleteProgram(programId);
 }
 
 void Shader::loadFragmentShader(const fs::path& path)
@@ -100,38 +101,87 @@ void Shader::setProjectionMatrix(const glm::mat4& projectionMatrix)
 
 void Shader::createProgram()
 {
-	program = glCreateProgram();
+	programId = glCreateProgram();
 
-	glAttachShader(program, vertexShader);
-	glAttachShader(program, fragmentShader);
-	glLinkProgram(program);
+	glAttachShader(programId, vertexShader);
+	glAttachShader(programId, fragmentShader);
+	glLinkProgram(programId);
 
 	GLint result = GL_FALSE;
 
-	glGetProgramiv(program, GL_LINK_STATUS, &result);
+	glGetProgramiv(programId, GL_LINK_STATUS, &result);
 
 	if (result != GL_TRUE)
 	{
 		int infoLogLength;
-		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
+		glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
 		string errorMessage;
 		errorMessage.resize(infoLogLength);
-		glGetProgramInfoLog(program, infoLogLength, 0, &errorMessage[0]);
+		glGetProgramInfoLog(programId, infoLogLength, 0, &errorMessage[0]);
 		Logger::error(errorMessage);
 	}
 }
 
 void Shader::setDiffuseColor(const Color& color)
 {
-	glm::vec4 vecColor(color.r, color.g, color.b, color.intensity);
-	glUniform4fv(diffuseColorId, 1, &vecColor[0]);
+	glm::vec3 vecColor(color.r, color.g, color.b);
+	glUniform3fv(diffuseColorId, 1, &vecColor[0]);
 }
 
-void Shader::allocateMatriceIds()
+void Shader::allocateUniforms()
 {
-	modelMatrixId = glGetUniformLocation(program, modelMatrixName.c_str());
-	viewMatrixId = glGetUniformLocation(program, viewMatrixName.c_str());
-	projectionMatrixId = glGetUniformLocation(program, projectionMatrixName.c_str());
-	diffuseColorId = glGetUniformLocation(program, "diffuseColor");
+	modelMatrixId = glGetUniformLocation(programId, modelMatrixName.c_str());
+	viewMatrixId = glGetUniformLocation(programId, viewMatrixName.c_str());
+	projectionMatrixId = glGetUniformLocation(programId, projectionMatrixName.c_str());
+	diffuseColorId = glGetUniformLocation(programId, "diffuseColor");
+
+	//Allocate 5 lights
+	for (int i = 0; i <= 5; i++)
+	{
+		allocateLight();
+	}
+}
+
+void Shader::setLight(int index, const Light& light)
+{
+	glUniform3fv(lightIds[index].position, 1, &light.getPosition()[0]);
+	glUniform3fv(lightIds[index].color, 1, &light.getColor()[0]);
+	glUniform1f(lightIds[index].intensity, light.getIntensity());
+}
+
+int Shader::addLight(const Light& light)
+{
+	if (numLights < 10)
+	{
+		int index = numLights;
+		setLight(index, light);
+		numLights++;
+		return index;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+void Shader::clearLights()
+{
+}
+
+void Shader::allocateLight()
+{
+	int newLightIndex = lightIds.size();
+	std::string newLightGLSLName = (boost::format("lights[%d].") % newLightIndex).str();
+	std::string positionName = newLightGLSLName + "position";
+	std::string colorName = newLightGLSLName + "color";
+	std::string intensityName = newLightGLSLName + "intensity";
+
+	LightId newLightId;
+
+	newLightId.position = glGetUniformLocation(programId, positionName.c_str());
+	newLightId.color = glGetUniformLocation(programId, colorName.c_str());
+	newLightId.intensity = glGetUniformLocation(programId, intensityName.c_str());
+
+	lightIds.push_back(newLightId);
 }
 
