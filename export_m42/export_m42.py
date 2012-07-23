@@ -134,6 +134,7 @@ def writeMaterial(file, mat, texdir):
         file.write("diffuse " + "{0:.6f} {1:.6f} {2:.6f} {3:6f}\n".format(c.r, c.g, c.b, mat.diffuse_intensity))
         c = mat.specular_color
         file.write("specular " + "{0:.6f} {1:.6f} {2:.6f} {3:6f}\n".format(c.r, c.g, c.b, mat.specular_intensity))
+        file.write("ambient {0:.6f}\n".format(mat.ambient))
     elif ts.texture.type == 'IMAGE':
         file.write("texture\n")
         file.write("img " + ts.texture.image.name + "\n")
