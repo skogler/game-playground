@@ -9,6 +9,26 @@ public:
 	Light(glm::vec3 position);
 	virtual ~Light();
 
+	float getLinearAttenuation() const
+	{
+		return linearAttenuation;
+	}
+
+	void setLinearAttenuation(float linearAttenuation)
+	{
+		this->linearAttenuation = linearAttenuation;
+	}
+
+	float getSquaredAttenuation() const
+	{
+		return squaredAttenuation;
+	}
+
+	void setSquaredAttenuation(float squaredAttenuation)
+	{
+		this->squaredAttenuation = squaredAttenuation;
+	}
+
 	float getIntensity() const
 	{
 		return intensity;
@@ -43,6 +63,8 @@ protected:
 	glm::vec3 position;
 	glm::vec3 color;
 	float intensity;
+	float linearAttenuation;
+	float squaredAttenuation;
 };
 
 #endif /* LIGHT_HPP_ */

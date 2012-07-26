@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <glm/glm.hpp>
-#include "../definitions.hpp"
+#include "core/definitions.hpp"
 
 #include "terrain.hpp"
 

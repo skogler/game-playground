@@ -1,16 +1,18 @@
 #include "camera.hpp"
-#include "../core/gameentity.hpp"
+
+#include "core/gameentity.hpp"
+#include "utils/logger.hpp"
+#include "constants/inputconstants.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "../constants/inputconstants.hpp"
 #include <iostream>
 
 #define PI 3.1415926f
 
 Camera::Camera()
 {
-
+	updateModelMatrix();
 }
 
 Camera::~Camera()

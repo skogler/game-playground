@@ -9,7 +9,7 @@
 #define TGALOADER_HPP_
 
 #include <GL/gl.h>
-#include "../utils/logger.hpp"
+#include "utils/logger.hpp"
 #include <iostream>
 #include <fstream>
 #include <string.h>

@@ -7,11 +7,11 @@
 
 #include "inputevent.hpp"
 
-InputEvent::InputEvent(std::set<Action> actionSet, std::set<State> stateSet, bool mouseMoved) {
-	//init data
-	this->actionSet = actionSet;
-	this->stateSet = stateSet;
-	this->mouseMoved = mouseMoved;
+InputEvent::InputEvent(std::set<Action> actionSet, std::set<State> stateSet, bool mouseMoved)
+    : actionSet(actionSet),
+      stateSet(stateSet),
+      mouseMoved(mouseMoved)
+{
 }
 
 InputEvent::~InputEvent() {

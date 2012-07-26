@@ -17,11 +17,13 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "../utils/config.h"
-#include "../utils/FPSManager.hpp"
-#include "../core/inputmanager.hpp"
-#include "../core/inputmapper.hpp"
-#include "../core/resourcemanager.hpp"
+#include "utils/config.h"
+#include "utils/FPSManager.hpp"
+#include "core/inputmanager.hpp"
+#include "core/inputmapper.hpp"
+#include "core/resourcemanager.hpp"
+#include "graphics/renderer.hpp"
+#include "graphics/camera.hpp"
 #include "gamestate.hpp"
 
 class GameStateEngine
@@ -43,13 +45,14 @@ private:
 	shared_ptr<sf::RenderWindow> window;
 
 	shared_ptr<FPSManager> fpsManager;
+	shared_ptr<Renderer> renderer;
+	shared_ptr<Camera> defaultCamera;
 
 public:
 	GameStateEngine(shared_ptr<FPSManager> fpsManager);
 	virtual ~GameStateEngine();
 
 	bool init();
-	void cleanup();
 
 	void changeGameState(GameState* state);
 	void pushState(GameState* state);
@@ -59,6 +62,11 @@ public:
 	void update();
 	void render();
 	void updateWindow();
+
+	inline shared_ptr<Renderer> getRenderer() const
+	{
+		return renderer;
+	}
 
 	inline shared_ptr<ResourceManager> getResourceManager()
 	{

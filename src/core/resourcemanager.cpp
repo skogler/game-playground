@@ -11,7 +11,7 @@ ResourceManager::ResourceManager(const fs::path & resourceDirectory) :
 		textureCache(resourceDirectory / "textures", "dds"),
 		materialCache(resourceDirectory / "materials", "m42mat"),
 		meshCache(resourceDirectory / "models", "m42"),
-		shaderCache(resourceDirectory / "shaders", "shader")
+		shaderCache(resourceDirectory / "shaders", "")
 {
 }
 

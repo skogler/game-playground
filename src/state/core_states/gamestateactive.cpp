@@ -6,10 +6,10 @@
  */
 
 #include "gamestateactive.hpp"
-#include "../../core/inputmanager.hpp"
-#include "../../core/resources/shader.hpp"
-#include "../../core/resources/mesh.hpp"
-#include "../../graphics/oglrenderer.hpp"
+#include "core/inputmanager.hpp"
+#include "graphics/shaderprogram.hpp"
+#include "core/resources/mesh.hpp"
+#include "graphics/oglrenderer.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -20,16 +20,19 @@ using std::list;
 
 #include <iostream>
 
-GameStateActive::GameStateActive(GameStateEngine* game) :
-				inputManager(game->getInputManager()),
-				freeCam(new FreeMovementCam(game->getWindow())),
-				resourceManager(game->getResourceManager()),
-				renderer(new OGLRenderer(resourceManager, freeCam))
+GameStateActive::GameStateActive(shared_ptr<Renderer> renderer,
+		shared_ptr<InputManager> inputManager,
+		shared_ptr<ResourceManager> resourceManager,
+		shared_ptr<sf::Window> window) :
+				inputManager(inputManager),
+				freeCam(new FreeMovementCam(window)),
+				resourceManager(resourceManager),
+				renderer(renderer)
 {
 	glm::vec3 cameraPos(0.0f, 0.0f, 20.0f);
 	freeCam->setPosition(cameraPos);
-//	freeCam->turn(3.14f, 0.0f);
 	inputManager->addListener(freeCam);
+	renderer->setCamera(freeCam);
 }
 
 GameStateActive::~GameStateActive()
@@ -43,45 +46,48 @@ void GameStateActive::init()
 	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
 	mesh->upload();
 
-	//Terrain init
-	terrain = shared_ptr<Terrain>(new Terrain());
-	terrain->init();
+//	//Terrain init
+//	terrain = shared_ptr<Terrain>(new Terrain());
+//	terrain->init();
 	//Monkey heads
 	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m1->setMesh(mesh);
-	glm::vec3 position(5.0f, 0.0f, 0.0f);
+	glm::vec3 position(5.0f, 10.0f, -10.0f);
 	m1->setPosition(position);
+	m1->rotateX(-1.57f);
 	entities.push_back(m1);
 
 	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m1->setMesh(mesh);
-	position = glm::vec3(0.0f, 5.0f, 0.0f);
-	m1->setPosition(position);
-	entities.push_back(m1);
-
-	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
-	m1->setMesh(mesh);
-	position = glm::vec3(0.0f, 0.0f, -5.0f);
+	m1->rotateX(-1.57f);
+	position = glm::vec3(0.0f, 10.0f, -5.0f);
 	m1->setPosition(position);
 	entities.push_back(m1);
 
 	m2 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m2->setMesh(mesh);
+	position = glm::vec3(2.0f, 1.0f, 0.0f);
+	m2->setPosition(position);
+	m2->rotateX(-1.57f);
 	entities.push_back(m2);
 
-	glm::vec3 lightPos(0.0f, 100.0f, 0.0f);
-	Light li(lightPos);
-	glm::vec3 lightColor(1.0f, 182.0f/255.0f, 36.0f/255.0f);
-	li.setColor(lightColor);
-	li.setIntensity(1.0f);
-	renderer->addLight(li);
-	glm::vec3 l2Color(0.0f, 1.0f, 0.0f);
-	glm::vec3 l2Position(10.0f, -10.0f, 0.0f);
-	Light l2(l2Position);
-	l2.setColor(l2Color);
-	renderer->addLight(l2);
+	glm::vec3 redLightPos(-20.0f, 0.0f, 0.0f);
+	Light redLight(redLightPos);
+	glm::vec3 lightColor(1.0f, 0.0f, 0.0f);
+	redLight.setColor(lightColor);
+	redLight.setLinearAttenuation(0.05f);
+	redLight.setIntensity(1.0f);
+	renderer->addLight(redLight);
 
-	renderer->enableDebugGrid(false);
+	glm::vec3 whiteLightPosition(0.0f, 1000.0f, 1000.0f);
+	Light whiteLight(whiteLightPosition);
+	whiteLight.setIntensity(1.0f);
+	whiteLight.setLinearAttenuation(0.0f);
+	whiteLight.setSquaredAttenuation(0.0f);
+	renderer->addLight(whiteLight);
+
+	renderer->enableDebugGrid(true);
+	renderer->enableDebugAxes(true);
 }
 
 void GameStateActive::cleanup()
@@ -103,20 +109,20 @@ void GameStateActive::handleEvents(InputEvent* inputEvent)
 
 void GameStateActive::update()
 {
-	//m2->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
+	freeCam->update();
 	//m1->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
 	//m1->move(20.0f * 3.1415926535897f / 300.0f);
+	m2->rotateZ(0.01f);
+//	m1->rotateX(0.01f);
 	std::for_each(entities.begin(), entities.end(),
 			boost::mem_fn(&GameEntity::update));
 }
 
 void GameStateActive::render()
 {
-	freeCam->update();
 	renderer->startFrame();
 
-	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin();
-			i != entities.end(); ++i)
+	for (list<shared_ptr<RenderedEntity> >::const_iterator i = entities.begin(); i != entities.end(); ++i)
 	{
 		renderer->renderEntity(*i);
 	}

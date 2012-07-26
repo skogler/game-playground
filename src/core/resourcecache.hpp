@@ -17,6 +17,11 @@ public:
 	virtual ~ResourceCache();
 	void setBaseDirectory(const std::string & baseDirectory);
 
+	/**
+	 * Gets the resource with the specified name.
+	 * Name is relative to baseDirectory, the file ending is added automatically.
+	 * If not found, throws a runtime error.
+	 */
 	shared_ptr<T> get(const std::string & name);
 	bool load(const std::string & name);
 
@@ -31,8 +36,8 @@ protected:
 
 template<class T>
 ResourceCache<T>::ResourceCache(const fs::path & baseDirectory, const std::string & fileEnding) :
-		baseDirectory(baseDirectory),
-		fileEnding(fileEnding)
+				baseDirectory(baseDirectory),
+				fileEnding(fileEnding)
 {
 	if (!(fs::exists(this->baseDirectory) && fs::is_directory(this->baseDirectory)))
 	{
@@ -53,8 +58,18 @@ shared_ptr<T> ResourceCache<T>::get(const std::string& name)
 
 	if (iter == loadedResources.end())
 	{
-		fs::path filename = baseDirectory / (name + "." + fileEnding) ;
-		shared_ptr<T> resource(new T(filename));
+		fs::path path = baseDirectory;
+		std::string filename(name); // copy filename
+		if(fileEnding != "") // Do not add extension if file ending is empty
+		{
+			filename += ("." + fileEnding);
+		}
+		path /= filename;
+		if (!(fs::exists(path) && fs::is_regular_file(path)))
+		{
+			throw std::runtime_error("Resource file not found: " + path.string());
+		}
+		shared_ptr<T> resource(new T(path));
 		loadedResources[name] = resource;
 		return resource;
 	}

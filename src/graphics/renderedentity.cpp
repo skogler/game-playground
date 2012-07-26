@@ -8,7 +8,3 @@ RenderedEntity::~RenderedEntity()
 {
 }
 
-void RenderedEntity::update()
-{
-}
-

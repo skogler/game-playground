@@ -8,7 +8,7 @@
 #ifndef GAMESTATE_HPP_
 #define GAMESTATE_HPP_
 
-#include "../core/inputevent.hpp"
+#include "core/inputevent.hpp"
 
 class GameState
 {
@@ -24,15 +24,9 @@ public:
 	virtual void update() = 0;
 	virtual void render() = 0;
 
+    GameState() {};
+    virtual ~GameState() {};
 protected:
-	GameState()
-	{
-	}
-	;
-	virtual ~GameState()
-	{
-	}
-	;
 
 };
 

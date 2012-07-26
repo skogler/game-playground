@@ -1,7 +1,7 @@
 #include "material.hpp"
 
 #include "exceptions/invalidresourceerror.hpp"
-#include "../../utils/logger.hpp"
+#include "utils/logger.hpp"
 
 #include <fstream>
 #include <string>
@@ -46,8 +46,10 @@ void Material::loadFromFile(const boost::filesystem::path& path)
 				case 's':
 					state = 3; // specular color
 					break;
+				case 'a':
+					state = 4; // ambient intensity
 				case 'i':
-					state = 4; // image properties
+					state = 5; // image properties
 					break;
 				default:
 					state = 0;
@@ -65,11 +67,11 @@ void Material::loadFromFile(const boost::filesystem::path& path)
 						{
 							if (parts[1] == "color")
 							{
-								type = COLOR;
+								type = MATERIAL_TYPE_COLOR;
 							}
 							else if (parts[1] == "texture")
 							{
-								type = TEXTURE;
+								type = MATERIAL_TYPE_TEXTURE;
 							}
 						}
 						else if (state == 2) // diffuse color
@@ -116,7 +118,26 @@ void Material::loadFromFile(const boost::filesystem::path& path)
 								throw InvalidResourceError(path.string());
 							}
 						}
-						else if (state == 4)
+						else if (state == 4) // ambient intensity
+						{
+							if (l == 2)
+							{
+								try
+								{
+
+									ambient = boost::lexical_cast<float>(parts[1]);
+
+								} catch (boost::bad_lexical_cast &)
+								{
+									throw InvalidResourceError(path.string());
+								}
+							}
+							else
+							{
+								throw InvalidResourceError(path.string());
+							}
+						}
+						else if (state == 5) // texture properties
 						{
 							if (l == 2)
 							{

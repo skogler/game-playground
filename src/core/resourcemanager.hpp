@@ -21,12 +21,11 @@ public:
 	shared_ptr<Texture>  getTexture(const std::string & name);
 	shared_ptr<Shader>   getShader(const std::string & name);
 
-
 protected:
 	//Resource Caches
-	ResourceCache<Texture> textureCache;
-	ResourceCache<Shader> shaderCache;
-	ResourceCache<Mesh> meshCache;
+	ResourceCache<Texture> 	textureCache;
+	ResourceCache<Shader> 	shaderCache;
+	ResourceCache<Mesh> 	meshCache;
 	ResourceCache<Material> materialCache;
 };
 

@@ -2,10 +2,12 @@
 #define RENDERER_HPP_
 
 
-#include "../core/resources/mesh.hpp"
-#include "../core/resources/terrain.hpp"
-#include "../core/definitions.hpp"
-#include "../core/resources/shader.hpp"
+#include "core/resources/mesh.hpp"
+#include "core/resources/terrain.hpp"
+#include "core/definitions.hpp"
+#include "core/resources/shader.hpp"
+#include "graphics/shaderprogram.hpp"
+#include "graphics/camera.hpp"
 #include "renderedentity.hpp"
 #include "light.hpp"
 
@@ -31,14 +33,13 @@ public:
 
 	// Debug functions
 	virtual void enableDebugGrid(const bool enable) = 0;
+	virtual void enableDebugAxes(const bool enable) = 0;
 	virtual void enableLighting(const bool enable) = 0;
 	virtual void enableWireframe(const bool enable) = 0;
 	virtual void enableTextures(const bool enable) = 0;
 
 	virtual void setWindowSize(const unsigned int width, const unsigned int height) = 0;
-
-protected:
-	virtual void useShader(shared_ptr<Shader> shader) = 0;
+	virtual void setCamera(shared_ptr<Camera> camera) = 0;
 };
 
 #endif /* RENDERER_HPP_ */

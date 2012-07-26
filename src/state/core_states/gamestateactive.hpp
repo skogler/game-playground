@@ -8,24 +8,29 @@
 #ifndef GAMESTATEACTIVE_HPP_
 #define GAMESTATEACTIVE_HPP_
 
-#include "../gamestate.hpp"
 #include <list>
 #include <boost/scoped_ptr.hpp>
-#include "../../core/definitions.hpp"
-#include "../../graphics/cameras/freemovementcam.hpp"
 
-#include "../../core/gameentity.hpp"
-#include "../../core/inputmanager.hpp"
-#include "../../state/GameStateEngine.hpp"
-#include "../../graphics/renderedentity.hpp"
-#include "../../graphics/renderer.hpp"
-#include "../../graphics/light.hpp"
-#include "../../core/resources/terrain.hpp"
+#include "core/definitions.hpp"
+#include "core/gameentity.hpp"
+#include "core/inputmanager.hpp"
+#include "core/resources/terrain.hpp"
+#include "graphics/cameras/freemovementcam.hpp"
+#include "graphics/renderedentity.hpp"
+#include "graphics/renderer.hpp"
+#include "graphics/light.hpp"
+#include "state/gamestate.hpp"
+#include "state/GameStateEngine.hpp"
+
+#include <SFML/Window.hpp>
 
 class GameStateActive: public GameState
 {
 public:
-	GameStateActive(GameStateEngine* game);
+	GameStateActive(shared_ptr<Renderer> renderer,
+			shared_ptr<InputManager> inputManager,
+			shared_ptr<ResourceManager> resourceManager,
+			shared_ptr<sf::Window> window);
 	virtual ~GameStateActive();
 
 	void init();
@@ -52,7 +57,6 @@ private:
 	shared_ptr<RenderedEntity> m2;
 	shared_ptr<Terrain> terrain;
 	//Test end
-
 };
 
 #endif /* GAMESTATEACTIVE_HPP_ */

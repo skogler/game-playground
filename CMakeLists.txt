@@ -7,6 +7,8 @@ set(LOG_DEBUG 1)
 set(LOG_INFO 1)
 
 project(${PROJECT_NAME})
+set(PROJECT_SOURCE_DIR src/)
+set(PROJECT_INCLUDE_DIR src/)
 
 # Enable debug symbols by default
 if(CMAKE_BUILD_TYPE STREQUAL "")
@@ -14,10 +16,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "")
 endif()
 
 configure_file(
-    "${PROJECT_SOURCE_DIR}/src/utils/config.h.in"
-    "${PROJECT_SOURCE_DIR}/src/utils/config.h"
+    "${PROJECT_SOURCE_DIR}/utils/config.h.in"
+    "${PROJECT_SOURCE_DIR}/utils/config.h"
     )
-include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_INCLUDE_DIR}")
 
 # Define sources and executable
 set(EXECUTABLE_NAME ${PROJECT_NAME})

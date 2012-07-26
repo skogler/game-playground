@@ -7,7 +7,7 @@
 
 #ifndef INPUTEVENT_HPP_
 #define INPUTEVENT_HPP_
-#include "../constants/inputconstants.hpp"
+#include "constants/inputconstants.hpp"
 #include <list>
 #include <set>
 using namespace input_constants;

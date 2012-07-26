@@ -10,7 +10,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 
-FreeMovementCam::FreeMovementCam(shared_ptr<sf::RenderWindow> window) :
+FreeMovementCam::FreeMovementCam(shared_ptr<sf::Window> window) :
 				window(window)
 {
 	windowXhalf = window->getSize().x / 2;
@@ -30,27 +30,27 @@ void FreeMovementCam::handleinput(InputEvent* inputEvent)
 {
 	if (inputEvent->containsState(STATE_CAMERA_MOVING_FORWARD))
 	{
-		this->moveForward(0.3);
+		this->moveForward(0.1);
 	}
 	if (inputEvent->containsState(STATE_CAMERA_MOVING_BACK))
 	{
-		this->moveForward(-0.3);
+		this->moveForward(-0.1);
 	}
 	if (inputEvent->containsState(STATE_CAMERA_MOVE_RIGHT))
 	{
-		this->moveRight(0.3);
+		this->moveRight(0.1);
 	}
 	if (inputEvent->containsState(STATE_CAMERA_MOVE_LEFT))
 	{
-		this->moveRight(-0.3);
+		this->moveRight(-0.1);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_LEFT))
 	{
-		this->rotateY(-0.05f);
+		this->rotateY(-0.01f);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_RIGHT))
 	{
-		this->rotateY(0.05f);
+		this->rotateY(0.01f);
 	}
 	if (inputEvent->containsAction(ACTION_CAMERA_TURN_UP))
 	{

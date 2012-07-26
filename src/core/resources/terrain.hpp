@@ -5,7 +5,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "../../utils/tgaloader.hpp"
+#include "utils/tgaloader.hpp"
 
 //testing struct will be removed shortly
 struct STGA

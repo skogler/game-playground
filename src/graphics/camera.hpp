@@ -2,8 +2,8 @@
 #define CAMERA_INC
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "../core/gameentity.hpp"
-#include "../core/inputlistener.hpp"
+#include "core/gameentity.hpp"
+#include "core/inputlistener.hpp"
 
 /**
  * Provides an interface for a camera, extends entity and has a

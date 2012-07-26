@@ -1,7 +1,7 @@
 #ifndef GAMEENTITY_HPP_
 #define GAMEENTITY_HPP_
 
-#include "../utils/UIDGenerator.hpp"
+#include "utils/UIDGenerator.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -54,7 +54,7 @@ public:
 	inline void setPosition(glm::vec3 & position)
 	{
 		this->position = position;
-		updateModelMatrix();
+		positionModified = true;
 	}
 
 	inline const glm::mat4& getModelMatrix()

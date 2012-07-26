@@ -1,6 +1,7 @@
 #include "gameentity.hpp"
 
-#include "../graphics/graphics-definitions.hpp"
+#include "graphics/graphics-definitions.hpp"
+#include "utils/logger.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -12,15 +13,15 @@ using std::endl;
 
 GameEntity::GameEntity() :
 				modelMatrix(1.0f),
-				movementSpeed(3),
+				movementSpeed(1),
 				turnSpeed(1),
 				position(0.0f, 0.0f, 0.0f),
-				positionModified(false),
-				rotationModified(false),
+				positionModified(true),
+				rotationModified(true),
 				front(-UNIT_Z),
 				right(UNIT_X),
 				up(UNIT_Y),
-				rotation(0.0f, 0.0f, 0.0f, 1.0f) // = no-op rotation quaternion
+				rotation(1.0f, 0.0f, 0.0f, 0.0f) // = no-op rotation quaternion
 {
 	uid = UIDGenerator::instance()->next();
 	updateModelMatrix();
@@ -84,7 +85,7 @@ void GameEntity::update()
 	{
 		updateModelMatrix();
 	}
-	if(rotationModified)
+	if (rotationModified)
 	{
 		updateDirections();
 	}
@@ -92,9 +93,10 @@ void GameEntity::update()
 
 void GameEntity::updateModelMatrix()
 {
-	// Apply translation first, then rotation (matrix multiplication)
-	modelMatrix = glm::mat4_cast(rotation);
+	// Apply translation first, then rotation
+	modelMatrix = glm::mat4(1.0f);
 	modelMatrix = glm::translate(modelMatrix, position);
+	modelMatrix = modelMatrix * glm::mat4_cast(rotation);
 	positionModified = false;
 }
 
@@ -102,12 +104,15 @@ void GameEntity::lookAt(const glm::vec3& target)
 {
 	//TODO: implement properly
 	modelMatrix = glm::lookAt(position, target, glm::vec3(0.0f, 1.0f, 0.0f));
+	rotation = glm::quat_cast(modelMatrix);
+	updateDirections();
 }
 
 void GameEntity::updateDirections()
 {
 	front = rotation * (-UNIT_Z);
-	right = glm::cross(front, up);  // UP is always the Y axis
+	right = rotation * (UNIT_X);
+	up = rotation * (UNIT_Y);
 	rotationModified = false;
 }
 

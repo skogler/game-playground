@@ -1,7 +1,7 @@
 #include "mesh.hpp"
 
 #include "exceptions/invalidresourceerror.hpp"
-#include "../../utils/logger.hpp"
+#include "utils/logger.hpp"
 
 #include <string>
 #include <vector>

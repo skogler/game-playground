@@ -6,7 +6,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "../definitions.hpp"
+#include "core/definitions.hpp"
 #include <boost/filesystem.hpp>
 #include "material.hpp"
 

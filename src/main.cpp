@@ -24,7 +24,7 @@ int main()
 		return 1;
 	}
 
-	gse.pushState(new GameStateActive(&gse));
+	gse.pushState(new GameStateActive(gse.getRenderer(), gse.getInputManager(), gse.getResourceManager(), gse.getWindow()));
 	int count = 0;
 	while (gse.isRunning())
 	{
@@ -42,7 +42,6 @@ int main()
 		gse.updateWindow();
 		fps->markEndPoint();
 	}
-	gse.cleanup();
 
 	return 0;
 }

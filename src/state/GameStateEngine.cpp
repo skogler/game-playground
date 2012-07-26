@@ -8,7 +8,11 @@
 #include "GameStateEngine.hpp"
 
 #include "gamestate.hpp"
-#include "../core/resourcemanager.hpp"
+#include "core/resourcemanager.hpp"
+#include "graphics/oglrenderer.hpp"
+#include "graphics/cameras/freemovementcam.hpp"
+#include "graphics/cameras/noopcamera.hpp"
+#include "utils/logger.hpp"
 
 #include <iostream>
 #include <boost/filesystem.hpp>
@@ -18,13 +22,13 @@ GameStateEngine::GameStateEngine(shared_ptr<FPSManager> fpsManager) :
 				inputMapper(new InputMapper),
 				resourceManager(new ResourceManager(boost::filesystem::path("resources"))),
 				window(new sf::RenderWindow()),
-				fpsManager(fpsManager)
+				fpsManager(fpsManager),
+				defaultCamera(new NoOpCamera())
 {
 }
 
 GameStateEngine::~GameStateEngine()
 {
-	// TODO Auto-generated destructor stub
 }
 
 /**
@@ -41,7 +45,7 @@ bool GameStateEngine::init()
 	contextSettings.majorVersion = 4;
 	contextSettings.minorVersion = 2;
 
-	window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
+    window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
 //	window->create(sf::VideoMode::getFullscreenModes()[0], "game-playground", sf::Style::Close | sf::Style::Fullscreen, contextSettings);
 
 	window->setFramerateLimit(50);
@@ -55,12 +59,10 @@ bool GameStateEngine::init()
 
 	window->display();
 
-	return true;
-}
+	renderer = shared_ptr<Renderer>(new OGLRenderer(resourceManager, defaultCamera));
+	renderer->setWindowSize(window->getSize().x, window->getSize().y);
 
-void GameStateEngine::cleanup()
-{
-	// TODO Clean up after awesomeness
+	return true;
 }
 
 void GameStateEngine::changeGameState(GameState* state)
@@ -83,7 +85,9 @@ void GameStateEngine::pushState(GameState* state)
  */
 void GameStateEngine::popState()
 {
-	states.pop_back();
+    GameState * last = states.back();
+    states.pop_back();
+    delete last;//FIXME mem leak hotfix - free should be automatic
 }
 
 /*
