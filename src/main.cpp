@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <boost/format.hpp>
 
+#include "errorhandler.hpp"
 #include "core/inputmanager.hpp"
 #include "state/GameStateEngine.hpp"
 #include "state/core_states/gamestateactive.hpp"
@@ -14,6 +15,7 @@ using namespace std;
 
 int main()
 {
+	registerErrorHandler();
 	shared_ptr<FPSManager> fps(new FPSManager);
 	GameStateEngine gse(fps);
 

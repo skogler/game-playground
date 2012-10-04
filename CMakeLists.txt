@@ -10,6 +10,8 @@ project(${PROJECT_NAME})
 set(PROJECT_SOURCE_DIR src/)
 set(PROJECT_INCLUDE_DIR src/)
 
+SET (CMAKE_CXX_FLAGS_INIT                "-Wall")
+
 # Enable debug symbols by default
 if(CMAKE_BUILD_TYPE STREQUAL "")
     set(CMAKE_BUILD_TYPE Debug)

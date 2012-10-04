@@ -2,6 +2,7 @@
 
 #include "exceptions/invalidresourceerror.hpp"
 #include "utils/logger.hpp"
+#include "utils/UIDGenerator.hpp"
 
 #include <fstream>
 #include <string>
@@ -12,8 +13,11 @@
 
 using namespace std;
 
-Material::Material(const boost::filesystem::path& path)
+Material::Material(const boost::filesystem::path& path) :
+		textureName(""),
+		uid(UIDGenerator::instance()->next())
 {
+
 	loadFromFile(path);
 	Logger::debug(string("Loaded material: ") + path.string());
 }

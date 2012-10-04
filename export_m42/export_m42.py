@@ -73,7 +73,7 @@ def save(filename, meshes):
     meshdir = os.path.dirname(filename)
     texdir = os.path.join(meshdir, os.pardir, "textures")
     if not os.path.exists(texdir):
-        texdir = texdir
+        texdir = meshdir
 
     textures = []
     for mat in materials:
@@ -118,7 +118,6 @@ def writeMesh(file, mesh):
     for v in mesh.vertices:
         n = v.normal
         file.write ("{0:.6f} {1:.6f} {2:.6f}\n".format(n.x, n.y, n.z))
-
 
     file.write("uv\n")
     for l in uvlayer:

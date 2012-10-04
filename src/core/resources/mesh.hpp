@@ -28,6 +28,16 @@ public:
 
 	const std::vector<std::string> getUsedMaterials() const;
 
+	GLuint getUvBuffer() const
+	{
+		return uvBuffer;
+	}
+
+	void setUvBuffer(GLuint uvBuffer)
+	{
+		this->uvBuffer = uvBuffer;
+	}
+
 	std::vector<unsigned int> * getFaces()
 	{
 		return &faces;
@@ -95,6 +105,7 @@ protected:
 	GLuint vertexBuffer;
 	GLuint faceBuffer;
 	GLuint normalBuffer;
+	GLuint uvBuffer;
 	void load(const boost::filesystem::path& path);
 };
 

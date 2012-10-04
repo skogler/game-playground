@@ -35,6 +35,8 @@ in LightResult lightResults[MAX_LIGHTS];
 in vec3 normalCameraSpace;
 in vec3 eyeDirectionCameraSpace;
 
+in vec2 textureCoordinatesFrag;
+
 out vec3 finalColor;
 
 void main()
@@ -68,7 +70,11 @@ void main()
 		// Add specular color
 		specularLight += lights[i].color * (lights[i].intensity * pow(cosAlpha, 5)) / attenuation;
 	}
+	// DEBUG: show uv coordinates as red and green respectively
+	//finalColor = vec3(textureCoordinatesFrag.x, textureCoordinatesFrag.y, 0.0f);
 
+//*
 	finalColor = material.diffuseColor.rgb * material.diffuseColor.a * diffuseLight +
 			material.specularColor.rgb * material.specularColor.a * specularLight; // a = intensity
+//			*/
 }

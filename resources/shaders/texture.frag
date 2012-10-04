@@ -1,4 +1,4 @@
-#version 330 core
+#version 330
 #pragma optionNV(unroll all)
 #define MAX_LIGHTS 10
 
@@ -31,9 +31,6 @@ struct Material
 
 uniform Material material;
 
-
-in vec2 textureCoordinates;
-
 uniform sampler2D texture;
 uniform Light lights[MAX_LIGHTS];
 
@@ -41,6 +38,8 @@ uniform Light lights[MAX_LIGHTS];
 in LightResult lightResults[MAX_LIGHTS];
 in vec3 normalCameraSpace;
 in vec3 eyeDirectionCameraSpace;
+
+in vec2 textureCoordinatesFrag;
 
 out vec3 finalColor;
 
@@ -75,7 +74,15 @@ void main()
 		// Add specular color
 		specularLight += lights[i].color * (lights[i].intensity * pow(cosAlpha, 5)) / attenuation;
 	}
+	
+	vec3 diffuseColor = texture2D(texture, textureCoordinatesFrag).rgb; 
 
-	finalColor = texture2D(texture, textureCoordinates).rgb * diffuseLight +
+//**
+	finalColor = diffuseColor * ambientColor  + diffuseColor * diffuseLight  + diffuseColor *
 			specularLight; // a = intensity
+//			*/
+	
+	// DEBUG: show UV coordinates as red and green on models	
+//	finalColor = vec3(textureCoordinatesFrag.x, textureCoordinatesFrag.y, 0.0f);
+			
 }

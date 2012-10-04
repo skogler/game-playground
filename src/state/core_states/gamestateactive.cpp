@@ -46,38 +46,26 @@ void GameStateActive::init()
 	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
 	mesh->upload();
 
+	shared_ptr<Mesh> nyancube = resourceManager->getMesh("nyancube");
+	nyancube->upload();
+
 //	//Terrain init
 //	terrain = shared_ptr<Terrain>(new Terrain());
 //	terrain->init();
-	//Monkey heads
 	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
-	m1->setMesh(mesh);
-	glm::vec3 position(5.0f, 10.0f, -10.0f);
+	m1->setMesh(nyancube);
+	glm::vec3 position(5.0f, 0.0f, 0.0f);
 	m1->setPosition(position);
 	m1->rotateX(-1.57f);
-	entities.push_back(m1);
-
-	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
-	m1->setMesh(mesh);
-	m1->rotateX(-1.57f);
-	position = glm::vec3(0.0f, 10.0f, -5.0f);
-	m1->setPosition(position);
+	m1->rotateZ(-1.57f);
 	entities.push_back(m1);
 
 	m2 = shared_ptr<RenderedEntity>(new RenderedEntity());
 	m2->setMesh(mesh);
-	position = glm::vec3(2.0f, 1.0f, 0.0f);
+	position = glm::vec3(0.0f, 0.0f, 0.0f);
 	m2->setPosition(position);
 	m2->rotateX(-1.57f);
 	entities.push_back(m2);
-
-	glm::vec3 redLightPos(-20.0f, 0.0f, 0.0f);
-	Light redLight(redLightPos);
-	glm::vec3 lightColor(1.0f, 0.0f, 0.0f);
-	redLight.setColor(lightColor);
-	redLight.setLinearAttenuation(0.05f);
-	redLight.setIntensity(1.0f);
-	renderer->addLight(redLight);
 
 	glm::vec3 whiteLightPosition(0.0f, 1000.0f, 1000.0f);
 	Light whiteLight(whiteLightPosition);

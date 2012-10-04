@@ -21,6 +21,7 @@ Mesh::Mesh(const boost::filesystem::path & path) :
 				vertexBuffer(0),
 				faceBuffer(0),
 				normalBuffer(0),
+				uvBuffer(0),
 				uploaded(false)
 {
 	load(path);
@@ -48,6 +49,10 @@ void Mesh::upload()
 	glGenBuffers(1, &normalBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &uvBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
+	glBufferData(GL_ARRAY_BUFFER, uvCoordinates.size() * sizeof(glm::vec2), &uvCoordinates[0], GL_STATIC_DRAW);
 }
 
 void Mesh::release()
@@ -55,6 +60,7 @@ void Mesh::release()
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteBuffers(1, &faceBuffer);
 	glDeleteBuffers(1, &normalBuffer);
+	glDeleteBuffers(1, &uvBuffer);
 }
 
 const std::vector<std::string> Mesh::getUsedMaterials() const

@@ -1,6 +1,7 @@
 #include "shaderprogram.hpp"
 
 #include "utils/logger.hpp"
+#include "graphics/glutils.hpp"
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
@@ -32,25 +33,24 @@ ShaderProgram::~ShaderProgram()
 void ShaderProgram::setModelMatrix(const glm::mat4& modelMatrix)
 {
 	glUniformMatrix4fv(modelMatrixId, 1, GL_FALSE, &modelMatrix[0][0]);
+	checkGLErrors();
 }
 
 void ShaderProgram::setViewMatrix(const glm::mat4& viewMatrix)
 {
 	glUniformMatrix4fv(viewMatrixId, 1, GL_FALSE, &viewMatrix[0][0]);
+	checkGLErrors();
 }
 
 void ShaderProgram::setProjectionMatrix(const glm::mat4& projectionMatrix)
 {
 	glUniformMatrix4fv(projectionMatrixId, 1, GL_FALSE, &projectionMatrix[0][0]);
+	checkGLErrors();
 }
 
 void ShaderProgram::setMaterial(const Material& material)
 {
-	if (material.getType() == MATERIAL_TYPE_TEXTURE)
-	{
-
-	}
-	else
+	if (material.getType() == MATERIAL_TYPE_COLOR)
 	{
 		glUniform4f(materialId.diffuseColor, material.getDiffuse().r, material.getDiffuse().g, material.getDiffuse().b,
 				material.getDiffuse().intensity);
@@ -58,7 +58,13 @@ void ShaderProgram::setMaterial(const Material& material)
 				material.getSpecular().intensity);
 		glUniform1f(materialId.ambient, 1.0f); // TODO use real value
 	}
-
+	else if (material.getType() == MATERIAL_TYPE_TEXTURE)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0);
+		shared_ptr<Texture> texture = material.getTexture();
+		glBindTexture(GL_TEXTURE_2D, material.getTexture()->get_id());
+	}
+	checkGLErrors();
 }
 
 void ShaderProgram::allocateUniforms()
@@ -67,9 +73,18 @@ void ShaderProgram::allocateUniforms()
 	viewMatrixId = glGetUniformLocation(programId, viewMatrixName.c_str());
 	projectionMatrixId = glGetUniformLocation(programId, projectionMatrixName.c_str());
 
-	materialId.diffuseColor = glGetUniformLocation(programId, "material.diffuseColor");
-	materialId.specularColor = glGetUniformLocation(programId, "material.specularColor");
-	materialId.ambient = glGetUniformLocation(programId, "material.ambient");
+	if (hasEffect(EFFECT_TEXTURE))
+	{
+		GLuint textureId = glGetUniformLocation(programId, "texture");
+		glUniform1i(textureId, 0); // Texture Unit 0 == texture
+	}
+
+	if (hasEffect(EFFECT_COLOR))
+	{
+		materialId.diffuseColor = glGetUniformLocation(programId, "material.diffuseColor");
+		materialId.specularColor = glGetUniformLocation(programId, "material.specularColor");
+		materialId.ambient = glGetUniformLocation(programId, "material.ambient");
+	}
 
 	// If this shader can do lighting, allocate the uniforms for it
 	if (hasEffect(EFFECT_LIGHTING))
@@ -80,6 +95,7 @@ void ShaderProgram::allocateUniforms()
 			allocateLight();
 		}
 	}
+	checkGLErrors();
 }
 
 void ShaderProgram::setLight(int index, const Light& light)
@@ -89,6 +105,7 @@ void ShaderProgram::setLight(int index, const Light& light)
 	glUniform1f(lightIds[index].intensity, light.getIntensity());
 	glUniform1f(lightIds[index].linearAttenuation, light.getLinearAttenuation());
 	glUniform1f(lightIds[index].squaredAttenuation, light.getSquaredAttenuation());
+	checkGLErrors();
 }
 
 int ShaderProgram::addLight(const Light& light)
@@ -114,6 +131,7 @@ void ShaderProgram::attachShader(shared_ptr<Shader> shader)
 {
 	shaders.push_back(shader);
 	glAttachShader(programId, shader->getShaderId());
+	checkGLErrors();
 }
 
 void ShaderProgram::link()
@@ -132,6 +150,7 @@ void ShaderProgram::link()
 		Logger::error(errorMessage);
 		throw std::runtime_error("Shader program failed to link: " + errorMessage);
 	}
+	bind();
 	allocateUniforms();
 }
 
@@ -164,5 +183,6 @@ void ShaderProgram::allocateLight()
 	newLightId.squaredAttenuation = glGetUniformLocation(programId, squaredAttenuationName.c_str());
 
 	lightIds.push_back(newLightId);
+	checkGLErrors();
 }
 

@@ -1,17 +1,21 @@
 #include "resourcemanager.hpp"
 
+#include "utils/logger.hpp"
+
+#include <stdio.h>
+
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
+#include <boost/format.hpp>
 namespace fs = boost::filesystem;
-
 using namespace std;
 
 ResourceManager::ResourceManager(const fs::path & resourceDirectory) :
-		textureCache(resourceDirectory / "textures", "dds"),
-		materialCache(resourceDirectory / "materials", "m42mat"),
-		meshCache(resourceDirectory / "models", "m42"),
-		shaderCache(resourceDirectory / "shaders", "")
+				textureCache(resourceDirectory / "textures", "dds"),
+				materialCache(resourceDirectory / "materials", "m42mat"),
+				meshCache(resourceDirectory / "models", "m42"),
+				shaderCache(resourceDirectory / "shaders", "")
 {
 }
 
@@ -23,16 +27,22 @@ shared_ptr<Mesh> ResourceManager::getMesh(const string& name)
 {
 	shared_ptr<Mesh> mesh = meshCache.get(name);
 	vector<std::string> mats = mesh->getUsedMaterials();
-	for(vector<string>::const_iterator iter = mats.begin(); iter != mats.end(); ++iter)
+	for (vector<string>::const_iterator iter = mats.begin(); iter != mats.end(); ++iter)
 	{
-		mesh->setMaterial(*iter, materialCache.get(*iter));
+		mesh->setMaterial(*iter, getMaterial(*iter));
 	}
 	return mesh;
 }
 
 shared_ptr<Material> ResourceManager::getMaterial(const string& name)
 {
-	return materialCache.get(name);
+	shared_ptr<Material> mat = materialCache.get(name);
+
+	if (mat->getType() == MATERIAL_TYPE_TEXTURE)
+	{
+		mat->setTexture(getTexture(mat->getTextureName()));
+	}
+	return mat;
 }
 
 shared_ptr<Texture> ResourceManager::getTexture(const string& name)

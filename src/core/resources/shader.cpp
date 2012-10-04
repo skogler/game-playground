@@ -33,7 +33,7 @@ Shader::Shader(const boost::filesystem::path& filepath)
 	shaderId = glCreateShader(shaderType);
 	if(shaderId == 0)
 	{
-		throw new std::runtime_error("Shader allocation failed, shader type was: " + shaderType);
+		throw new std::runtime_error((boost::format("Shader allocation failed, shader type was: %d")  %  shaderType).str());
 	}
 	loadFromFile(filepath);
 }

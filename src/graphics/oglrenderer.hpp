@@ -46,8 +46,11 @@ protected:
 	{
 		projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
 		// send it to the shaders
+		colorShader->bind();
 		colorShader->setProjectionMatrix(projectionMatrix);
-//		textureShader->setProjectionMatrix(projectionMatrix);
+		textureShader->bind();
+		textureShader->setProjectionMatrix(projectionMatrix);
+		debugShader->bind();
 		debugShader->setProjectionMatrix(projectionMatrix);
 	}
 

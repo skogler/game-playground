@@ -44,7 +44,6 @@ OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager, shared_ptr
 	textureShader->addEffect(EFFECT_LIGHTING);
 	textureShader->link();
 
-	colorShader->bind();
 	updateProjectionMatrix();
 
 	initDebugGrid();
@@ -62,8 +61,12 @@ OGLRenderer::~OGLRenderer()
 
 void OGLRenderer::renderEntity(shared_ptr<RenderedEntity> entity)
 {
-	// send model matrix to shader
+	// send model matrix to shaders
+	colorShader->bind();
 	colorShader->setModelMatrix(entity->getModelMatrix());
+	textureShader->bind();
+	textureShader->setModelMatrix(entity->getModelMatrix());
+	colorShader->bind();
 	renderMesh(entity->getMesh());
 }
 
@@ -93,20 +96,54 @@ void OGLRenderer::renderMesh(shared_ptr<Mesh> mesh)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getFaceBuffer());
 
+	// index 2 => UV Coordinates
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->getUvBuffer());
+	glVertexAttribPointer(2,                                // attribute
+			2,                                // size
+			GL_FLOAT,                         // type
+			GL_FALSE,                         // normalized?
+			0,                                // stride
+			(void*) 0                          // array buffer offset
+			);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getFaceBuffer());
+
 	vector<FaceGroup> faceGroups = mesh->getFaceGroups();
 	vector<FaceGroup>::iterator iter;
 	for (iter = faceGroups.begin(); iter < faceGroups.end(); ++iter)
 	{
-		useMaterial(mesh->getMaterial(iter->materialName));
+		shared_ptr<Material> mat = mesh->getMaterial(iter->materialName);
+		ShaderProgram * usedShader = 0;
+		if (mat->getType() == MATERIAL_TYPE_COLOR)
+		{
+			usedShader = colorShader.get();
+		}
+		else if (mat->getType() == MATERIAL_TYPE_TEXTURE)
+		{
+			usedShader = textureShader.get();
+		}
+		usedShader->bind();
+		usedShader->setMaterial(*mat);
+
 		glDrawElements(GL_TRIANGLES, iter->size, GL_UNSIGNED_INT, BUFFER_OFFSET(sizeof(unsigned int) * iter->start));
 	}
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 }
 
 void OGLRenderer::useMaterial(shared_ptr<Material> material)
 {
-	colorShader->setMaterial(*material);
+	if (material->getType() == MATERIAL_TYPE_COLOR)
+	{
+		colorShader->setMaterial(*material);
+	}
+	else if (material->getType() == MATERIAL_TYPE_TEXTURE)
+	{
+		textureShader->setMaterial(*material);
+	}
+
 }
 
 void OGLRenderer::enableDebugGrid(const bool show)
@@ -123,12 +160,10 @@ void OGLRenderer::setWindowSize(const unsigned int width, const unsigned int hei
 void OGLRenderer::startFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	colorShader->bind();
 	colorShader->setViewMatrix(camera->getModelMatrix());
-//	textureShader->setViewMatrix(camera->getModelMatrix());
-//	if (debugAxesEnabled || debugGridEnabled)
-//	{
-//		debugShader->setViewMatrix(camera->getModelMatrix());
-//	}
+	textureShader->bind();
+	textureShader->setViewMatrix(camera->getModelMatrix());
 }
 
 void OGLRenderer::endFrame()
@@ -149,14 +184,6 @@ void OGLRenderer::endFrame()
 			drawDebugGrid();
 		}
 		colorShader->bind();
-	}
-
-	int errorCode = glGetError();
-	if (errorCode)
-	{
-		std::string message = (boost::format("A OpenGL error occured: %d") % errorCode).str();
-
-		Logger::error(message);
 	}
 }
 
@@ -181,6 +208,7 @@ void OGLRenderer::renderTerrain(shared_ptr<Terrain> terrain)
 
 void OGLRenderer::addLight(const Light& light)
 {
+	colorShader->bind();
 	colorShader->addLight(light);
 }
 

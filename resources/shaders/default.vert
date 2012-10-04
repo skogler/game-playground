@@ -1,9 +1,10 @@
-#version 330 core
+#version 330
 #pragma optionNV(unroll all)
 #define MAX_LIGHTS 10
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 textureCoordinates;
 
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
@@ -32,6 +33,8 @@ out LightResult lightResults[MAX_LIGHTS];
 out vec3 normalCameraSpace;
 out vec3 eyeDirectionCameraSpace;
 
+out vec2 textureCoordinatesFrag;
+
 void main()
 {
 	vec4 posModelSpace = vec4(position, 1);
@@ -50,4 +53,6 @@ void main()
 		lightResults[i].directionCameraSpace = lightPositionCameraSpace.xyz + eyeDirectionCameraSpace;
 		lightResults[i].distance = distance(positionCameraSpace, lightPositionCameraSpace);
 	}
+	
+	textureCoordinatesFrag = textureCoordinates;
 }
