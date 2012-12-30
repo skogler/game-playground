@@ -4,6 +4,7 @@
 #include <string>
 #include <boost/filesystem.hpp>
 
+#include "definitions.hpp"
 #include "resourcecache.hpp"
 #include "resources/material.hpp"
 #include "resources/mesh.hpp"
@@ -24,9 +25,9 @@ public:
 protected:
 	//Resource Caches
 	ResourceCache<Texture> 	textureCache;
-	ResourceCache<Shader> 	shaderCache;
-	ResourceCache<Mesh> 	meshCache;
 	ResourceCache<Material> materialCache;
+	ResourceCache<Mesh> 	  meshCache;
+	ResourceCache<Shader> 	shaderCache;
 };
 
 #endif /* RESOURCEMANAGER_HPP_ */

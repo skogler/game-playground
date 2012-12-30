@@ -55,8 +55,8 @@ protected:
 	}
 
 	shared_ptr<ShaderProgram> colorShader;
-	shared_ptr<ShaderProgram> debugShader;
 	shared_ptr<ShaderProgram> textureShader;
+	shared_ptr<ShaderProgram> debugShader;
 	shared_ptr<Camera> camera;
 
 	glm::mat4 projectionMatrix;

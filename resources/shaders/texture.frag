@@ -74,15 +74,15 @@ void main()
 		// Add specular color
 		specularLight += lights[i].color * (lights[i].intensity * pow(cosAlpha, 5)) / attenuation;
 	}
-	
-	vec3 diffuseColor = texture2D(texture, textureCoordinatesFrag).rgb; 
 
-//**
+	vec3 diffuseColor = texture2D(texture, textureCoordinatesFrag).rgb;
+
+/**
 	finalColor = diffuseColor * ambientColor  + diffuseColor * diffuseLight  + diffuseColor *
 			specularLight; // a = intensity
-//			*/
-	
-	// DEBUG: show UV coordinates as red and green on models	
-//	finalColor = vec3(textureCoordinatesFrag.x, textureCoordinatesFrag.y, 0.0f);
-			
+			*/
+
+	// DEBUG: show UV coordinates as red and green on models
+	finalColor = vec3(textureCoordinatesFrag.x, textureCoordinatesFrag.y, 0.0f);
+
 }

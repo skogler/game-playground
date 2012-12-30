@@ -1,15 +1,13 @@
 #include "resourcemanager.hpp"
-
 #include "utils/logger.hpp"
-
-#include <stdio.h>
 
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 namespace fs = boost::filesystem;
-using namespace std;
+using std::vector;
+using std::string;
 
 ResourceManager::ResourceManager(const fs::path & resourceDirectory) :
 				textureCache(resourceDirectory / "textures", "dds"),

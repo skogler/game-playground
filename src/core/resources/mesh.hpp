@@ -4,11 +4,20 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <cstdint>
+
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "core/definitions.hpp"
 #include <boost/filesystem.hpp>
+
+#include "core/definitions.hpp"
 #include "material.hpp"
+
+struct M42Header
+{
+  std::uint32_t numVertices;
+  std::uint32_t numFaces;
+};
 
 struct FaceGroup
 {

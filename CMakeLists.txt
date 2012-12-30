@@ -10,7 +10,7 @@ project(${PROJECT_NAME})
 set(PROJECT_SOURCE_DIR src/)
 set(PROJECT_INCLUDE_DIR src/)
 
-SET (CMAKE_CXX_FLAGS_INIT                "-Wall")
+SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}-g -Wall -std=c++11")
 
 # Enable debug symbols by default
 if(CMAKE_BUILD_TYPE STREQUAL "")

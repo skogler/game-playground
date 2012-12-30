@@ -11,12 +11,13 @@
 #include "utils/config.h"
 #include "utils/logger.hpp"
 #include "utils/FPSManager.hpp"
-using namespace std;
+using std::cout;
+using std::endl;
 
 int main()
 {
 	registerErrorHandler();
-	shared_ptr<FPSManager> fps(new FPSManager);
+  shared_ptr<FPSManager> fps(new FPSManager);
 	GameStateEngine gse(fps);
 
 	if (!gse.init())
@@ -26,7 +27,8 @@ int main()
 		return 1;
 	}
 
-	gse.pushState(new GameStateActive(gse.getRenderer(), gse.getInputManager(), gse.getResourceManager(), gse.getWindow()));
+  shared_ptr<GameState> gameStateActive(new GameStateActive(gse.getRenderer(), gse.getInputManager(), gse.getResourceManager(), gse.getWindow()));
+	gse.pushState(gameStateActive);
 	int count = 0;
 	while (gse.isRunning())
 	{

@@ -31,7 +31,7 @@ class GameStateEngine
 private:
 	bool running;
 	// the stack of states
-	std::vector<GameState*> states;
+	std::vector<shared_ptr<GameState>> states;
 
 	//Input
 	shared_ptr<InputManager> inputManager;
@@ -54,8 +54,8 @@ public:
 
 	bool init();
 
-	void changeGameState(GameState* state);
-	void pushState(GameState* state);
+	void changeGameState(shared_ptr<GameState> state);
+	void pushState(shared_ptr<GameState> state);
 	void popState();
 
 	void handleInput();
@@ -84,7 +84,7 @@ public:
 	}
 
 	//Getters and Setters
-	inline const std::vector<GameState*> & getStates() const
+	inline const std::vector<shared_ptr<GameState>> & getStates() const
 	{
 		return states;
 	}

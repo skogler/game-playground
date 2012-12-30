@@ -109,6 +109,8 @@ void registerErrorHandler()
 
 	sigact.sa_sigaction = crit_err_hdlr;
 	sigact.sa_flags = SA_RESTART | SA_SIGINFO;
+  sigemptyset(&sigact.sa_mask);
+  sigaddset(&sigact.sa_mask, SIGINT); //sigint is not allowed to interrupt our handler
 
 	if (sigaction(SIGSEGV, &sigact, (struct sigaction *) NULL) != 0)
 	{

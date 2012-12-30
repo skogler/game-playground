@@ -29,6 +29,7 @@ GameStateEngine::GameStateEngine(shared_ptr<FPSManager> fpsManager) :
 
 GameStateEngine::~GameStateEngine()
 {
+  window->close();
 }
 
 /**
@@ -45,7 +46,7 @@ bool GameStateEngine::init()
 	contextSettings.majorVersion = 4;
 	contextSettings.minorVersion = 2;
 
-    window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
+  window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
 //	window->create(sf::VideoMode::getFullscreenModes()[0], "game-playground", sf::Style::Close | sf::Style::Fullscreen, contextSettings);
 
 	window->setFramerateLimit(50);
@@ -65,16 +66,15 @@ bool GameStateEngine::init()
 	return true;
 }
 
-void GameStateEngine::changeGameState(GameState* state)
+void GameStateEngine::changeGameState(shared_ptr<GameState> state)
 {
-	//TODO: update stack in a appropriate manner
 	this->pushState(state);
 }
 
 /*
  * Adds a new state to the vector stack
  */
-void GameStateEngine::pushState(GameState* state)
+void GameStateEngine::pushState(shared_ptr<GameState> state)
 {
 	state->init();
 	states.push_back(state);
@@ -85,9 +85,8 @@ void GameStateEngine::pushState(GameState* state)
  */
 void GameStateEngine::popState()
 {
-    GameState * last = states.back();
+    shared_ptr<GameState> last = states.back();
     states.pop_back();
-    delete last;//FIXME mem leak hotfix - free should be automatic
 }
 
 /*
@@ -96,7 +95,7 @@ void GameStateEngine::popState()
 void GameStateEngine::handleInput()
 {
 	sf::Event event;
-	GameState* gstate = states.back();
+	shared_ptr<GameState> gstate = states.back();
 	while (window->pollEvent(event))
 	{
 		//TODO: remove check for exit
@@ -112,7 +111,7 @@ void GameStateEngine::handleInput()
  */
 void GameStateEngine::update()
 {
-	GameState* gstate = states.back();
+	shared_ptr<GameState> gstate = states.back();
 	gstate->update();
 }
 
@@ -121,7 +120,7 @@ void GameStateEngine::update()
  */
 void GameStateEngine::render()
 {
-	GameState* gstate = states.back();
+	shared_ptr<GameState> gstate = states.back();
 	gstate->render();
 }
 

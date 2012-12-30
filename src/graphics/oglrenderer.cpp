@@ -7,25 +7,24 @@
 #include <iostream>
 #include <vector>
 #include <boost/format.hpp>
-using namespace std;
+using std::vector;
 
 /**
  * Load our default shader on creation.
  */
 OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager, shared_ptr<Camera> camera) :
+				colorShader(new ShaderProgram()),
+				textureShader(new ShaderProgram()),
+				debugShader(new ShaderProgram()),
+				camera(camera),
 				aspectRatio(16.0f / 9.0f),
 				fov(60.0f),
-				camera(camera),
 				debugGridEnabled(true),
 				debugAxesEnabled(true),
 				debugGridMaterial(resourceManager->getMaterial("debug")),
 				redMaterial(resourceManager->getMaterial("debugRed")),
 				blueMaterial(resourceManager->getMaterial("debugBlue")),
-				greenMaterial(resourceManager->getMaterial("debugGreen")),
-				colorShader(new ShaderProgram()),
-				textureShader(new ShaderProgram()),
-				debugShader(new ShaderProgram())
-
+				greenMaterial(resourceManager->getMaterial("debugGreen"))
 {
 	debugShader->attachShader(resourceManager->getShader("defaultNoLight.vert"));
 	debugShader->attachShader(resourceManager->getShader("colorNoLight.frag"));

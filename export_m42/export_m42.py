@@ -99,29 +99,31 @@ def writeMesh(file, mesh):
     for face in mesh.polygons:
         key = mesh.materials[face.material_index].name.lower().strip()
         try:
-            facemap[key].append(face)
+          facemap[key].append(face)
         except KeyError:
-            facemap[key] = [face]
+          facemap[key] = [face]
 
-    uvlayer = mesh.uv_layers.active.data
     for mat in facemap:
         file.write("usemat " + mat + "\n")
         for face in facemap[mat]:
-            v = face.vertices
-            if len(v) == 3:
-                file.write("{0} {1} {2}\n".format(v[0], v[1], v[2]))
-            else:
-                raise Exception("Mesh has non-triangle faces. " +
-                        "Convert to triangles in edit mode before exporting!")
+          v = face.vertices
+          if len(v) == 3:
+            file.write("{0} {1} {2}\n".format(v[0], v[1], v[2]))
+          else:
+            raise Exception("Mesh has non-triangle faces. " +
+              "Convert to triangles in edit mode before exporting!")
 
     file.write ("n\n")
     for v in mesh.vertices:
-        n = v.normal
-        file.write ("{0:.6f} {1:.6f} {2:.6f}\n".format(n.x, n.y, n.z))
+      n = v.normal
+      file.write ("{0:.6f} {1:.6f} {2:.6f}\n".format(n.x, n.y, n.z))
 
-    file.write("uv\n")
-    for l in uvlayer:
-        file.write("{0:.6f} {1:.6f}\n".format(l.uv[0], 1 - l.uv[1]))
+    if mesh.uv_layers.active != None:
+      uvlayer = mesh.uv_layers.active.data
+      file.write("uv\n")
+      for l in uvlayer:
+          __import__('code').interact(local={k: v for ns in (globals(), locals()) for k, v in ns.items()})
+          file.write("{0:.6f} {1:.6f}\n".format(l.uv[0], 1 - l.uv[1]))
 
 def writeMaterial(file, mat, texdir):
     file.write("#M42 MAT\n")

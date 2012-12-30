@@ -25,8 +25,8 @@ GameStateActive::GameStateActive(shared_ptr<Renderer> renderer,
 		shared_ptr<ResourceManager> resourceManager,
 		shared_ptr<sf::Window> window) :
 				inputManager(inputManager),
-				freeCam(new FreeMovementCam(window)),
 				resourceManager(resourceManager),
+				freeCam(new FreeMovementCam(window)),
 				renderer(renderer)
 {
 	glm::vec3 cameraPos(0.0f, 0.0f, 20.0f);
@@ -42,11 +42,11 @@ GameStateActive::~GameStateActive()
 
 void GameStateActive::init()
 {
-	std::string meshName = "pirate";
+	std::string meshName = "monkey";
 	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
 	mesh->upload();
 
-	shared_ptr<Mesh> nyancube = resourceManager->getMesh("nyancube");
+	shared_ptr<Mesh> nyancube = resourceManager->getMesh(meshName);
 	nyancube->upload();
 
 //	//Terrain init

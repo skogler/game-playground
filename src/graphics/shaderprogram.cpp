@@ -14,7 +14,6 @@
 #include "core/resources/shader.hpp"
 
 namespace fs = boost::filesystem;
-using namespace std;
 
 ShaderProgram::ShaderProgram() :
 				modelMatrixName("modelMatrix"),
@@ -144,7 +143,7 @@ void ShaderProgram::link()
 	{
 		int infoLogLength;
 		glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
-		string errorMessage;
+    std::string errorMessage;
 		errorMessage.resize(infoLogLength);
 		glGetProgramInfoLog(programId, infoLogLength, 0, &errorMessage[0]);
 		Logger::error(errorMessage);

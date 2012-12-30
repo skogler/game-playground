@@ -11,8 +11,9 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 
-
 #include <boost/format.hpp>
+
+#define FAIL_MATERIAL "fail"
 
 using namespace std;
 using boost::lexical_cast;
@@ -84,7 +85,7 @@ void Mesh::load(const boost::filesystem::path & path)
 			int state = 0;
 			FaceGroup currentFaceGroup;
 			currentFaceGroup.start = 0;
-			currentFaceGroup.materialName = "fail"; //TODO this should actually display a fail material
+			currentFaceGroup.materialName = FAIL_MATERIAL;
 			while (f.good())
 			{
 				getline(f, line);
