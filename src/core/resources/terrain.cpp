@@ -74,9 +74,9 @@ void Terrain::renderTest()
 void Terrain::createVerticeData()
 {
 
-	for (int hMapX = 0; hMapX < hWidth; hMapX += 2)
+	for (unsigned int hMapX = 0; hMapX < hWidth; hMapX += 2)
 	{
-		for (int hMapZ = 0; hMapZ < hHeight; hMapZ += 2)
+		for (unsigned int hMapZ = 0; hMapZ < hHeight; hMapZ += 2)
 		{
 			vertices.push_back(
 					glm::vec3(hMapX, heightMap[hMapX][hMapZ], hMapZ));
@@ -140,9 +140,9 @@ void Terrain::loadImageFile(std::string filename)
 	pixelData.assign(p, p + size);
 	std::cout << "pixel Data size: " << pixelData.size() << "empty: "
 			<< pixelData.empty() << std::endl;
-	for (int i = 0; i < hHeight; i++)
+	for (unsigned int i = 0; i < hHeight; i++)
 	{
-		for (int j = 0; j < hWidth; j++)
+		for (unsigned int j = 0; j < hWidth; j++)
 		{
 			//std::cout << "i: " << i << " j: " << j << std::endl;
 			// compute the height as a value between 0.0 and 1.0
@@ -225,9 +225,9 @@ void Terrain::loadHeightMapFromTGA(std::string filename)
 	}
 
 	int flX, flZ;
-	for (int y = 0; y < tgaInf.height; y += STEP_SIZE)
+	for (unsigned int y = 0; y < tgaInf.height; y += STEP_SIZE)
 	{
-		for (int x = 0; x < tgaInf.width; x += STEP_SIZE)
+		for (unsigned int x = 0; x < tgaInf.width; x += STEP_SIZE)
 		{
 
 			for (int nTri = 0; nTri < 6; nTri++)
@@ -302,11 +302,7 @@ int Terrain::retreiveHeight(int x, int y)
 void Terrain::createVerticeDataFromTGA()
 {
 	std::cout << "start create vertice" << endl;
-
 	float startW, startL;
-	int aux;
-	float flx;
-	float flz;
 
 	// compute the initial point of the terrain on the XZ plane
 	startW = hWidth / 2.0 - hWidth;
@@ -321,9 +317,9 @@ void Terrain::createVerticeDataFromTGA()
 	}
 
 	std::cout << "start loop" << endl;
-	for (int i = 0; i < hHeight - 1; i += 15)
+	for (unsigned int i = 0; i < hHeight - 1; i += 15)
 	{
-		for (int j = 0; j < hWidth; j += 15)
+		for (unsigned int j = 0; j < hWidth; j += 15)
 		{
 			vertices.push_back(
 					glm::vec3(startW + j + xOffset,
@@ -340,6 +336,5 @@ void Terrain::createVerticeDataFromTGA()
 	std::cout << "end loop" << endl;
 	std::cout << "vertice size " << vertices.front().x << vertices.front().y
 			<< vertices.front().z << endl;
-
 }
 

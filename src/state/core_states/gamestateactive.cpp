@@ -42,7 +42,7 @@ GameStateActive::~GameStateActive()
 
 void GameStateActive::init()
 {
-	std::string meshName = "monkey";
+	std::string meshName = "test";
 	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
 	mesh->upload();
 

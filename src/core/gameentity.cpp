@@ -12,12 +12,12 @@ using std::endl;
 #define PI 3.1415926f
 
 GameEntity::GameEntity() :
-				modelMatrix(1.0f),
-				movementSpeed(1),
-				turnSpeed(1),
-				position(0.0f, 0.0f, 0.0f),
 				positionModified(true),
 				rotationModified(true),
+				movementSpeed(1),
+				turnSpeed(1),
+				modelMatrix(1.0f),
+				position(0.0f, 0.0f, 0.0f),
 				front(-UNIT_Z),
 				right(UNIT_X),
 				up(UNIT_Y),

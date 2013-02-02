@@ -106,7 +106,7 @@ bool TgaLoader::loadUncompressed(FILE * file)
 	}
 
 	// Byte Swapping Optimized By Steve Thomas
-	for (GLuint cswap = 0; cswap < (int) tga.imageSize; cswap += tga.bytesPerPixel)
+	for (GLuint cswap = 0; cswap < tga.imageSize; cswap += tga.bytesPerPixel)
 	{
 		imageData[cswap] ^= imageData[cswap + 2] ^= imageData[cswap] ^=
 				imageData[cswap + 2];

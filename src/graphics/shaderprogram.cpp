@@ -19,8 +19,8 @@ ShaderProgram::ShaderProgram() :
 				modelMatrixName("modelMatrix"),
 				viewMatrixName("viewMatrix"),
 				projectionMatrixName("projectionMatrix"),
-				numLights(0),
-				programId(glCreateProgram())
+				programId(glCreateProgram()),
+				numLights(0)
 {
 }
 

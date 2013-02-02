@@ -77,12 +77,10 @@ void main()
 
 	vec3 diffuseColor = texture2D(texture, textureCoordinatesFrag).rgb;
 
-/**
 	finalColor = diffuseColor * ambientColor  + diffuseColor * diffuseLight  + diffuseColor *
 			specularLight; // a = intensity
-			*/
 
 	// DEBUG: show UV coordinates as red and green on models
-	finalColor = vec3(textureCoordinatesFrag.x, textureCoordinatesFrag.y, 0.0f);
+	//finalColor = vec3(textureCoordinatesFrag.x, textureCoordinatesFrag.y, 0.0f);
 
 }

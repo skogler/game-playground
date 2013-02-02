@@ -12,6 +12,6 @@ const glm::vec3 UNIT_Z(0.0f, 0.0f, 1.0f);
 
 const glm::mat4 IDENTITY_MATRIX(1.0f);
 
-#define BUFFER_OFFSET(i) (reinterpret_cast<void*>(i))
+#define BUFFER_OFFSET(i) (reinterpret_cast<void*>((i)))
 
 #endif /* GRAPHICS_DEFINITIONS_HPP_ */

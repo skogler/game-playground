@@ -125,7 +125,7 @@ void OGLRenderer::renderMesh(shared_ptr<Mesh> mesh)
 		usedShader->bind();
 		usedShader->setMaterial(*mat);
 
-		glDrawElements(GL_TRIANGLES, iter->size, GL_UNSIGNED_INT, BUFFER_OFFSET(sizeof(unsigned int) * iter->start));
+		glDrawElements(GL_TRIANGLES, iter->size * 3, GL_UNSIGNED_INT, BUFFER_OFFSET(sizeof(GLuint) *3* iter->start));
 	}
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
@@ -184,6 +184,24 @@ void OGLRenderer::endFrame()
 		}
 		colorShader->bind();
 	}
+  GLenum err (glGetError());
+
+  while(err!=GL_NO_ERROR)
+  {
+    std::string error;
+
+    switch(err)
+    {
+      case GL_INVALID_OPERATION:      error="INVALID_OPERATION";      break;
+      case GL_INVALID_ENUM:           error="INVALID_ENUM";           break;
+      case GL_INVALID_VALUE:          error="INVALID_VALUE";          break;
+      case GL_OUT_OF_MEMORY:          error="OUT_OF_MEMORY";          break;
+      case GL_INVALID_FRAMEBUFFER_OPERATION:  error="INVALID_FRAMEBUFFER_OPERATION";  break;
+    }
+
+    std::cerr <<"OGL errrer: GL_" << error << std::endl;
+    err=glGetError();
+  }
 }
 
 void OGLRenderer::drawDebugGrid()

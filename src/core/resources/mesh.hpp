@@ -17,105 +17,115 @@ struct M42Header
 {
   std::uint32_t numVertices;
   std::uint32_t numFaces;
+  std::uint32_t numFaceGroups;
+};
+
+struct M42Vertex
+{
+  float position[3];
+  float normal[3];
+  float textureCoordinates[2]; // UV coordinates
 };
 
 struct FaceGroup
 {
-	std::string materialName;
-	unsigned int start;
-	unsigned int size;
+  std::string materialName;
+  std::uint32_t start;
+  std::uint32_t size;
 };
 
 class Mesh
 {
-public:
-	Mesh(const boost::filesystem::path & path);
+  protected:
+    bool uploaded;
+    std::map<std::string, shared_ptr<Material> > materials;
+    // Vertex data
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> textureCoordinates;
+    std::vector<GLuint> faces;
+    std::vector<FaceGroup> faceGroups;
 
-	virtual ~Mesh();
-	void upload();
-	void release();
+    GLuint vertexBuffer;
+    GLuint faceBuffer;
+    GLuint normalBuffer;
+    GLuint uvBuffer;
+    void load(const boost::filesystem::path& path);
 
-	const std::vector<std::string> getUsedMaterials() const;
+  public:
+    Mesh(const boost::filesystem::path & path);
 
-	GLuint getUvBuffer() const
-	{
-		return uvBuffer;
-	}
+    virtual ~Mesh();
+    void upload();
+    void release();
 
-	void setUvBuffer(GLuint uvBuffer)
-	{
-		this->uvBuffer = uvBuffer;
-	}
+    const std::vector<std::string> getUsedMaterials() const;
 
-	std::vector<unsigned int> * getFaces()
-	{
-		return &faces;
-	}
+    GLuint getUvBuffer() const
+    {
+      return uvBuffer;
+    }
 
-	std::vector<glm::vec3> getNormals() const
-	{
-		return normals;
-	}
+    void setUvBuffer(GLuint uvBuffer)
+    {
+      this->uvBuffer = uvBuffer;
+    }
 
-	std::vector<glm::vec2> getUvCoordinates() const
-	{
-		return uvCoordinates;
-	}
+    std::vector<GLuint> * getFaces()
+    {
+      return &faces;
+    }
 
-	std::vector<glm::vec3> getVertices() const
-	{
-		return vertices;
-	}
+    std::vector<glm::vec3> getNormals() const
+    {
+      return normals;
+    }
 
-	GLuint getFaceBuffer() const
-	{
-		return faceBuffer;
-	}
+    std::vector<glm::vec2> getUvCoordinates() const
+    {
+      return textureCoordinates;
+    }
 
-	GLuint getNormalBuffer() const
-	{
-		return normalBuffer;
-	}
+    std::vector<glm::vec3> getVertices() const
+    {
+      return vertices;
+    }
 
-	GLuint getVertexBuffer() const
-	{
-		return vertexBuffer;
-	}
+    GLuint getFaceBuffer() const
+    {
+      return faceBuffer;
+    }
 
-	inline std::vector<FaceGroup>& getFaceGroups()
-	{
-		return faceGroups;
-	}
+    GLuint getNormalBuffer() const
+    {
+      return normalBuffer;
+    }
 
-	bool uploaded;
+    GLuint getVertexBuffer() const
+    {
+      return vertexBuffer;
+    }
 
-	inline bool isUploaded() const
-	{
-		return uploaded;
-	}
+    inline std::vector<FaceGroup>& getFaceGroups()
+    {
+      return faceGroups;
+    }
 
-	inline void setMaterial(const std::string& name, shared_ptr<Material> material)
-	{
-		materials[name] = material;
-	}
+    inline bool isUploaded() const
+    {
+      return uploaded;
+    }
 
-	inline shared_ptr<Material> getMaterial(const std::string& name)
-	{
-		return materials[name];
-	}
+    inline void setMaterial(const std::string& name, shared_ptr<Material> material)
+    {
+      materials[name] = material;
+    }
 
-protected:
-	std::map<std::string, shared_ptr<Material> > materials;
-	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec3> normals;
-	std::vector<glm::vec2> uvCoordinates;
-	std::vector<unsigned int> faces;
-	std::vector<FaceGroup> faceGroups;
-	GLuint vertexBuffer;
-	GLuint faceBuffer;
-	GLuint normalBuffer;
-	GLuint uvBuffer;
-	void load(const boost::filesystem::path& path);
+    inline shared_ptr<Material> getMaterial(const std::string& name)
+    {
+      return materials[name];
+    }
+
 };
 
 #endif /* end of include guard: MESH_INC */

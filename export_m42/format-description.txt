@@ -1,0 +1,23 @@
+The M42 Model Format - Description
+==================================
+
+char[3] M42     // Magic header
+uint8_t numMeshes
+
+for each mesh:
+
+uint32_t numVertices
+uint32_t numFaces
+uint32_t numFaceGroups
+
+               | float[3] position
+numVertices * -| float[3] normal
+               | float[2] textureCoordinates
+
+numFaces * -| uint32_t[3] vertex indices
+
+                 | uint8_t materialNameLength
+numFaceGroups * -| string[materialNameLength] materialName
+                 | uint32_t start_index
+                 | uint32_t size
+
