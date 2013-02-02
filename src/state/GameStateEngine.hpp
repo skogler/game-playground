@@ -42,7 +42,7 @@ private:
 
 	//OpenGL context-settings and window
 	sf::ContextSettings contextSettings;
-	shared_ptr<sf::RenderWindow> window;
+	shared_ptr<sf::Window> window;
 
 	shared_ptr<FPSManager> fpsManager;
 	shared_ptr<Renderer> renderer;
@@ -78,7 +78,7 @@ public:
 		return inputManager;
 	}
 
-	inline shared_ptr<sf::RenderWindow> getWindow()
+	inline shared_ptr<sf::Window> getWindow()
 	{
 		return window;
 	}

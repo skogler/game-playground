@@ -152,6 +152,7 @@ void OGLRenderer::enableDebugGrid(const bool show)
 
 void OGLRenderer::setWindowSize(const unsigned int width, const unsigned int height)
 {
+  glViewport(0, 0, width, height);
 	aspectRatio = static_cast<float>(width / height);
 	updateProjectionMatrix();
 }

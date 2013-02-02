@@ -21,7 +21,7 @@ GameStateEngine::GameStateEngine(shared_ptr<FPSManager> fpsManager) :
 				inputManager(new InputManager),
 				inputMapper(new InputMapper),
 				resourceManager(new ResourceManager(boost::filesystem::path("resources"))),
-				window(new sf::RenderWindow()),
+				window(new sf::Window()),
 				fpsManager(fpsManager),
 				defaultCamera(new NoOpCamera())
 {
@@ -100,7 +100,14 @@ void GameStateEngine::handleInput()
 	{
 		//TODO: remove check for exit
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+    {
 			quit();
+    }
+    if (event.type==sf::Event::Resized)
+    {
+      renderer->setWindowSize(event.size.width, event.size.height);
+      window->display();
+    }
 		inputMapper->mapInputEvent(event);
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());
