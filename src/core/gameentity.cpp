@@ -74,11 +74,21 @@ void GameEntity::rotateZ(const float angleRadians)
 
 void GameEntity::rotate(const float angleRadians, const glm::vec3 & axis)
 {
-	rotation = glm::rotate(rotation, glm::degrees(angleRadians), axis);
+//	rotation = glm::rotate(rotation, glm::degrees(angleRadians), axis);
+  glm::quat mod_rot = glm::angleAxis(glm::degrees(angleRadians), axis);
+  rotation = mod_rot * rotation;
 	rotation = glm::normalize(rotation);
 	rotationModified = true;
 }
 
+void GameEntity::rotateGlobal(const float angleRadians, const glm::vec3 & axis)
+{
+//	rotation = glm::rotate(rotation, glm::degrees(angleRadians), axis);
+//	rotation = glm::normalize(rotation);
+  glm::quat mod_rot = glm::angleAxis(glm::degrees(angleRadians), axis);
+  rotation = rotation * mod_rot ;
+	rotationModified = true;
+}
 void GameEntity::update()
 {
 	if (positionModified || rotationModified)

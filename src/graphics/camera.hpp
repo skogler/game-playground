@@ -1,7 +1,9 @@
 #ifndef CAMERA_INC
 #define CAMERA_INC
+
 #include <glm/glm.hpp>
 #include <GL/glew.h>
+
 #include "core/gameentity.hpp"
 #include "core/inputlistener.hpp"
 

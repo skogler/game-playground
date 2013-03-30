@@ -6,6 +6,7 @@
  */
 
 #include "freemovementcam.hpp"
+#include "../graphics-definitions.hpp"
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
@@ -76,7 +77,7 @@ void FreeMovementCam::handleMouseMovement(int x, int y)
 	float vertMovement = (windowYhalf - y) * sensitivity;
 
 	rotateY(horizMovement);
-	rotateX(vertMovement);
+	rotateGlobal(vertMovement, UNIT_X);
 
 	sf::Mouse::setPosition(sf::Vector2<int>(windowXhalf, windowYhalf), *window);
 }

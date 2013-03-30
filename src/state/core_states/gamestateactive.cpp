@@ -10,6 +10,7 @@
 #include "graphics/shaderprogram.hpp"
 #include "core/resources/mesh.hpp"
 #include "graphics/oglrenderer.hpp"
+#include "graphics/graphics-definitions.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -58,7 +59,6 @@ void GameStateActive::init()
       glm::vec3 position(x_coord, 0.0f, z_coord);
       re->setPosition(position);
       re->rotateX(-1.57f);
-      //re->rotateZ(-1.57f);
       entities.push_back(re);
     }
   }
@@ -67,15 +67,7 @@ void GameStateActive::init()
 	glm::vec3 position(0.0f, 5.0f, 0.0f);
 	m1->setPosition(position);
 	m1->rotateX(-1.57f);
-	m1->rotateZ(-1.57f);
 	entities.push_back(m1);
-
-//	m2 = shared_ptr<RenderedEntity>(new RenderedEntity());
-//	m2->setMesh(mesh);
-//	position = glm::vec3(0.0f, 0.0f, 0.0f);
-//	m2->setPosition(position);
-//	m2->rotateX(-1.57f);
-//	entities.push_back(m2);
 
 	glm::vec3 whiteLightPosition(0.0f, 1000.0f, 1000.0f);
 	Light whiteLight(whiteLightPosition);
@@ -110,8 +102,7 @@ void GameStateActive::update()
 	freeCam->update();
 	//m1->turn(-2 * 3.1415926535897f / 300.0f, 0.0f);
 	//m1->move(20.0f * 3.1415926535897f / 300.0f);
-	m1->rotateZ(0.01f);
-//	m1->rotateX(0.01f);
+	m1->rotateY(0.01f);
 	std::for_each(entities.begin(), entities.end(),
 			boost::mem_fn(&GameEntity::update));
 }

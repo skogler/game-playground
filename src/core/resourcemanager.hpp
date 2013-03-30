@@ -6,6 +6,7 @@
 
 #include "definitions.hpp"
 #include "resourcecache.hpp"
+
 #include "resources/material.hpp"
 #include "resources/mesh.hpp"
 #include "resources/shader.hpp"

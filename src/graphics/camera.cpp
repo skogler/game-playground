@@ -1,12 +1,13 @@
 #include "camera.hpp"
 
+#include "core/inputlistener.hpp"
 #include "core/gameentity.hpp"
 #include "utils/logger.hpp"
 #include "constants/inputconstants.hpp"
 
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
 
 #define PI 3.1415926f
 

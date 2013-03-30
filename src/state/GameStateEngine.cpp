@@ -47,9 +47,10 @@ bool GameStateEngine::init()
 	contextSettings.minorVersion = 2;
 
   window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
+  window->setVerticalSyncEnabled(true);
 //	window->create(sf::VideoMode::getFullscreenModes()[0], "game-playground", sf::Style::Close | sf::Style::Fullscreen, contextSettings);
 
-	window->setFramerateLimit(50);
+	//window->setFramerateLimit(50);
 
 	//Glew error checking
 	GLenum err = glewInit();

@@ -1,7 +1,6 @@
 #include "resourcemanager.hpp"
-#include "utils/logger.hpp"
 
-#include <string>
+#include "utils/logger.hpp"
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
