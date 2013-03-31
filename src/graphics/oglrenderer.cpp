@@ -17,8 +17,8 @@ OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager, shared_ptr
 				textureShader(new ShaderProgram()),
 				debugShader(new ShaderProgram()),
 				camera(camera),
-				aspectRatio(16.0f / 9.0f),
-				fov(60.0f),
+				aspectRatio(10.0f),
+				fov(45.0f),
 				debugGridEnabled(true),
 				debugAxesEnabled(true),
 				debugGridMaterial(resourceManager->getMaterial("debug")),
@@ -153,7 +153,7 @@ void OGLRenderer::enableDebugGrid(const bool show)
 void OGLRenderer::setWindowSize(const unsigned int width, const unsigned int height)
 {
   glViewport(0, 0, width, height);
-	aspectRatio = static_cast<float>(width / height);
+	aspectRatio = (float)width / (float)height;
 	updateProjectionMatrix();
 }
 
