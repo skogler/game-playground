@@ -5,6 +5,7 @@
  *      Author: zeheron
  */
 
+#include <GL/glew.h>
 #include "GameStateEngine.hpp"
 
 #include "gamestate.hpp"
@@ -14,8 +15,14 @@
 #include "graphics/cameras/noopcamera.hpp"
 #include "utils/logger.hpp"
 
-#include <iostream>
 #include <boost/filesystem.hpp>
+#include <boost/thread.hpp>
+
+void GLAPIENTRY oglErrorCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
+    GLsizei length, const char* message, void* userParam)
+{
+  Logger::debug(message);
+}
 
 GameStateEngine::GameStateEngine(shared_ptr<FPSManager> fpsManager) :
 				inputManager(new InputManager),
@@ -42,7 +49,7 @@ bool GameStateEngine::init()
 	//OpenGL Context settings: depthBits, stencilBits, AA, major & minor version
 	contextSettings.depthBits = 24;
 	contextSettings.stencilBits = 8;
-	contextSettings.antialiasingLevel = 4;
+	contextSettings.antialiasingLevel = 16;
 	contextSettings.majorVersion = 4;
 	contextSettings.minorVersion = 2;
 
@@ -58,6 +65,13 @@ bool GameStateEngine::init()
 	{
 		throw std::runtime_error("Error initializing OpenGL(GLEW), maybe because of no/old video driver.");
 	}
+
+  if (glewIsSupported("GL_ARB_debug_output"))
+  {
+    glDebugMessageCallbackARB(oglErrorCallback, NULL);
+    glEnable(GL_DEBUG_OUTPUT);
+  }
+
 
 	window->display();
 

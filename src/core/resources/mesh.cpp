@@ -53,7 +53,7 @@ void Mesh::upload()
 
   glGenBuffers(1, &faceBuffer);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceBuffer);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size() * 3 * sizeof(uint32_t),
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size() * 3 * sizeof(GLuint),
       &faces[0], GL_STATIC_DRAW);
 
   glGenBuffers(1, &normalBuffer);

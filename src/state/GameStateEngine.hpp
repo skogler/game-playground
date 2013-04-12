@@ -9,12 +9,8 @@
 #define GAMESTATEENGINE_HPP_
 
 #include <vector>
-#include <sstream>
-#include <iostream>
-#include <boost/thread.hpp>
 
 #include <SFML/Graphics.hpp>
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 #include "utils/config.h"
