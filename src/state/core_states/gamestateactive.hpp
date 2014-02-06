@@ -20,7 +20,7 @@
 #include "graphics/renderer.hpp"
 #include "graphics/light.hpp"
 #include "state/gamestate.hpp"
-#include "state/GameStateEngine.hpp"
+#include "state/gamestateengine.hpp"
 
 #include <SFML/Window.hpp>
 

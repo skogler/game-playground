@@ -2,7 +2,7 @@
 
 #include "exceptions/invalidresourceerror.hpp"
 #include "utils/logger.hpp"
-#include "utils/UIDGenerator.hpp"
+#include "utils/uidgenerator.hpp"
 
 #include <fstream>
 #include <string>

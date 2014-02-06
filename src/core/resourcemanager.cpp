@@ -8,11 +8,16 @@ namespace fs = boost::filesystem;
 using std::vector;
 using std::string;
 
+const std::string ResourceManager::MODELS_DIR = "models";
+const std::string ResourceManager::TEXTURES_DIR = "textures";
+const std::string ResourceManager::MATERIALS_DIR = "materials";
+const std::string ResourceManager::SHADERS_DIR= "shaders";
+
 ResourceManager::ResourceManager(const fs::path & resourceDirectory) :
-				textureCache(resourceDirectory / "textures", "dds"),
-				materialCache(resourceDirectory / "materials", "m42mat"),
-				meshCache(resourceDirectory / "models", "m42"),
-				shaderCache(resourceDirectory / "shaders", "")
+				textureCache(resourceDirectory / TEXTURES_DIR, "dds"),
+				materialCache(resourceDirectory / MATERIALS_DIR, "m42mat"),
+				meshCache(resourceDirectory / MODELS_DIR, "m42"),
+				shaderCache(resourceDirectory / SHADERS_DIR, "")
 {
 }
 

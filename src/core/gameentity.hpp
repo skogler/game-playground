@@ -1,7 +1,7 @@
 #ifndef GAMEENTITY_HPP_
 #define GAMEENTITY_HPP_
 
-#include "utils/UIDGenerator.hpp"
+#include "utils/uidgenerator.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>

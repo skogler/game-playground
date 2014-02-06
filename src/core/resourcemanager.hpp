@@ -23,6 +23,11 @@ public:
 	shared_ptr<Texture>  getTexture(const std::string & name);
 	shared_ptr<Shader>   getShader(const std::string & name);
 
+	static const std::string TEXTURES_DIR;
+	static const std::string MATERIALS_DIR;
+	static const std::string MODELS_DIR;
+	static const std::string SHADERS_DIR;
+
 protected:
 	//Resource Caches
 	ResourceCache<Texture> 	textureCache;

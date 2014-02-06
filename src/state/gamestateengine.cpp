@@ -6,7 +6,7 @@
  */
 
 #include <GL/glew.h>
-#include "GameStateEngine.hpp"
+#include "gamestateengine.hpp"
 
 #include "gamestate.hpp"
 #include "core/resourcemanager.hpp"

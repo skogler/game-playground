@@ -5,7 +5,7 @@
  *      Author: zeheron
  */
 
-#include "FPSManager.hpp"
+#include "fpsmanager.hpp"
 #include <iostream>
 
 /*

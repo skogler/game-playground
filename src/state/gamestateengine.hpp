@@ -14,7 +14,7 @@
 #include <glm/glm.hpp>
 
 #include "utils/config.h"
-#include "utils/FPSManager.hpp"
+#include "utils/fpsmanager.hpp"
 #include "core/inputmanager.hpp"
 #include "core/inputmapper.hpp"
 #include "core/resourcemanager.hpp"
