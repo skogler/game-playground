@@ -25,10 +25,10 @@ GameStateActive::GameStateActive(shared_ptr<Renderer> renderer,
 		shared_ptr<InputManager> inputManager,
 		shared_ptr<ResourceManager> resourceManager,
 		shared_ptr<sf::Window> window) :
-				inputManager(inputManager),
-				resourceManager(resourceManager),
-				freeCam(new FreeMovementCam(window)),
-				renderer(renderer)
+	inputManager(inputManager),
+	resourceManager(resourceManager),
+	freeCam(new FreeMovementCam(window)),
+	renderer(renderer)
 {
 	glm::vec3 cameraPos(0.0f, 0.0f, 20.0f);
 	freeCam->setPosition(cameraPos);
@@ -43,39 +43,39 @@ GameStateActive::~GameStateActive()
 
 void GameStateActive::init()
 {
-// MANY PIRATES DEMO CODE:
-//	std::string meshName = "test";
-//	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
-//	mesh->upload();
-//
-//  for (int x_coord = -30; x_coord < 30; x_coord += 10)
-//  {
-//    for (int z_coord = -30; z_coord < 30; z_coord += 10)
-//    {
-//      shared_ptr<RenderedEntity> re = shared_ptr<RenderedEntity>(new RenderedEntity());
-//      re->setMesh(mesh);
-//      glm::vec3 position(x_coord, 0.0f, z_coord);
-//      re->setPosition(position);
-//      re->rotateX(-1.57f);
-//      entities.push_back(re);
-//    }
-//  }
-//	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
-//	m1->setMesh(mesh);
-//	glm::vec3 position(0.0f, 5.0f, 0.0f);
-//	m1->setPosition(position);
-//	m1->rotateX(-1.57f);
-//	entities.push_back(m1);
-//
-//	glm::vec3 whiteLightPosition(0.0f, 1000.0f, 1000.0f);
-//	Light whiteLight(whiteLightPosition);
-//	whiteLight.setIntensity(1.0f);
-//	whiteLight.setLinearAttenuation(0.0f);
-//	whiteLight.setSquaredAttenuation(0.0f);
-//	renderer->addLight(whiteLight);
-//
-//	renderer->enableDebugGrid(true);
-//	renderer->enableDebugAxes(true);
+	// MANY PIRATES DEMO CODE:
+	//	std::string meshName = "test";
+	//	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
+	//	mesh->upload();
+	//
+	//  for (int x_coord = -30; x_coord < 30; x_coord += 10)
+	//  {
+	//    for (int z_coord = -30; z_coord < 30; z_coord += 10)
+	//    {
+	//      shared_ptr<RenderedEntity> re = shared_ptr<RenderedEntity>(new RenderedEntity());
+	//      re->setMesh(mesh);
+	//      glm::vec3 position(x_coord, 0.0f, z_coord);
+	//      re->setPosition(position);
+	//      re->rotateX(-1.57f);
+	//      entities.push_back(re);
+	//    }
+	//  }
+	//	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
+	//	m1->setMesh(mesh);
+	//	glm::vec3 position(0.0f, 5.0f, 0.0f);
+	//	m1->setPosition(position);
+	//	m1->rotateX(-1.57f);
+	//	entities.push_back(m1);
+	//
+	//	glm::vec3 whiteLightPosition(0.0f, 1000.0f, 1000.0f);
+	//	Light whiteLight(whiteLightPosition);
+	//	whiteLight.setIntensity(1.0f);
+	//	whiteLight.setLinearAttenuation(0.0f);
+	//	whiteLight.setSquaredAttenuation(0.0f);
+	//	renderer->addLight(whiteLight);
+	//
+	//	renderer->enableDebugGrid(true);
+	//	renderer->enableDebugAxes(true);
 }
 
 void GameStateActive::cleanup()

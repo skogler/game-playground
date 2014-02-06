@@ -9,13 +9,13 @@
  */
 class NoOpCamera: public Camera
 {
-public:
-	NoOpCamera();
-	virtual ~NoOpCamera();
+	public:
+		NoOpCamera();
+		virtual ~NoOpCamera();
 
-	virtual void handleinput(InputEvent* inputEvent ) {};
-protected:
-	virtual void updateModelMatrix() {};
+		virtual void handleinput(InputEvent* inputEvent ) {};
+	protected:
+		virtual void updateModelMatrix() {};
 };
 
 #endif /* NOOPCAMERA_HPP_ */

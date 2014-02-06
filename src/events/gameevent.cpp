@@ -5,7 +5,7 @@
  *      Author: zeheron
  */
 
-#include "GameEvent.hpp"
+#include "gameevent.hpp"
 
 
 GameEvent::GameEvent() {

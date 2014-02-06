@@ -16,42 +16,42 @@
  */
 class Logger
 {
-public:
-	inline static void debug(const std::string& message)
-	{
+	public:
+		inline static void debug(const std::string& message)
+		{
 #if LOG_DEBUG == 1
-		adapter->debug(message);
+			adapter->debug(message);
 #endif
-	}
+		}
 
-	inline static void info(const std::string& message)
-	{
+		inline static void info(const std::string& message)
+		{
 #if LOG_INFO == 1
-		adapter->info(message);
+			adapter->info(message);
 #endif
-	}
+		}
 
-	inline static void warn(const std::string& message)
-	{
-		adapter->warn(message);
-	}
+		inline static void warn(const std::string& message)
+		{
+			adapter->warn(message);
+		}
 
-	inline static void error(const std::string& message)
-	{
-		adapter->error(message);
-	}
+		inline static void error(const std::string& message)
+		{
+			adapter->error(message);
+		}
 
-	inline static void setLoggingAdapter(LoggingAdapter * adapter)
-	{
-		Logger::adapter.reset(adapter);
-	}
+		inline static void setLoggingAdapter(LoggingAdapter * adapter)
+		{
+			Logger::adapter.reset(adapter);
+		}
 
-private:
-	static boost::scoped_ptr<LoggingAdapter> adapter;
+	private:
+		static boost::scoped_ptr<LoggingAdapter> adapter;
 
-protected:
-	Logger() {};
-	virtual ~Logger() {};
+	protected:
+		Logger() {};
+		virtual ~Logger() {};
 };
 
 #endif /* LOGGER_HPP_ */

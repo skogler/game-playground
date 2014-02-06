@@ -44,13 +44,11 @@ void Terrain::init()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3),
 			&vertices[0], GL_STATIC_DRAW);
-
 }
 
 void Terrain::cleanup()
 {
 	glDeleteBuffers(1, &vertexBuffer);
-
 }
 
 void Terrain::renderTest()
@@ -86,7 +84,7 @@ void Terrain::createVerticeData()
 					glm::vec3(hMapX + 1, heightMap[hMapX + 1][hMapZ], hMapZ));
 			vertices.push_back(
 					glm::vec3(hMapX + 1, heightMap[hMapX + 1][hMapZ + 1],
-							hMapZ + 1));
+						hMapZ + 1));
 		}
 
 	}
@@ -139,7 +137,7 @@ void Terrain::loadImageFile(std::string filename)
 	const sf::Uint8 * p = img.getPixelsPtr();
 	pixelData.assign(p, p + size);
 	std::cout << "pixel Data size: " << pixelData.size() << "empty: "
-			<< pixelData.empty() << std::endl;
+		<< pixelData.empty() << std::endl;
 	for (unsigned int i = 0; i < hHeight; i++)
 	{
 		for (unsigned int j = 0; j < hWidth; j++)
@@ -196,7 +194,7 @@ bool Terrain::loadTGA(const char *filename)
 	}
 
 	long imageSize = tgaFile.width * tgaFile.height * tgaFile.width
-			* tgaFile.byteCount;
+		* tgaFile.byteCount;
 
 	//allocate memory for image data
 	tgaFile.data = new unsigned char[imageSize];
@@ -233,11 +231,11 @@ void Terrain::loadHeightMapFromTGA(std::string filename)
 			for (int nTri = 0; nTri < 6; nTri++)
 			{
 				flX = (float) x
-						+ ((nTri == 1 || nTri == 2 || nTri == 5) ?
-								MESH_RESOLUTION : 0.0f);
+					+ ((nTri == 1 || nTri == 2 || nTri == 5) ?
+							MESH_RESOLUTION : 0.0f);
 				flZ = (float) y
-						+ ((nTri == 2 || nTri == 4 || nTri == 5) ?
-								MESH_RESOLUTION : 0.0f);
+					+ ((nTri == 2 || nTri == 4 || nTri == 5) ?
+							MESH_RESOLUTION : 0.0f);
 
 				int xx = flX - (tgaInf.width / 2);
 				int yy = rgbHeight((int) flX, (int) flZ) * MESH_HEIGHTSCALE;
@@ -250,39 +248,39 @@ void Terrain::loadHeightMapFromTGA(std::string filename)
 	}
 
 	/*
-	 int X = 0, Y = 0;
+	   int X = 0, Y = 0;
 
-	 for (X = 0; X < tgaInf.width; X += STEP_SIZE)
-	 for (Y = 0; Y < tgaInf.height; Y += STEP_SIZE)
-	 {
-	 vertices.push_back(glm::vec3(X, heighmap[Y + (X * tgaInf.width)], Y));
+	   for (X = 0; X < tgaInf.width; X += STEP_SIZE)
+	   for (Y = 0; Y < tgaInf.height; Y += STEP_SIZE)
+	   {
+	   vertices.push_back(glm::vec3(X, heighmap[Y + (X * tgaInf.width)], Y));
 
-	 vertices.push_back(glm::vec3(X, retreiveHeight(X, Y), Y));
+	   vertices.push_back(glm::vec3(X, retreiveHeight(X, Y), Y));
 
-	 vertices.push_back(
-	 glm::vec3(X + STEP_SIZE,
-	 retreiveHeight(X + STEP_SIZE, Y + STEP_SIZE),
-	 Y + STEP_SIZE));
-	 vertices.push_back(
-	 glm::vec3(X + STEP_SIZE,
-	 retreiveHeight(X + STEP_SIZE, Y + STEP_SIZE),
-	 Y + STEP_SIZE));
-	 vertices.push_back(
-	 glm::vec3(X + STEP_SIZE, retreiveHeight(X + STEP_SIZE, Y),
-	 Y));
+	   vertices.push_back(
+	   glm::vec3(X + STEP_SIZE,
+	   retreiveHeight(X + STEP_SIZE, Y + STEP_SIZE),
+	   Y + STEP_SIZE));
+	   vertices.push_back(
+	   glm::vec3(X + STEP_SIZE,
+	   retreiveHeight(X + STEP_SIZE, Y + STEP_SIZE),
+	   Y + STEP_SIZE));
+	   vertices.push_back(
+	   glm::vec3(X + STEP_SIZE, retreiveHeight(X + STEP_SIZE, Y),
+	   Y));
 
-	 }
-	 std::cout << tgaInf.width << "   "<< tgaInf.height << std::endl;
-	 std::cout << "vert: " << vertices.size() << std::endl;
+	   }
+	   std::cout << tgaInf.width << "   "<< tgaInf.height << std::endl;
+	   std::cout << "vert: " << vertices.size() << std::endl;
 
-	 */
+*/
 }
 
 float Terrain::rgbHeight(int nX, int nY)
 {
 	// Calculate The Position In The Texture
 	int nPos = ((nX % tgaInf.width) + ((nY % tgaInf.height) * tgaInf.width))
-			* 3;
+		* 3;
 	float flR = (float) heighmap[nPos]; // Get The Red Component
 	float flG = (float) heighmap[nPos + 1]; // Get The Green Component
 	float flB = (float) heighmap[nPos + 2]; // Get The Blue Component
@@ -323,18 +321,18 @@ void Terrain::createVerticeDataFromTGA()
 		{
 			vertices.push_back(
 					glm::vec3(startW + j + xOffset,
-							terrainHeights[(i) * hWidth + j] + yOffset,
-							startL - i + zOffset));
+						terrainHeights[(i) * hWidth + j] + yOffset,
+						startL - i + zOffset));
 
 			std::cout << startW + j + xOffset << " || "
-					<< terrainHeights[(i) * hWidth + j] + yOffset << " || "
-					<< startL - i + zOffset << std::endl;
+				<< terrainHeights[(i) * hWidth + j] + yOffset << " || "
+				<< startL - i + zOffset << std::endl;
 
 		}
 
 	}
 	std::cout << "end loop" << endl;
 	std::cout << "vertice size " << vertices.front().x << vertices.front().y
-			<< vertices.front().z << endl;
+		<< vertices.front().z << endl;
 }
 

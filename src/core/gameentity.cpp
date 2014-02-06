@@ -3,8 +3,7 @@
 #include "graphics/graphics-definitions.hpp"
 #include "utils/logger.hpp"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -12,16 +11,16 @@ using std::endl;
 #define PI 3.1415926f
 
 GameEntity::GameEntity() :
-				positionModified(true),
-				rotationModified(true),
-				movementSpeed(1),
-				turnSpeed(1),
-				modelMatrix(1.0f),
-				position(0.0f, 0.0f, 0.0f),
-				front(-UNIT_Z),
-				right(UNIT_X),
-				up(UNIT_Y),
-				rotation(1.0f, 0.0f, 0.0f, 0.0f) // = no-op rotation quaternion
+	positionModified(true),
+	rotationModified(true),
+	movementSpeed(1),
+	turnSpeed(1),
+	modelMatrix(1.0f),
+	position(0.0f, 0.0f, 0.0f),
+	front(-UNIT_Z),
+	right(UNIT_X),
+	up(UNIT_Y),
+	rotation(1.0f, 0.0f, 0.0f, 0.0f) // = no-op rotation quaternion
 {
 	uid = UIDGenerator::instance()->next();
 	updateModelMatrix();
@@ -74,19 +73,16 @@ void GameEntity::rotateZ(const float angleRadians)
 
 void GameEntity::rotate(const float angleRadians, const glm::vec3 & axis)
 {
-//	rotation = glm::rotate(rotation, glm::degrees(angleRadians), axis);
-  glm::quat mod_rot = glm::angleAxis(glm::degrees(angleRadians), axis);
-  rotation = mod_rot * rotation;
+	glm::quat mod_rot = glm::angleAxis(angleRadians, axis);
+	rotation = mod_rot * rotation;
 	rotation = glm::normalize(rotation);
 	rotationModified = true;
 }
 
 void GameEntity::rotateGlobal(const float angleRadians, const glm::vec3 & axis)
 {
-//	rotation = glm::rotate(rotation, glm::degrees(angleRadians), axis);
-//	rotation = glm::normalize(rotation);
-  glm::quat mod_rot = glm::angleAxis(glm::degrees(angleRadians), axis);
-  rotation = rotation * mod_rot ;
+	glm::quat mod_rot = glm::angleAxis(angleRadians, axis);
+	rotation = rotation * mod_rot;
 	rotationModified = true;
 }
 void GameEntity::update()

@@ -12,7 +12,7 @@
 #include <iostream>
 
 FreeMovementCam::FreeMovementCam(shared_ptr<sf::Window> window) :
-				window(window)
+	window(window)
 {
 	windowXhalf = window->getSize().x / 2;
 	windowYhalf = window->getSize().y / 2;

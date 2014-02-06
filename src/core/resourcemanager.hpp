@@ -14,26 +14,26 @@
 
 class ResourceManager
 {
-public:
-	ResourceManager(const boost::filesystem::path & resourceDirectory);
-	virtual ~ResourceManager();
+	public:
+		ResourceManager(const boost::filesystem::path & resourceDirectory);
+		virtual ~ResourceManager();
 
-	shared_ptr<Mesh>     getMesh(const std::string & name);
-	shared_ptr<Material> getMaterial(const std::string & name);
-	shared_ptr<Texture>  getTexture(const std::string & name);
-	shared_ptr<Shader>   getShader(const std::string & name);
+		shared_ptr<Mesh>     getMesh(const std::string & name);
+		shared_ptr<Material> getMaterial(const std::string & name);
+		shared_ptr<Texture>  getTexture(const std::string & name);
+		shared_ptr<Shader>   getShader(const std::string & name);
 
-	static const std::string TEXTURES_DIR;
-	static const std::string MATERIALS_DIR;
-	static const std::string MODELS_DIR;
-	static const std::string SHADERS_DIR;
+		static const std::string TEXTURES_DIR;
+		static const std::string MATERIALS_DIR;
+		static const std::string MODELS_DIR;
+		static const std::string SHADERS_DIR;
 
-protected:
-	//Resource Caches
-	ResourceCache<Texture> 	textureCache;
-	ResourceCache<Material> materialCache;
-	ResourceCache<Mesh> 	  meshCache;
-	ResourceCache<Shader> 	shaderCache;
+	protected:
+		//Resource Caches
+		ResourceCache<Texture> 	textureCache;
+		ResourceCache<Material> materialCache;
+		ResourceCache<Mesh> 	  meshCache;
+		ResourceCache<Shader> 	shaderCache;
 };
 
 #endif /* RESOURCEMANAGER_HPP_ */

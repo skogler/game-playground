@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include "core/definitions.hpp"
 
@@ -14,13 +15,13 @@
  */
 class Level
 {
-public:
-	Level(const std::string & filename);
-	virtual ~Level();
-protected:
-	shared_ptr<Terrain> terrain;
-	std::vector<glm::vec2> spawnPoints;
-	std::vector<std::string> resourceList;
+	public:
+		Level(const std::string & filename);
+		virtual ~Level();
+	protected:
+		shared_ptr<Terrain> terrain;
+		std::vector<glm::vec2> spawnPoints;
+		std::vector<std::string> resourceList;
 };
 
 #endif /* LEVEL_HPP_ */

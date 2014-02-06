@@ -14,18 +14,18 @@ using std::vector;
  * Load our default shader on creation.
  */
 OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager, shared_ptr<Camera> camera) :
-				colorShader(new ShaderProgram()),
-				textureShader(new ShaderProgram()),
-				debugShader(new ShaderProgram()),
-				camera(camera),
-				aspectRatio(10.0f),
-				fov(45.0f),
-				debugGridEnabled(true),
-				debugAxesEnabled(true),
-				debugGridMaterial(resourceManager->getMaterial("debug")),
-				redMaterial(resourceManager->getMaterial("debugRed")),
-				blueMaterial(resourceManager->getMaterial("debugBlue")),
-				greenMaterial(resourceManager->getMaterial("debugGreen"))
+	colorShader(new ShaderProgram()),
+	textureShader(new ShaderProgram()),
+	debugShader(new ShaderProgram()),
+	camera(camera),
+	aspectRatio(10.0f),
+	fov(45.0f),
+	debugGridEnabled(true),
+	debugAxesEnabled(true),
+	debugGridMaterial(resourceManager->getMaterial("debug")),
+	redMaterial(resourceManager->getMaterial("debugRed")),
+	blueMaterial(resourceManager->getMaterial("debugBlue")),
+	greenMaterial(resourceManager->getMaterial("debugGreen"))
 {
 	debugShader->attachShader(resourceManager->getShader("defaultNoLight.vert"));
 	debugShader->attachShader(resourceManager->getShader("colorNoLight.frag"));
@@ -153,7 +153,7 @@ void OGLRenderer::enableDebugGrid(const bool show)
 
 void OGLRenderer::setWindowSize(const unsigned int width, const unsigned int height)
 {
-  glViewport(0, 0, width, height);
+	glViewport(0, 0, width, height);
 	aspectRatio = (float)width / (float)height;
 	updateProjectionMatrix();
 }
@@ -186,24 +186,24 @@ void OGLRenderer::endFrame()
 		}
 		colorShader->bind();
 	}
-//  GLenum err (glGetError());
+	//  GLenum err (glGetError());
 
-//  while(err!=GL_NO_ERROR)
-//  {
-//    std::string error;
-//
-//    switch(err)
-//    {
-//      case GL_INVALID_OPERATION:      error="INVALID_OPERATION";      break;
-//      case GL_INVALID_ENUM:           error="INVALID_ENUM";           break;
-//      case GL_INVALID_VALUE:          error="INVALID_VALUE";          break;
-//      case GL_OUT_OF_MEMORY:          error="OUT_OF_MEMORY";          break;
-//      case GL_INVALID_FRAMEBUFFER_OPERATION:  error="INVALID_FRAMEBUFFER_OPERATION";  break;
-//    }
-//
-//    std::cerr <<"OGL errrer: GL_" << error << std::endl;
-//    err=glGetError();
-//  }
+	//  while(err!=GL_NO_ERROR)
+	//  {
+	//    std::string error;
+	//
+	//    switch(err)
+	//    {
+	//      case GL_INVALID_OPERATION:      error="INVALID_OPERATION";      break;
+	//      case GL_INVALID_ENUM:           error="INVALID_ENUM";           break;
+	//      case GL_INVALID_VALUE:          error="INVALID_VALUE";          break;
+	//      case GL_OUT_OF_MEMORY:          error="OUT_OF_MEMORY";          break;
+	//      case GL_INVALID_FRAMEBUFFER_OPERATION:  error="INVALID_FRAMEBUFFER_OPERATION";  break;
+	//    }
+	//
+	//    std::cerr <<"OGL errrer: GL_" << error << std::endl;
+	//    err=glGetError();
+	//  }
 }
 
 void OGLRenderer::drawDebugGrid()

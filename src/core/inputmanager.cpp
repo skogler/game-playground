@@ -34,7 +34,7 @@ void InputManager::handleUserInput(InputEvent* inEvent)
 	for (it = vListeners.begin(); it != vListeners.end(); it++)
 	{
 		(*it)->handleinput(inEvent);
-    }
-    delete inEvent; //FIXME: this was a quick fix to prevent memory leak. TODO: Design the system better so this is not necessary
+	}
+	delete inEvent; //FIXME: this was a quick fix to prevent memory leak. TODO: Design the system better so this is not necessary
 }
 

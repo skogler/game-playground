@@ -34,7 +34,7 @@ void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext)
 	void * caller_address = (void *) uc->uc_mcontext.rip; // x86 specific
 
 	std::cerr << "signal " << sig_num << " (" << strsignal(sig_num) << "), address is " << info->si_addr << " from " << caller_address
-			<< std::endl << std::endl;
+		<< std::endl << std::endl;
 
 	void * array[50];
 	int size = backtrace(array, 50);
@@ -86,7 +86,7 @@ void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext)
 			else
 			{
 				std::cerr << "[bt]: (" << i << ") " << messages[i] << " : " << mangled_name << "+" << offset_begin << offset_end
-						<< std::endl;
+					<< std::endl;
 			}
 			free(real_name);
 		}
@@ -109,8 +109,8 @@ void registerErrorHandler()
 
 	sigact.sa_sigaction = crit_err_hdlr;
 	sigact.sa_flags = SA_RESTART | SA_SIGINFO;
-  sigemptyset(&sigact.sa_mask);
-  sigaddset(&sigact.sa_mask, SIGINT); //sigint is not allowed to interrupt our handler
+	sigemptyset(&sigact.sa_mask);
+	sigaddset(&sigact.sa_mask, SIGINT); //sigint is not allowed to interrupt our handler
 
 	if (sigaction(SIGSEGV, &sigact, (struct sigaction *) NULL) != 0)
 	{

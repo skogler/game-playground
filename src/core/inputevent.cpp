@@ -7,10 +7,10 @@
 
 #include "inputevent.hpp"
 
-InputEvent::InputEvent(std::set<Action> actionSet, std::set<State> stateSet, bool mouseMoved)
-    : actionSet(actionSet),
-      stateSet(stateSet),
-      mouseMoved(mouseMoved)
+	InputEvent::InputEvent(std::set<Action> actionSet, std::set<State> stateSet, bool mouseMoved)
+: actionSet(actionSet),
+	stateSet(stateSet),
+	mouseMoved(mouseMoved)
 {
 }
 

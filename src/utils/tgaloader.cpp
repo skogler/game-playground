@@ -109,7 +109,7 @@ bool TgaLoader::loadUncompressed(FILE * file)
 	for (GLuint cswap = 0; cswap < tga.imageSize; cswap += tga.bytesPerPixel)
 	{
 		imageData[cswap] ^= imageData[cswap + 2] ^= imageData[cswap] ^=
-				imageData[cswap + 2];
+			imageData[cswap + 2];
 	}
 
 	fclose(file);

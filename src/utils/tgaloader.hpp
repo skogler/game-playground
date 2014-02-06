@@ -37,31 +37,31 @@ typedef struct
 } TGAInfo;
 class TgaLoader
 {
-public:
-	TgaLoader();
-	virtual ~TgaLoader();
+	public:
+		TgaLoader();
+		virtual ~TgaLoader();
 
-	bool loadTGAFile(std::string filename);
+		bool loadTGAFile(std::string filename);
 
-	TGAInfo getTga() const
-	{
-		return tga;
-	}
+		TGAInfo getTga() const
+		{
+			return tga;
+		}
 
-	GLubyte* getImageData() const
-	{
-		return imageData;
-	}
+		GLubyte* getImageData() const
+		{
+			return imageData;
+		}
 
-private:
+	private:
 
-	//TGA data
-	TGAHeader tgaheader;
-	TGAInfo tga;
-	GLubyte	* imageData;
+		//TGA data
+		TGAHeader tgaheader;
+		TGAInfo tga;
+		GLubyte	* imageData;
 
-	bool loadUncompressed(FILE * file);
-	bool loadCompressed(FILE * file);
+		bool loadUncompressed(FILE * file);
+		bool loadCompressed(FILE * file);
 };
 
 #endif /* TGALOADER_HPP_ */

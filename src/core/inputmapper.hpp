@@ -15,28 +15,28 @@
 
 class InputMapper {
 
-private:
-	std::map<sf::Keyboard::Key, Action> keyboardActionMap;
-	std::map<sf::Keyboard::Key, State> keyboardStateMap;
+	private:
+		std::map<sf::Keyboard::Key, Action> keyboardActionMap;
+		std::map<sf::Keyboard::Key, State> keyboardStateMap;
 
-	std::set<Action> actionSet;
-	std::set<State> stateSet;
-	bool mouseMoved;
-	InputEvent* currentInputEvent;
+		std::set<Action> actionSet;
+		std::set<State> stateSet;
+		bool mouseMoved;
+		InputEvent* currentInputEvent;
 
-	//Iterators
-	std::map<sf::Keyboard::Key, Action>::iterator itKActionMap;
-	std::map<sf::Keyboard::Key, State>::iterator itKStateMap;
-	std::set<State>::iterator itStateSet;
+		//Iterators
+		std::map<sf::Keyboard::Key, Action>::iterator itKActionMap;
+		std::map<sf::Keyboard::Key, State>::iterator itKStateMap;
+		std::set<State>::iterator itStateSet;
 
 
-public:
-	InputMapper();
-	virtual ~InputMapper();
+	public:
+		InputMapper();
+		virtual ~InputMapper();
 
-	InputEvent* retrieveInputEvent();
+		InputEvent* retrieveInputEvent();
 
-	void mapInputEvent(sf::Event event);
+		void mapInputEvent(sf::Event event);
 };
 
 #endif /* INPUTMAPPER_HPP_ */

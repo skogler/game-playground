@@ -12,32 +12,32 @@ namespace fs = boost::filesystem;
 template<class T>
 class ResourceCache
 {
-public:
-	ResourceCache(const boost::filesystem::path & baseDirectory, const std::string & fileEnding);
-	virtual ~ResourceCache();
-	void setBaseDirectory(const std::string & baseDirectory);
+	public:
+		ResourceCache(const boost::filesystem::path & baseDirectory, const std::string & fileEnding);
+		virtual ~ResourceCache();
+		void setBaseDirectory(const std::string & baseDirectory);
 
-	/**
-	 * Gets the resource with the specified name.
-	 * Name is relative to baseDirectory, the file ending is added automatically.
-	 * If not found, throws a runtime error.
-	 */
-	shared_ptr<T> get(const std::string & name);
-	bool load(const std::string & name);
+		/**
+		 * Gets the resource with the specified name.
+		 * Name is relative to baseDirectory, the file ending is added automatically.
+		 * If not found, throws a runtime error.
+		 */
+		shared_ptr<T> get(const std::string & name);
+		bool load(const std::string & name);
 
-protected:
-	fs::path baseDirectory;
-	std::string fileEnding;
-	std::map<std::string, shared_ptr<T> > loadedResources;
+	protected:
+		fs::path baseDirectory;
+		std::string fileEnding;
+		std::map<std::string, shared_ptr<T> > loadedResources;
 
-//	std::vector<fs::path> resourceList;
-//	void createResourceList();
+		//	std::vector<fs::path> resourceList;
+		//	void createResourceList();
 };
 
 template<class T>
 ResourceCache<T>::ResourceCache(const fs::path & baseDirectory, const std::string & fileEnding) :
-				baseDirectory(baseDirectory),
-				fileEnding(fileEnding)
+	baseDirectory(baseDirectory),
+	fileEnding(fileEnding)
 {
 	if (!(fs::exists(this->baseDirectory) && fs::is_directory(this->baseDirectory)))
 	{
@@ -45,12 +45,12 @@ ResourceCache<T>::ResourceCache(const fs::path & baseDirectory, const std::strin
 	}
 	//createResourceList();
 }
-template<class T>
+	template<class T>
 ResourceCache<T>::~ResourceCache()
 {
 }
 
-template<class T>
+	template<class T>
 shared_ptr<T> ResourceCache<T>::get(const std::string& name)
 {
 	typedef typename std::map<std::string, shared_ptr<T> >::iterator It;

@@ -7,15 +7,15 @@
 
 class Texture
 {
-public:
-	Texture(const boost::filesystem::path& path);
-	virtual ~Texture();
-	inline GLuint get_id() { return id; }
+	public:
+		Texture(const boost::filesystem::path& path);
+		virtual ~Texture();
+		inline GLuint get_id() { return id; }
 
-protected:
-	GLuint id;
+	protected:
+		GLuint id;
 
-	void loadFromFile(const boost::filesystem::path& path);
+		void loadFromFile(const boost::filesystem::path& path);
 
 };
 

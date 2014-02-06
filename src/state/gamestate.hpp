@@ -13,20 +13,20 @@
 class GameState
 {
 
-public:
-	virtual void init() = 0;
-	virtual void cleanup() = 0;
+	public:
+		virtual void init() = 0;
+		virtual void cleanup() = 0;
 
-	virtual void pause() = 0;
-	virtual void resume() = 0;
+		virtual void pause() = 0;
+		virtual void resume() = 0;
 
-	virtual void handleEvents(InputEvent* inputEvent) = 0;
-	virtual void update() = 0;
-	virtual void render() = 0;
+		virtual void handleEvents(InputEvent* inputEvent) = 0;
+		virtual void update() = 0;
+		virtual void render() = 0;
 
-    GameState() {};
-    virtual ~GameState() {};
-protected:
+		GameState() {};
+		virtual ~GameState() {};
+	protected:
 
 };
 

@@ -5,9 +5,9 @@
 
 class Unit : public RenderedEntity
 {
-public:
-	Unit();
-	virtual ~Unit();
+	public:
+		Unit();
+		virtual ~Unit();
 };
 
 #endif /* UNIT_HPP_ */

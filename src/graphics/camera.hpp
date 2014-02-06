@@ -1,6 +1,7 @@
 #ifndef CAMERA_INC
 #define CAMERA_INC
 
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 
@@ -14,13 +15,13 @@
  */
 class Camera: public GameEntity , public InputListener
 {
-public:
-	Camera();
-	virtual ~Camera();
+	public:
+		Camera();
+		virtual ~Camera();
 
-	virtual void handleinput(InputEvent* inputEvent );
-protected:
-	virtual void updateModelMatrix();
+		virtual void handleinput(InputEvent* inputEvent );
+	protected:
+		virtual void updateModelMatrix();
 };
 
 #endif /* end of include guard: CAMERA_INC */

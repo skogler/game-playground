@@ -19,24 +19,24 @@
 #include <boost/thread.hpp>
 
 void GLAPIENTRY oglErrorCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
-    GLsizei length, const char* message, void* userParam)
+		GLsizei length, const char* message, void* userParam)
 {
-  Logger::debug(message);
+	Logger::debug(message);
 }
 
 GameStateEngine::GameStateEngine(shared_ptr<FPSManager> fpsManager) :
-				inputManager(new InputManager),
-				inputMapper(new InputMapper),
-				resourceManager(new ResourceManager(boost::filesystem::path("resources"))),
-				window(new sf::Window()),
-				fpsManager(fpsManager),
-				defaultCamera(new NoOpCamera())
+	inputManager(new InputManager),
+	inputMapper(new InputMapper),
+	resourceManager(new ResourceManager(boost::filesystem::path("resources"))),
+	window(new sf::Window()),
+	fpsManager(fpsManager),
+	defaultCamera(new NoOpCamera())
 {
 }
 
 GameStateEngine::~GameStateEngine()
 {
-  window->close();
+	window->close();
 }
 
 /**
@@ -53,9 +53,9 @@ bool GameStateEngine::init()
 	contextSettings.majorVersion = 4;
 	contextSettings.minorVersion = 2;
 
-  window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
-  window->setVerticalSyncEnabled(true);
-//	window->create(sf::VideoMode::getFullscreenModes()[0], "game-playground", sf::Style::Close | sf::Style::Fullscreen, contextSettings);
+	window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
+	window->setVerticalSyncEnabled(true);
+	//	window->create(sf::VideoMode::getFullscreenModes()[0], "game-playground", sf::Style::Close | sf::Style::Fullscreen, contextSettings);
 
 	//window->setFramerateLimit(50);
 
@@ -66,11 +66,11 @@ bool GameStateEngine::init()
 		throw std::runtime_error("Error initializing OpenGL(GLEW), maybe because of no/old video driver.");
 	}
 
-  if (glewIsSupported("GL_ARB_debug_output"))
-  {
-    glDebugMessageCallbackARB(oglErrorCallback, NULL);
-    glEnable(GL_DEBUG_OUTPUT);
-  }
+	if (glewIsSupported("GL_ARB_debug_output"))
+	{
+		glDebugMessageCallbackARB(oglErrorCallback, NULL);
+		glEnable(GL_DEBUG_OUTPUT);
+	}
 
 
 	window->display();
@@ -100,8 +100,8 @@ void GameStateEngine::pushState(shared_ptr<GameState> state)
  */
 void GameStateEngine::popState()
 {
-    shared_ptr<GameState> last = states.back();
-    states.pop_back();
+	shared_ptr<GameState> last = states.back();
+	states.pop_back();
 }
 
 /*
@@ -115,14 +115,14 @@ void GameStateEngine::handleInput()
 	{
 		//TODO: remove check for exit
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-    {
+		{
 			quit();
-    }
-    if (event.type==sf::Event::Resized)
-    {
-      renderer->setWindowSize(event.size.width, event.size.height);
-      window->display();
-    }
+		}
+		if (event.type==sf::Event::Resized)
+		{
+			renderer->setWindowSize(event.size.width, event.size.height);
+			window->display();
+		}
 		inputMapper->mapInputEvent(event);
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());

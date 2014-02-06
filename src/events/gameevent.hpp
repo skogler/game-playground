@@ -9,9 +9,9 @@
 #define GAMEEVENT_HPP_
 
 class GameEvent {
-public:
-	GameEvent();
-	virtual ~GameEvent();
+	public:
+		GameEvent();
+		virtual ~GameEvent();
 };
 
 #endif /* GAMEEVENT_HPP_ */

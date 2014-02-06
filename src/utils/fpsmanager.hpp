@@ -16,46 +16,46 @@
 
 class FPSManager {
 
-private:
-	unsigned short int avarageCalculationFrameCount;
-	unsigned short int delta;
-	unsigned short int fixedFrameRate;
-	boost::circular_buffer<unsigned short int> frameTimeCiBuffer;
-	boost::chrono::high_resolution_clock::time_point start;
-	boost::chrono::high_resolution_clock::time_point end;
+	private:
+		unsigned short int avarageCalculationFrameCount;
+		unsigned short int delta;
+		unsigned short int fixedFrameRate;
+		boost::circular_buffer<unsigned short int> frameTimeCiBuffer;
+		boost::chrono::high_resolution_clock::time_point start;
+		boost::chrono::high_resolution_clock::time_point end;
 
-	boost::chrono::milliseconds calculateframeTime();
+		boost::chrono::milliseconds calculateframeTime();
 
 
-public:
-	FPSManager();
-	FPSManager(int startDelta);
-	virtual ~FPSManager();
+	public:
+		FPSManager();
+		FPSManager(int startDelta);
+		virtual ~FPSManager();
 
-	void markStartPoint();
-	void markEndPoint();
-	void markFixedRateEndPoint();
-	void setFixedFrameRate(unsigned short int fixedFrameRate);
+		void markStartPoint();
+		void markEndPoint();
+		void markFixedRateEndPoint();
+		void setFixedFrameRate(unsigned short int fixedFrameRate);
 
-	unsigned short int getFixedFrameRate() const
-	{
-		return fixedFrameRate;
-	}
+		unsigned short int getFixedFrameRate() const
+		{
+			return fixedFrameRate;
+		}
 
-	unsigned short int getAvarageCalculationFrameCount() const
-	{
-		return avarageCalculationFrameCount;
-	}
+		unsigned short int getAvarageCalculationFrameCount() const
+		{
+			return avarageCalculationFrameCount;
+		}
 
-	void setAvarageCalculationFrameCount(unsigned short int avarageCalculationFrameCount)
-	{
-		this->avarageCalculationFrameCount = avarageCalculationFrameCount;
-	}
+		void setAvarageCalculationFrameCount(unsigned short int avarageCalculationFrameCount)
+		{
+			this->avarageCalculationFrameCount = avarageCalculationFrameCount;
+		}
 
-	unsigned short int getDelta() const
-	{
-		return delta;
-	}
+		unsigned short int getDelta() const
+		{
+			return delta;
+		}
 };
 
 #endif /* FPSMANAGER_HPP_ */

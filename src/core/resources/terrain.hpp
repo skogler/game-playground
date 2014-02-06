@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include "utils/tgaloader.hpp"
@@ -38,47 +39,47 @@ struct STGA
 
 class Terrain
 {
-public:
-	Terrain();
-	virtual ~Terrain();
+	public:
+		Terrain();
+		virtual ~Terrain();
 
-	void init();
-	void cleanup();
+		void init();
+		void cleanup();
 
-	void loadHeightMapFromTGA(std::string filename);
+		void loadHeightMapFromTGA(std::string filename);
 
-	void createVerticeData();
-	void renderTest();
-	void render();
-	void loadRawFile(std::string filename, int width, int height);
-	void loadImageFile(std::string filename);
-	void createVerticeDataFromTGA();
-	bool loadTGA(const char * filename);
-	float rgbHeight(int nX, int nY);
+		void createVerticeData();
+		void renderTest();
+		void render();
+		void loadRawFile(std::string filename, int width, int height);
+		void loadImageFile(std::string filename);
+		void createVerticeDataFromTGA();
+		bool loadTGA(const char * filename);
+		float rgbHeight(int nX, int nY);
 
-private:
-	GLubyte *heighmap;
-	TGAInfo tgaInf;
+	private:
+		GLubyte *heighmap;
+		TGAInfo tgaInf;
 
-	int retreiveHeight(int x, int y);
+		int retreiveHeight(int x, int y);
 
-	//To be removed
-	STGA tgaFile;
+		//To be removed
+		STGA tgaFile;
 
-	//Heighfield vars
-	float yOffset;
-	float xOffset;
-	float zOffset;
-	unsigned int hWidth;
-	unsigned int hHeight;
-	float *terrainHeights;
-	float *terrainNormals;
+		//Heighfield vars
+		float yOffset;
+		float xOffset;
+		float zOffset;
+		unsigned int hWidth;
+		unsigned int hHeight;
+		float *terrainHeights;
+		float *terrainNormals;
 
-	unsigned char heightMap[1024][1024];
+		unsigned char heightMap[1024][1024];
 
-	//Render vars
-	std::vector<glm::vec3> vertices;
-	GLuint vertexBuffer;
+		//Render vars
+		std::vector<glm::vec3> vertices;
+		GLuint vertexBuffer;
 
 };
 

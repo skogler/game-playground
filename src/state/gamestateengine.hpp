@@ -24,81 +24,81 @@
 
 class GameStateEngine
 {
-private:
-	bool running;
-	// the stack of states
-	std::vector<shared_ptr<GameState>> states;
+	private:
+		bool running;
+		// the stack of states
+		std::vector<shared_ptr<GameState>> states;
 
-	//Input
-	shared_ptr<InputManager> inputManager;
-	boost::scoped_ptr<InputMapper> inputMapper;
+		//Input
+		shared_ptr<InputManager> inputManager;
+		boost::scoped_ptr<InputMapper> inputMapper;
 
-	// Resource Manager
-	shared_ptr<ResourceManager> resourceManager;
+		// Resource Manager
+		shared_ptr<ResourceManager> resourceManager;
 
-	//OpenGL context-settings and window
-	sf::ContextSettings contextSettings;
-	shared_ptr<sf::Window> window;
+		//OpenGL context-settings and window
+		sf::ContextSettings contextSettings;
+		shared_ptr<sf::Window> window;
 
-	shared_ptr<FPSManager> fpsManager;
-	shared_ptr<Renderer> renderer;
-	shared_ptr<Camera> defaultCamera;
+		shared_ptr<FPSManager> fpsManager;
+		shared_ptr<Renderer> renderer;
+		shared_ptr<Camera> defaultCamera;
 
-public:
-	GameStateEngine(shared_ptr<FPSManager> fpsManager);
-	virtual ~GameStateEngine();
+	public:
+		GameStateEngine(shared_ptr<FPSManager> fpsManager);
+		virtual ~GameStateEngine();
 
-	bool init();
+		bool init();
 
-	void changeGameState(shared_ptr<GameState> state);
-	void pushState(shared_ptr<GameState> state);
-	void popState();
+		void changeGameState(shared_ptr<GameState> state);
+		void pushState(shared_ptr<GameState> state);
+		void popState();
 
-	void handleInput();
-	void update();
-	void render();
-	void updateWindow();
+		void handleInput();
+		void update();
+		void render();
+		void updateWindow();
 
-	inline shared_ptr<Renderer> getRenderer() const
-	{
-		return renderer;
-	}
+		inline shared_ptr<Renderer> getRenderer() const
+		{
+			return renderer;
+		}
 
-	inline shared_ptr<ResourceManager> getResourceManager()
-	{
-		return resourceManager;
-	}
+		inline shared_ptr<ResourceManager> getResourceManager()
+		{
+			return resourceManager;
+		}
 
-	inline shared_ptr<InputManager> getInputManager()
-	{
-		return inputManager;
-	}
+		inline shared_ptr<InputManager> getInputManager()
+		{
+			return inputManager;
+		}
 
-	inline shared_ptr<sf::Window> getWindow()
-	{
-		return window;
-	}
+		inline shared_ptr<sf::Window> getWindow()
+		{
+			return window;
+		}
 
-	//Getters and Setters
-	inline const std::vector<shared_ptr<GameState>> & getStates() const
-	{
-		return states;
-	}
+		//Getters and Setters
+		inline const std::vector<shared_ptr<GameState>> & getStates() const
+		{
+			return states;
+		}
 
-	inline bool isRunning() const
-	{
-		return running;
-	}
+		inline bool isRunning() const
+		{
+			return running;
+		}
 
-	inline void start()
-	{
-		running = true;
-	}
+		inline void start()
+		{
+			running = true;
+		}
 
-	inline void quit()
-	{
-		running = false;
-	}
+		inline void quit()
+		{
+			running = false;
+		}
 };
 
 #endif /* GAMESTATEENGINE_HPP_ */

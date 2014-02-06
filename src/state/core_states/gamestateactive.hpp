@@ -26,37 +26,37 @@
 
 class GameStateActive: public GameState
 {
-public:
-	GameStateActive(shared_ptr<Renderer> renderer,
-			shared_ptr<InputManager> inputManager,
-			shared_ptr<ResourceManager> resourceManager,
-			shared_ptr<sf::Window> window);
-	virtual ~GameStateActive();
+	public:
+		GameStateActive(shared_ptr<Renderer> renderer,
+				shared_ptr<InputManager> inputManager,
+				shared_ptr<ResourceManager> resourceManager,
+				shared_ptr<sf::Window> window);
+		virtual ~GameStateActive();
 
-	void init();
-	void cleanup();
+		void init();
+		void cleanup();
 
-	void pause();
-	void resume();
+		void pause();
+		void resume();
 
-	void handleEvents(InputEvent* inputEvent);
-	void update();
-	void render();
-	void drawGround();
+		void handleEvents(InputEvent* inputEvent);
+		void update();
+		void render();
+		void drawGround();
 
-private:
-	shared_ptr<InputManager> inputManager;
-	shared_ptr<ResourceManager> resourceManager;
-	shared_ptr<FreeMovementCam> freeCam;
-	shared_ptr<Renderer> renderer;
-	std::list<shared_ptr<RenderedEntity> > entities;
-	std::vector<shared_ptr<Light> > lights;
+	private:
+		shared_ptr<InputManager> inputManager;
+		shared_ptr<ResourceManager> resourceManager;
+		shared_ptr<FreeMovementCam> freeCam;
+		shared_ptr<Renderer> renderer;
+		std::list<shared_ptr<RenderedEntity> > entities;
+		std::vector<shared_ptr<Light> > lights;
 
-	//Test start
-	shared_ptr<RenderedEntity> m1;
-	shared_ptr<RenderedEntity> m2;
-	shared_ptr<Terrain> terrain;
-	//Test end
+		//Test start
+		shared_ptr<RenderedEntity> m1;
+		shared_ptr<RenderedEntity> m2;
+		shared_ptr<Terrain> terrain;
+		//Test end
 };
 
 #endif /* GAMESTATEACTIVE_HPP_ */

@@ -64,18 +64,18 @@ void Texture::loadFromFile(const fs::path& path)
 	unsigned int textureFormat;
 	switch (compressionFormat)
 	{
-	case ID_DXT1:
-		textureFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
-		break;
-	case ID_DXT3:
-		textureFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
-		break;
-	case ID_DXT5:
-		textureFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-		break;
-	default:
-		free(buffer);
-		throw std::runtime_error("Unsupported DDS image format: " + path.string());
+		case ID_DXT1:
+			textureFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+			break;
+		case ID_DXT3:
+			textureFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+			break;
+		case ID_DXT5:
+			textureFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+			break;
+		default:
+			free(buffer);
+			throw std::runtime_error("Unsupported DDS image format: " + path.string());
 	}
 
 	// Create OpenGL texture and use it

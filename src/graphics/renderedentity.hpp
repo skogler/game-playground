@@ -7,22 +7,22 @@
 
 class RenderedEntity: public GameEntity
 {
-public:
-	explicit RenderedEntity();
-	virtual ~RenderedEntity();
+	public:
+		explicit RenderedEntity();
+		virtual ~RenderedEntity();
 
-	inline void setMesh(const shared_ptr<Mesh> mesh)
-	{
+		inline void setMesh(const shared_ptr<Mesh> mesh)
+		{
 
-		this->mesh = mesh;
-	}
+			this->mesh = mesh;
+		}
 
-	inline shared_ptr<Mesh> getMesh()
-	{
-		return mesh;
-	}
-protected:
-	shared_ptr<Mesh> mesh;
+		inline shared_ptr<Mesh> getMesh()
+		{
+			return mesh;
+		}
+	protected:
+		shared_ptr<Mesh> mesh;
 };
 
 #endif /* end of include guard: RENDEREDENTITY_INC */

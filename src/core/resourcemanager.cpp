@@ -14,10 +14,10 @@ const std::string ResourceManager::MATERIALS_DIR = "materials";
 const std::string ResourceManager::SHADERS_DIR= "shaders";
 
 ResourceManager::ResourceManager(const fs::path & resourceDirectory) :
-				textureCache(resourceDirectory / TEXTURES_DIR, "dds"),
-				materialCache(resourceDirectory / MATERIALS_DIR, "m42mat"),
-				meshCache(resourceDirectory / MODELS_DIR, "m42"),
-				shaderCache(resourceDirectory / SHADERS_DIR, "")
+	textureCache(resourceDirectory / TEXTURES_DIR, "dds"),
+	materialCache(resourceDirectory / MATERIALS_DIR, "m42mat"),
+	meshCache(resourceDirectory / MODELS_DIR, "m42"),
+	shaderCache(resourceDirectory / SHADERS_DIR, "")
 {
 }
 

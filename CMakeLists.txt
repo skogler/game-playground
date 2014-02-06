@@ -29,6 +29,9 @@ set(EXECUTABLE_NAME ${PROJECT_NAME})
 FILE(GLOB_RECURSE SRCFILES src/*.cpp)
 add_executable(${EXECUTABLE_NAME} ${SRCFILES})
 
+#Math library
+target_link_libraries(${EXECUTABLE_NAME} m)
+
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 2.0 REQUIRED system window graphics network audio)
@@ -42,8 +45,6 @@ find_package(OpenGL REQUIRED)
 if (OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_LIBRARIES})
-    # or: target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_gl_LIBRARY})
-    target_link_libraries(${EXECUTABLE_NAME} m)  # if you use maths.h
 endif()
 
 # GLEW
@@ -51,6 +52,12 @@ find_package(GLEW REQUIRED)
 if (GLEW_FOUND)
     include_directories(${GLEW_INCLUDE_PATH})
     target_link_libraries(${EXECUTABLE_NAME} ${GLEW_LIBRARY})
+endif()
+
+find_package(CEGUI REQUIRED)
+if (CEGUI_FOUND)
+    include_directories(${CEGUI_INCLUDE_DIR})
+    target_link_libraries(${EXECUTABLE_NAME} ${CEGUI_LIBRARIES})
 endif()
 
 # boost
