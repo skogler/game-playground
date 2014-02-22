@@ -25,8 +25,8 @@ void GLAPIENTRY oglErrorCallback(GLenum source, GLenum type, GLuint id, GLenum s
 }
 
 GameStateEngine::GameStateEngine(shared_ptr<FPSManager> fpsManager) :
-	inputManager(new InputManager),
-	inputMapper(new InputMapper),
+	inputManager(new InputManager()),
+	inputMapper(new InputMapper()),
 	resourceManager(new ResourceManager(boost::filesystem::path("resources"))),
 	window(new sf::Window()),
 	fpsManager(fpsManager),
@@ -51,7 +51,7 @@ bool GameStateEngine::init()
 	contextSettings.stencilBits = 8;
 	contextSettings.antialiasingLevel = 16;
 	contextSettings.majorVersion = 4;
-	contextSettings.minorVersion = 2;
+	contextSettings.minorVersion = 1;
 
 	window->create(sf::VideoMode(1024, 768, 32), "game-playground", sf::Style::Default, contextSettings);
 	window->setVerticalSyncEnabled(true);
@@ -71,13 +71,9 @@ bool GameStateEngine::init()
 		glDebugMessageCallbackARB(oglErrorCallback, NULL);
 		glEnable(GL_DEBUG_OUTPUT);
 	}
-
-
 	window->display();
-
 	renderer = shared_ptr<Renderer>(new OGLRenderer(resourceManager, defaultCamera));
 	renderer->setWindowSize(window->getSize().x, window->getSize().y);
-
 	return true;
 }
 
@@ -133,8 +129,7 @@ void GameStateEngine::handleInput()
  */
 void GameStateEngine::update()
 {
-	shared_ptr<GameState> gstate = states.back();
-	gstate->update();
+	states.back()->update();
 }
 
 /*
@@ -142,8 +137,7 @@ void GameStateEngine::update()
  */
 void GameStateEngine::render()
 {
-	shared_ptr<GameState> gstate = states.back();
-	gstate->render();
+	states.back()->render();
 }
 
 void GameStateEngine::updateWindow()

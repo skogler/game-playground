@@ -1,3 +1,5 @@
+# Log files
+*.log
 # Compiled Object files
 *.slo
 *.lo

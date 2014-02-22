@@ -1,6 +1,6 @@
 #version 330 core
 #pragma optionNV(unroll all)
-#define MAX_LIGHTS 10
+#define MAX_LIGHTS 1
 
 vec3 ambientColor = vec3(0.1f, 0.1f, 0.1f);
 

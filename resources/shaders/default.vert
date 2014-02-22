@@ -1,6 +1,6 @@
 #version 330
 #pragma optionNV(unroll all)
-#define MAX_LIGHTS 10
+#define MAX_LIGHTS 1
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;

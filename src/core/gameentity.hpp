@@ -73,6 +73,7 @@ class GameEntity
 		void lookAt(const glm::vec3& target);
 
 		void rotateGlobal(const float angleRadians, const glm::vec3 & axis);
+
 	protected:
 		int uid;
 		bool positionModified;
