@@ -142,6 +142,6 @@ void GameStateEngine::render()
 
 void GameStateEngine::updateWindow()
 {
-	window->display();
+   window->display();
 }
 

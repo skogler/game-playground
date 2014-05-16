@@ -1,3 +1,7 @@
 #M42 MAT
-type texture
-img troll.dds
+#type texture
+#img troll.dds
+type color
+diffuse 0.093683 0.093683 0.093683 1.000000
+specular 1.000000 1.000000 1.000000 0.000000
+ambient 1.000000

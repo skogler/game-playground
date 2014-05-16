@@ -183,6 +183,8 @@ void OGLRenderer::renderMesh(shared_ptr<Mesh> mesh)
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void OGLRenderer::useMaterial(shared_ptr<Material> material)
@@ -211,6 +213,7 @@ void OGLRenderer::setWindowSize(const unsigned int width, const unsigned int hei
 
 void OGLRenderer::startFrame()
 {
+	CEGUI::System::getSingleton().injectTimePulse(0.1f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_BLEND);
@@ -242,25 +245,27 @@ void OGLRenderer::endFrame()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glActiveTexture(GL_TEXTURE0);
 	glUseProgram(0);
+	//TODO: make this work with caching
+	CEGUI::System::getSingleton().invalidateAllCachedRendering();
 	CEGUI::System::getSingleton().renderAllGUIContexts();
-	  GLenum err (glGetError());
+	//GLenum err (glGetError());
 
-	  while(err!=GL_NO_ERROR)
-	  {
-	    std::string error;
-	
-	    switch(err)
-	    {
-	      case GL_INVALID_OPERATION:      error="INVALID_OPERATION";      break;
-	      case GL_INVALID_ENUM:           error="INVALID_ENUM";           break;
-	      case GL_INVALID_VALUE:          error="INVALID_VALUE";          break;
-	      case GL_OUT_OF_MEMORY:          error="OUT_OF_MEMORY";          break;
-	      case GL_INVALID_FRAMEBUFFER_OPERATION:  error="INVALID_FRAMEBUFFER_OPERATION";  break;
-	    }
-	
-	    std::cerr <<"OGL error: GL_" << error << std::endl;
-	    err=glGetError();
-	  }
+	//  while(err!=GL_NO_ERROR)
+	//  {
+	//    std::string error;
+	//
+	//    switch(err)
+	//    {
+	//      case GL_INVALID_OPERATION:      error="INVALID_OPERATION";      break;
+	//      case GL_INVALID_ENUM:           error="INVALID_ENUM";           break;
+	//      case GL_INVALID_VALUE:          error="INVALID_VALUE";          break;
+	//      case GL_OUT_OF_MEMORY:          error="OUT_OF_MEMORY";          break;
+	//      case GL_INVALID_FRAMEBUFFER_OPERATION:  error="INVALID_FRAMEBUFFER_OPERATION";  break;
+	//    }
+	//
+	//    std::cerr <<"OGL error: GL_" << error << std::endl;
+	//    err=glGetError();
+	//  }
 }
 
 void OGLRenderer::drawDebugGrid()

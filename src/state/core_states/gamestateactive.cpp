@@ -48,24 +48,24 @@ void GameStateActive::init()
 	shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
 	mesh->upload();
 
-	for (int x_coord = -30; x_coord < 30; x_coord += 5)
-	{
-	  for (int z_coord = -30; z_coord < 30; z_coord += 5)
-	  {
+	//for (int x_coord = -30; x_coord < 30; x_coord += 5)
+	//{
+	//  for (int z_coord = -30; z_coord < 30; z_coord += 5)
+	//  {
 	    shared_ptr<RenderedEntity> re = shared_ptr<RenderedEntity>(new RenderedEntity());
 	    re->setMesh(mesh);
-	    glm::vec3 position(x_coord, 0.0f, z_coord);
+	    glm::vec3 position(1, 0.0f, 0);
 	    re->setPosition(position);
 	    re->rotateX(-1.57f);
 	    entities.push_back(re);
-	  }
-	}
-	m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
-	m1->setMesh(mesh);
-	glm::vec3 position(0.0f, 5.0f, 0.0f);
-	m1->setPosition(position);
-	m1->rotateX(-1.57f);
-	entities.push_back(m1);
+	//  }
+	//}
+	//m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
+	//m1->setMesh(mesh);
+	//glm::vec3 position(0.0f, 5.0f, 0.0f);
+	//m1->setPosition(position);
+	//m1->rotateX(-1.57f);
+	//entities.push_back(m1);
 	
 	glm::vec3 whiteLightPosition(0.0f, 1000.0f, 1000.0f);
 	Light whiteLight(whiteLightPosition);
