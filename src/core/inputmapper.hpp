@@ -8,35 +8,35 @@
 #ifndef INPUTMAPPER_HPP_
 #define INPUTMAPPER_HPP_
 
-#include <map>
-#include <SFML/Window/Event.hpp>
-#include "inputevent.hpp"
 #include "definitions.hpp"
+#include "inputevent.hpp"
+#include <SDL2/SDL.h>
+#include <map>
 
-class InputMapper {
+class InputMapper
+{
+private:
+    std::map<SDL_Keycode, Action> keyboardActionMap;
+    std::map<SDL_Keycode, State>  keyboardStateMap;
 
-	private:
-		std::map<sf::Keyboard::Key, Action> keyboardActionMap;
-		std::map<sf::Keyboard::Key, State> keyboardStateMap;
+    std::set<Action> actionSet;
+    std::set<State>  stateSet;
+    bool             mouseMoved;
+    InputEvent       currentInputEvent;
 
-		std::set<Action> actionSet;
-		std::set<State> stateSet;
-		bool mouseMoved;
-		InputEvent currentInputEvent;
+    // Iterators
+    decltype(keyboardActionMap)::iterator itKActionMap;
+    decltype(keyboardStateMap)::iterator itKStateMap;
+    decltype(stateSet)::iterator itStateSet;
 
-		//Iterators
-		std::map<sf::Keyboard::Key, Action>::iterator itKActionMap;
-		std::map<sf::Keyboard::Key, State>::iterator itKStateMap;
-		std::set<State>::iterator itStateSet;
+public:
+    InputMapper();
+    virtual ~InputMapper();
 
-	public:
-		InputMapper();
-		virtual ~InputMapper();
+    InputEvent& retrieveInputEvent();
 
-		InputEvent& retrieveInputEvent();
-
-		void mapInputEvent(sf::Event event);
-        void endFrame();
+    void mapInputEvent(SDL_Event& event);
+    void endFrame();
 };
 
 #endif /* INPUTMAPPER_HPP_ */

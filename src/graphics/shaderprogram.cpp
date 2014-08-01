@@ -76,7 +76,6 @@ void ShaderProgram::allocateUniforms()
 			allocateLight();
 		}
 	}
-	checkGLErrors();
 }
 
 void ShaderProgram::setLight(int index, const Light& light)
@@ -114,7 +113,6 @@ void ShaderProgram::attachShader(shared_ptr<Shader> shader)
 {
 	shaders.push_back(shader);
 	glAttachShader(programId, shader->getShaderId());
-	checkGLErrors();
 }
 
 void ShaderProgram::link()

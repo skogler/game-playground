@@ -27,7 +27,7 @@ int main()
 		return 1;
 	}
 
-	shared_ptr<GameState> gameStateActive(new GameStateActive(gse.getRenderer(), gse.getInputManager(), gse.getResourceManager(), gse.getWindow()));
+	shared_ptr<GameState> gameStateActive(new GameStateActive(gse.getRenderer(), gse.getInputManager(), gse.getResourceManager()));
 	gse.pushState(gameStateActive);
 	int count = 0;
 	while (gse.isRunning())

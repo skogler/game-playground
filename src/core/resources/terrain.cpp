@@ -7,7 +7,7 @@
 #include <boost/lexical_cast.hpp>
 #include <glm/glm.hpp>
 #include "utils/logger.hpp"
-#include <SFML/Graphics/Image.hpp>
+//#include <SFML/Graphics/Image.hpp>
 using namespace std;
 
 #define MESH_RESOLUTION 4.0f									// Pixels Per Vertex
@@ -118,40 +118,40 @@ void Terrain::loadRawFile(std::string filename, int width, int height)
 	fclose(pFile);
 }
 
-void Terrain::loadImageFile(std::string filename)
-{
-	int aux;
-	sf::Image img;
-	if (img.loadFromFile(filename.c_str()))
-	{
-		std::cout << "worked" << endl;
-	}
-
-	hWidth = img.getSize().x;
-	hHeight = img.getSize().y;
-
-	terrainHeights = (float *) malloc(hWidth * hHeight * sizeof(float));
-
-	std::size_t size = hWidth * hHeight * 4;
-	std::vector<sf::Uint8> pixelData(size);
-	const sf::Uint8 * p = img.getPixelsPtr();
-	pixelData.assign(p, p + size);
-	std::cout << "pixel Data size: " << pixelData.size() << "empty: "
-		<< pixelData.empty() << std::endl;
-	for (unsigned int i = 0; i < hHeight; i++)
-	{
-		for (unsigned int j = 0; j < hWidth; j++)
-		{
-			//std::cout << "i: " << i << " j: " << j << std::endl;
-			// compute the height as a value between 0.0 and 1.0
-			aux = (i * hWidth + j);
-			terrainHeights[i * hWidth + j] = (pixelData[aux] / 1.0f);
-			//std::cout << pixelData[aux] / 255.0f << std::endl;
-		}
-	}
-	std::cout << "loadImageFilecomplete + Heights created" << endl;
-
-}
+// void Terrain::loadImageFile(std::string filename)
+// {
+// 	int aux;
+// 	sf::Image img;
+// 	if (img.loadFromFile(filename.c_str()))
+// 	{
+// 		std::cout << "worked" << endl;
+// 	}
+// 
+// 	hWidth = img.getSize().x;
+// 	hHeight = img.getSize().y;
+// 
+// 	terrainHeights = (float *) malloc(hWidth * hHeight * sizeof(float));
+// 
+// 	std::size_t size = hWidth * hHeight * 4;
+// 	std::vector<sf::Uint8> pixelData(size);
+// 	const sf::Uint8 * p = img.getPixelsPtr();
+// 	pixelData.assign(p, p + size);
+// 	std::cout << "pixel Data size: " << pixelData.size() << "empty: "
+// 		<< pixelData.empty() << std::endl;
+// 	for (unsigned int i = 0; i < hHeight; i++)
+// 	{
+// 		for (unsigned int j = 0; j < hWidth; j++)
+// 		{
+// 			//std::cout << "i: " << i << " j: " << j << std::endl;
+// 			// compute the height as a value between 0.0 and 1.0
+// 			aux = (i * hWidth + j);
+// 			terrainHeights[i * hWidth + j] = (pixelData[aux] / 1.0f);
+// 			//std::cout << pixelData[aux] / 255.0f << std::endl;
+// 		}
+// 	}
+// 	std::cout << "loadImageFilecomplete + Heights created" << endl;
+// 
+// }
 
 /**
  * Renders the terrain

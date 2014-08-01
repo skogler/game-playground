@@ -7,17 +7,10 @@
 
 #include "freemovementcam.hpp"
 #include "../graphics-definitions.hpp"
-#include <SFML/Window/Mouse.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <iostream>
 
-FreeMovementCam::FreeMovementCam(shared_ptr<sf::Window> window) :
-	window(window)
+FreeMovementCam::FreeMovementCam()
 {
-	windowXhalf = window->getSize().x / 2;
-	windowYhalf = window->getSize().y / 2;
-	sf::Mouse::setPosition(sf::Vector2<int>(windowXhalf, windowYhalf));
-	window->setMouseCursorVisible(false);
 }
 
 FreeMovementCam::~FreeMovementCam()
@@ -61,23 +54,13 @@ void FreeMovementCam::handleinput(InputEvent& inputEvent)
 	{
 		rotateX(-0.05f);
 	}
-	if (inputEvent.containsAction(ACTION_MOUSE_MOVED))
+	if (inputEvent.mouseMoved)
 	{
-		handleMouseMovement(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
+        static const float sensitivity = 0.01f;
+        float horizMovement = -inputEvent.mouseMotionX * sensitivity;
+        float vertMovement = -inputEvent.mouseMotionY * sensitivity;
+
+        rotateY(horizMovement);
+        rotateGlobal(vertMovement, UNIT_X);
 	}
-}
-
-/**
- * Handles mouse position changes and converts them to camera movements.
- */
-void FreeMovementCam::handleMouseMovement(int x, int y)
-{
-	float sensitivity = 0.001f;
-	float horizMovement = (windowXhalf - x) * sensitivity;
-	float vertMovement = (windowYhalf - y) * sensitivity;
-
-	rotateY(horizMovement);
-	rotateGlobal(vertMovement, UNIT_X);
-
-	sf::Mouse::setPosition(sf::Vector2<int>(windowXhalf, windowYhalf), *window);
 }

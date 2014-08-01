@@ -23,11 +23,10 @@ using std::list;
 
 GameStateActive::GameStateActive(shared_ptr<Renderer> renderer,
 		shared_ptr<InputManager> inputManager,
-		shared_ptr<ResourceManager> resourceManager,
-		shared_ptr<sf::Window> window) :
+		shared_ptr<ResourceManager> resourceManager) :
 	inputManager(inputManager),
 	resourceManager(resourceManager),
-	freeCam(new FreeMovementCam(window)),
+	freeCam(new FreeMovementCam()),
 	renderer(renderer)
 {
 	glm::vec3 cameraPos(0.0f, 0.0f, 20.0f);

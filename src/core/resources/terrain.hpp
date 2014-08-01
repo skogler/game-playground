@@ -52,7 +52,7 @@ class Terrain
 		void renderTest();
 		void render();
 		void loadRawFile(std::string filename, int width, int height);
-		void loadImageFile(std::string filename);
+//		void loadImageFile(std::string filename);
 		void createVerticeDataFromTGA();
 		bool loadTGA(const char * filename);
 		float rgbHeight(int nX, int nY);

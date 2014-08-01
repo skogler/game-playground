@@ -12,26 +12,26 @@
 #include <set>
 using namespace input_constants;
 
-class InputEvent
+class InputEvent final
 {
 private:
     std::set<Action>& actionSet;
     std::set<State>&  stateSet;
-    bool                       mouseMoved;
 
 public:
     InputEvent(std::set<Action>& actionSet,
                std::set<State>&  stateSet,
                bool              mouseMoved);
-    virtual ~InputEvent();
+    ~InputEvent();
+
+    bool                       mouseMoved;
+    int mouseMotionX;
+    int mouseMotionY;
 
     bool containsAction(Action action);
     bool containsState(State state);
 
-    bool isMouseMoved() const
-    {
-        return mouseMoved;
-    }
+
 
     void setStateSet(const std::set<State>& stateSet)
     {

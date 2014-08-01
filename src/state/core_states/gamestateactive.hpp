@@ -29,8 +29,7 @@ class GameStateActive: public GameState
 	public:
 		GameStateActive(shared_ptr<Renderer> renderer,
 				shared_ptr<InputManager> inputManager,
-				shared_ptr<ResourceManager> resourceManager,
-				shared_ptr<sf::Window> window);
+				shared_ptr<ResourceManager> resourceManager);
 		virtual ~GameStateActive();
 
 		void init();

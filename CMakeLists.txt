@@ -32,13 +32,18 @@ add_executable(${EXECUTABLE_NAME} ${SRCFILES})
 #Math library
 target_link_libraries(${EXECUTABLE_NAME} m)
 
-# Detect and add SFML
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-find_package(SFML 2.0 REQUIRED system window graphics network audio)
-if(SFML_FOUND)
-    include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
-endif()
+INCLUDE(FindPkgConfig)
+PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+PKG_SEARCH_MODULE(SDL2_IMAGE REQUIRED SDL2_image)
+PKG_SEARCH_MODULE(SDL2_MIXER REQUIRED SDL2_mixer)
+target_link_libraries(${EXECUTABLE_NAME}   ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+
+PKG_SEARCH_MODULE(CEGUI REQUIRED CEGUI-0)
+target_link_libraries(${EXECUTABLE_NAME} ${CEGUI_LIBRARIES})
+include_directories(${CEGUI_INCLUDE_DIRS})
+PKG_SEARCH_MODULE(CEGUIGL REQUIRED CEGUI-0-OPENGL3)
+target_link_libraries(${EXECUTABLE_NAME} ${CEGUIGL_LIBRARIES})
+include_directories(${CEGUIGL_INCLUDE_DIRS})
 
 # OpenGL
 find_package(OpenGL REQUIRED)
@@ -54,11 +59,11 @@ if (GLEW_FOUND)
     target_link_libraries(${EXECUTABLE_NAME} ${GLEW_LIBRARY})
 endif()
 
-find_package(CEGUI REQUIRED)
-if (CEGUI_FOUND)
-    include_directories(${CEGUI_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${CEGUI_LIBRARIES})
-endif()
+#find_package(CEGUI REQUIRED)
+#if (CEGUI_FOUND)
+#    include_directories(${CEGUI_INCLUDE_DIR})
+#    target_link_libraries(${EXECUTABLE_NAME} ${CEGUI_LIBRARIES})
+#endif()
 
 # boost
 #set(Boost_ADDITIONAL_VERSIONS "1.78" "1.78.0" "1.79" "1.79.0")
