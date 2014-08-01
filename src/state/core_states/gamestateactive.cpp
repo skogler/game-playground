@@ -90,7 +90,7 @@ void GameStateActive::resume()
 {
 }
 
-void GameStateActive::handleEvents(InputEvent* inputEvent)
+void GameStateActive::handleEvents(InputEvent& inputEvent)
 {
 	inputManager->handleUserInput(inputEvent);
 }

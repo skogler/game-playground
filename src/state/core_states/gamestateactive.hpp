@@ -39,7 +39,7 @@ class GameStateActive: public GameState
 		void pause();
 		void resume();
 
-		void handleEvents(InputEvent* inputEvent);
+		void handleEvents(InputEvent& inputEvent);
 		void update();
 		void render();
 		void drawGround();

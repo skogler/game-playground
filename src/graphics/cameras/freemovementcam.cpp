@@ -27,41 +27,41 @@ FreeMovementCam::~FreeMovementCam()
 /**
  * Handles the input events for the camera object.
  */
-void FreeMovementCam::handleinput(InputEvent* inputEvent)
+void FreeMovementCam::handleinput(InputEvent& inputEvent)
 {
-	if (inputEvent->containsState(STATE_CAMERA_MOVING_FORWARD))
+	if (inputEvent.containsState(STATE_CAMERA_MOVING_FORWARD))
 	{
-		this->moveForward(0.1);
+		moveForward(0.1);
 	}
-	if (inputEvent->containsState(STATE_CAMERA_MOVING_BACK))
+	if (inputEvent.containsState(STATE_CAMERA_MOVING_BACK))
 	{
-		this->moveForward(-0.1);
+		moveForward(-0.1);
 	}
-	if (inputEvent->containsState(STATE_CAMERA_MOVE_RIGHT))
+	if (inputEvent.containsState(STATE_CAMERA_MOVE_RIGHT))
 	{
-		this->moveRight(0.1);
+		moveRight(0.1);
 	}
-	if (inputEvent->containsState(STATE_CAMERA_MOVE_LEFT))
+	if (inputEvent.containsState(STATE_CAMERA_MOVE_LEFT))
 	{
-		this->moveRight(-0.1);
+		moveRight(-0.1);
 	}
-	if (inputEvent->containsAction(ACTION_CAMERA_TURN_LEFT))
+	if (inputEvent.containsAction(ACTION_CAMERA_TURN_LEFT))
 	{
-		this->rotateY(-0.01f);
+		rotateY(-0.01f);
 	}
-	if (inputEvent->containsAction(ACTION_CAMERA_TURN_RIGHT))
+	if (inputEvent.containsAction(ACTION_CAMERA_TURN_RIGHT))
 	{
-		this->rotateY(0.01f);
+		rotateY(0.01f);
 	}
-	if (inputEvent->containsAction(ACTION_CAMERA_TURN_UP))
+	if (inputEvent.containsAction(ACTION_CAMERA_TURN_UP))
 	{
-		this->rotateX(0.05f);
+		rotateX(0.05f);
 	}
-	if (inputEvent->containsAction(ACTION_CAMERA_TURN_DOWN))
+	if (inputEvent.containsAction(ACTION_CAMERA_TURN_DOWN))
 	{
-		this->rotateX(-0.05f);
+		rotateX(-0.05f);
 	}
-	if (inputEvent->containsAction(ACTION_MOUSE_MOVED))
+	if (inputEvent.containsAction(ACTION_MOUSE_MOVED))
 	{
 		handleMouseMovement(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
 	}

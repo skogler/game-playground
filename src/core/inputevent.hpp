@@ -12,42 +12,46 @@
 #include <set>
 using namespace input_constants;
 
-class InputEvent {
+class InputEvent
+{
+private:
+    std::set<Action>& actionSet;
+    std::set<State>&  stateSet;
+    bool                       mouseMoved;
 
-	private:
-		std::set<Action> actionSet;
-		std::set<State> stateSet;
-		//Iterators
-		std::set<Action>::iterator itActionSet;
-		std::set<State>::iterator itStateSet;
-		bool mouseMoved;
+public:
+    InputEvent(std::set<Action>& actionSet,
+               std::set<State>&  stateSet,
+               bool              mouseMoved);
+    virtual ~InputEvent();
 
-	public:
-		InputEvent(std::set<Action> actionSet,std::set<State> stateSet, bool mouseMoved);
-		virtual ~InputEvent();
+    bool containsAction(Action action);
+    bool containsState(State state);
 
-		bool containsAction(Action action);
-		bool containsState(State state);
+    bool isMouseMoved() const
+    {
+        return mouseMoved;
+    }
 
-		bool isMouseMoved() const {
-			return mouseMoved;
-		}
+    void setStateSet(const std::set<State>& stateSet)
+    {
+        this->stateSet = stateSet;
+    }
 
-		void setStateSet(std::set<State> stateSet) {
-			this->stateSet = stateSet;
-		}
+    void setActionSet(const std::set<Action>& actionSet)
+    {
+        this->actionSet = actionSet;
+    }
 
-		void setActionSet(std::set<Action> actionSet) {
-			this->actionSet = actionSet;
-		}
+    const std::set<Action>& getActionSet() const
+    {
+        return actionSet;
+    }
 
-		std::set<Action> getActionSet() const {
-			return actionSet;
-		}
-
-		std::set<State> getStateSet() const {
-			return stateSet;
-		}
+    const std::set<State>& getStateSet() const
+    {
+        return stateSet;
+    }
 };
 
 #endif /* INPUTEVENT_HPP_ */

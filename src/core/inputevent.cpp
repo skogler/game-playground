@@ -7,30 +7,25 @@
 
 #include "inputevent.hpp"
 
-	InputEvent::InputEvent(std::set<Action> actionSet, std::set<State> stateSet, bool mouseMoved)
-: actionSet(actionSet),
-	stateSet(stateSet),
-	mouseMoved(mouseMoved)
+InputEvent::InputEvent(std::set<Action>& actionSet,
+                       std::set<State>&  stateSet,
+                       bool              mouseMoved)
+    : actionSet(actionSet)
+    , stateSet(stateSet)
+    , mouseMoved(mouseMoved)
 {
 }
 
-InputEvent::~InputEvent() {
-	// TODO Auto-generated destructor stub
+InputEvent::~InputEvent()
+{
 }
 
-bool InputEvent::containsAction(Action action) {
-	if (actionSet.find(action) != actionSet.end())
-		return true;
-	else
-		return false;
-
+bool InputEvent::containsAction(Action action)
+{
+    return actionSet.find(action) != actionSet.end();
 }
 
-bool InputEvent::containsState(State state) {
-	if (stateSet.find(state) != stateSet.end())
-		return true;
-	else
-		return false;
-
+bool InputEvent::containsState(State state)
+{
+    return stateSet.find(state) != stateSet.end();
 }
-

@@ -18,7 +18,7 @@ class FreeMovementCam: public Camera
 		FreeMovementCam(shared_ptr<sf::Window> rwindow);
 		virtual ~FreeMovementCam();
 
-		virtual void handleinput(InputEvent* inputEvent);
+		virtual void handleinput(InputEvent& inputEvent) override;
 
 	protected:
 		shared_ptr<sf::Window> window;

@@ -22,21 +22,21 @@ class InputMapper {
 		std::set<Action> actionSet;
 		std::set<State> stateSet;
 		bool mouseMoved;
-		InputEvent* currentInputEvent;
+		InputEvent currentInputEvent;
 
 		//Iterators
 		std::map<sf::Keyboard::Key, Action>::iterator itKActionMap;
 		std::map<sf::Keyboard::Key, State>::iterator itKStateMap;
 		std::set<State>::iterator itStateSet;
 
-
 	public:
 		InputMapper();
 		virtual ~InputMapper();
 
-		InputEvent* retrieveInputEvent();
+		InputEvent& retrieveInputEvent();
 
 		void mapInputEvent(sf::Event event);
+        void endFrame();
 };
 
 #endif /* INPUTMAPPER_HPP_ */

@@ -8,7 +8,13 @@
 #include "inputmapper.hpp"
 #include <iostream>
 
-InputMapper::InputMapper()
+InputMapper::InputMapper() 
+    : keyboardActionMap()
+    , keyboardStateMap()
+    , actionSet()
+    , stateSet()
+    , mouseMoved(false)
+    , currentInputEvent{actionSet, stateSet, mouseMoved}
 {
 	// TODO: Refactor this  so the assignments are read from a config file.
 	keyboardActionMap[sf::Keyboard::A] = ACTION_CAMERA_MOVE_LEFT;
@@ -28,13 +34,10 @@ InputMapper::InputMapper()
 
 InputMapper::~InputMapper()
 {
-	// TODO Auto-generated destructor stub
 }
 
-InputEvent* InputMapper::retrieveInputEvent()
+InputEvent& InputMapper::retrieveInputEvent()
 {
-	currentInputEvent = new InputEvent(actionSet, stateSet, mouseMoved);
-	actionSet.clear();
 	return currentInputEvent;
 }
 
@@ -74,3 +77,7 @@ void InputMapper::mapInputEvent(sf::Event event)
 		actionSet.insert(ACTION_MOUSE_MOVED);
 }
 
+void InputMapper::endFrame()
+{
+    actionSet.clear();
+}

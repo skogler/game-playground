@@ -122,6 +122,7 @@ void GameStateEngine::handleInput()
 		inputMapper->mapInputEvent(event);
 	}
 	gstate->handleEvents(inputMapper->retrieveInputEvent());
+    inputMapper->endFrame();
 }
 
 /*

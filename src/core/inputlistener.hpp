@@ -8,19 +8,21 @@
 #ifndef INPUTLISTENER_HPP_
 #define INPUTLISTENER_HPP_
 
-#include <SFML/Window/Event.hpp>
 #include "inputevent.hpp"
+#include <SFML/Window/Event.hpp>
 
-class InputListener {
-
+class InputListener
+{
 public:
+    virtual void handleinput(InputEvent& inputEvent) = 0;
 
-	virtual void handleinput(InputEvent*inputEvent ) = 0;
 
-
-	InputListener() {  }
-	virtual ~InputListener() {  }
-
+    InputListener()
+    {
+    }
+    virtual ~InputListener()
+    {
+    }
 };
 
 #endif /* INPUTLISTENER_HPP_ */
