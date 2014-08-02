@@ -1,9 +1,3 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <boost/format.hpp>
-
 #include "errorhandler.hpp"
 #include "core/inputmanager.hpp"
 #include "state/gamestateengine.hpp"
@@ -11,6 +5,15 @@
 #include "utils/config.h"
 #include "utils/logger.hpp"
 #include "utils/fpsmanager.hpp"
+#include "graphics/guiinputlistener.hpp"
+
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <boost/format.hpp>
+#include <CEGUI/CEGUI.h>
+
 using std::cout;
 using std::endl;
 
@@ -26,6 +29,10 @@ int main()
 		cout << "glew init failed" << endl;
 		return 1;
 	}
+
+    shared_ptr<InputListener> guiListener = make_shared<GuiInputListener>(
+                CEGUI::System::getSingleton().getDefaultGUIContext());
+    gse.getInputManager()->addListener(guiListener);
 
 	shared_ptr<GameState> gameStateActive(new GameStateActive(gse.getRenderer(), gse.getInputManager(), gse.getResourceManager()));
 	gse.pushState(gameStateActive);

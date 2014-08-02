@@ -53,8 +53,8 @@ class OGLRenderer: public Renderer
 			colorShader->setProjectionMatrix(projectionMatrix);
 			textureShader->bind();
 			textureShader->setProjectionMatrix(projectionMatrix);
-			debugShader->bind();
-			debugShader->setProjectionMatrix(projectionMatrix);
+			//debugShader->bind();
+			//debugShader->setProjectionMatrix(projectionMatrix);
 		}
 
 		shared_ptr<ShaderProgram> colorShader;

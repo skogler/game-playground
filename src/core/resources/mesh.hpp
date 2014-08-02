@@ -51,6 +51,7 @@ class Mesh
 		GLuint faceBuffer;
 		GLuint normalBuffer;
 		GLuint uvBuffer;
+        GLuint vertexArrayObject;
 		void load(const boost::filesystem::path& path);
 
 	public:
@@ -61,6 +62,11 @@ class Mesh
 		void release();
 
 		const std::vector<std::string> getUsedMaterials() const;
+
+		GLuint getVertexArrayObject() const
+		{
+			return vertexArrayObject;
+		}
 
 		GLuint getUvBuffer() const
 		{

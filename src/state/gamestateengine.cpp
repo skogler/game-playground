@@ -69,9 +69,10 @@ bool GameStateEngine::init()
         throw std::runtime_error("Error initializing SDL.");
     }
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 
     if (!(mMainWindow =
               SDL_CreateWindow("game-playground", SDL_WINDOWPOS_UNDEFINED,
@@ -90,6 +91,7 @@ bool GameStateEngine::init()
     }
 
     // Glew error checking
+    glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (GLEW_OK != err)
     {
@@ -101,6 +103,9 @@ bool GameStateEngine::init()
     {
         glDebugMessageCallbackARB(oglErrorCallback, NULL);
         glEnable(GL_DEBUG_OUTPUT);
+    }
+    else {
+        Logger::error("NO DEBUG OUTPUT!!!!");
     }
     renderer =
         shared_ptr<Renderer>(new OGLRenderer(resourceManager, defaultCamera));
