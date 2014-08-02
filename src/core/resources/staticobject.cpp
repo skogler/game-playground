@@ -7,4 +7,3 @@ StaticObject::StaticObject()
 StaticObject::~StaticObject()
 {
 }
-

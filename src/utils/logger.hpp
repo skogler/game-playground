@@ -1,12 +1,12 @@
 #ifndef LOGGER_HPP_
 #define LOGGER_HPP_
 
-#include <string>
 #include <boost/scoped_ptr.hpp>
+#include <string>
 
-#include "loggingadapter.hpp"
-#include "consoleloggingadapter.hpp"
 #include "config.h"
+#include "consoleloggingadapter.hpp"
+#include "loggingadapter.hpp"
 
 /**
  * This class should be used for logging in the whole program.
@@ -16,43 +16,46 @@
  */
 class Logger
 {
-	public:
-		inline static void debug(const std::string& message)
-		{
+public:
+    inline static void debug(const std::string& message)
+    {
 #if LOG_DEBUG == 1
-			adapter->debug(message);
-#endif
-		}
+        adapter->debug(message);
+#endif // if LOG_DEBUG == 1
+    }
 
-		inline static void info(const std::string& message)
-		{
+    inline static void info(const std::string& message)
+    {
 #if LOG_INFO == 1
-			adapter->info(message);
-#endif
-		}
+        adapter->info(message);
+#endif // if LOG_INFO == 1
+    }
 
-		inline static void warn(const std::string& message)
-		{
-			adapter->warn(message);
-		}
+    inline static void warn(const std::string& message)
+    {
+        adapter->warn(message);
+    }
 
-		inline static void error(const std::string& message)
-		{
-			adapter->error(message);
-		}
+    inline static void error(const std::string& message)
+    {
+        adapter->error(message);
+    }
 
-		inline static void setLoggingAdapter(LoggingAdapter * adapter)
-		{
-			Logger::adapter.reset(adapter);
-		}
+    inline static void setLoggingAdapter(LoggingAdapter* adapter)
+    {
+        Logger::adapter.reset(adapter);
+    }
 
-	private:
-		static boost::scoped_ptr<LoggingAdapter> adapter;
+private:
+    static boost::scoped_ptr<LoggingAdapter> adapter;
 
-	protected:
-		Logger() {};
-		virtual ~Logger() {};
+protected:
+    Logger()
+    {
+    }
+    virtual ~Logger()
+    {
+    }
 };
 
 #endif /* LOGGER_HPP_ */
-

@@ -59,14 +59,14 @@ void Mesh::upload()
                  &vertices[0], GL_STATIC_DRAW);
     // index 0 => vertices
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0,                                           // attribute
-                          3,                                           // size
-                          GL_FLOAT,                                    // type
-                          GL_FALSE,                                    // normalized?
-                          0,                                           // stride
-                          (void*) 0                                    // array
-                                                                       // buffer
-                                                                       // offset
+    glVertexAttribPointer(0,        // attribute
+                          3,        // size
+                          GL_FLOAT, // type
+                          GL_FALSE, // normalized?
+                          0,        // stride
+                          (void*) 0 // array
+                                    // buffer
+                                    // offset
                          );
 
     glGenBuffers(1, &normalBuffer);
@@ -75,14 +75,14 @@ void Mesh::upload()
                  &normals[0], GL_STATIC_DRAW);
     // index 1 => normals
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1,                                            // attribute
-                          3,                                            // size
-                          GL_FLOAT,                                     // type
-                          GL_FALSE,                                     // normalized?
-                          0,                                            // stride
-                          (void*) 0                                     // array
-                                                                        // buffer
-                                                                        // offset
+    glVertexAttribPointer(1,        // attribute
+                          3,        // size
+                          GL_FLOAT, // type
+                          GL_FALSE, // normalized?
+                          0,        // stride
+                          (void*) 0 // array
+                                    // buffer
+                                    // offset
                          );
 
 
@@ -94,14 +94,14 @@ void Mesh::upload()
 
     // index 2 => UV Coordinates
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2,                                            // attribute
-                          2,                                            // size
-                          GL_FLOAT,                                     // type
-                          GL_FALSE,                                     // normalized?
-                          0,                                            // stride
-                          (void*) 0                                     // array
-                                                                        // buffer
-                                                                        // offset
+    glVertexAttribPointer(2,        // attribute
+                          2,        // size
+                          GL_FLOAT, // type
+                          GL_FALSE, // normalized?
+                          0,        // stride
+                          (void*) 0 // array
+                                    // buffer
+                                    // offset
                          );
 
     glGenBuffers(1, &faceBuffer);

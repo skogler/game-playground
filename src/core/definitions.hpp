@@ -1,4 +1,3 @@
-
 #ifndef DEFINITIONS_HPP_
 #define DEFINITIONS_HPP_
 

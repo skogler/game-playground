@@ -19,14 +19,14 @@ private:
     std::set<State>&  stateSet;
 
 public:
-    InputEvent(std::set<Action>& actionSet,
-               std::set<State>&  stateSet,
-               bool              mouseMoved);
+    InputEvent(std::set<Action> &actionSet,
+               std::set<State> &stateSet,
+               bool mouseMoved);
     ~InputEvent();
 
-    bool                       mouseMoved;
-    int mouseMotionX;
-    int mouseMotionY;
+    bool mouseMoved;
+    int  mouseMotionX;
+    int  mouseMotionY;
 
     bool containsAction(Action action);
     bool containsState(State state);

@@ -80,7 +80,7 @@ void InputMapper::mapInputEvent(SDL_Event& event)
     if (event.type == SDL_MOUSEMOTION)
     {
         actionSet.insert(ACTION_MOUSE_MOVED);
-        currentInputEvent.mouseMoved = true;
+        currentInputEvent.mouseMoved   = true;
         currentInputEvent.mouseMotionX = static_cast<int>(event.motion.xrel);
         currentInputEvent.mouseMotionY = static_cast<int>(event.motion.yrel);
     }
@@ -88,7 +88,7 @@ void InputMapper::mapInputEvent(SDL_Event& event)
 
 void InputMapper::endFrame()
 {
-    currentInputEvent.mouseMoved = false;
+    currentInputEvent.mouseMoved   = false;
     currentInputEvent.mouseMotionX = 0;
     currentInputEvent.mouseMotionY = 0;
     actionSet.clear();

@@ -7,4 +7,3 @@ NoOpCamera::NoOpCamera()
 NoOpCamera::~NoOpCamera()
 {
 }
-

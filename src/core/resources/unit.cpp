@@ -7,4 +7,3 @@ Unit::Unit()
 Unit::~Unit()
 {
 }
-

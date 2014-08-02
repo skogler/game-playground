@@ -2,12 +2,11 @@
 
 #include <string>
 
-Level::Level(const std::string & filename)
+Level::Level(const std::string& filename)
 {
-	// TODO: implement
+    // TODO: implement
 }
 
 Level::~Level()
 {
 }
-

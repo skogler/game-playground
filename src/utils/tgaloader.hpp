@@ -8,12 +8,12 @@
 #ifndef TGALOADER_HPP_
 #define TGALOADER_HPP_
 
-#include <GL/gl.h>
 #include "utils/logger.hpp"
-#include <iostream>
+#include <GL/gl.h>
 #include <fstream>
-#include <string.h>
+#include <iostream>
 #include <stdlib.h>
+#include <string.h>
 
 
 #define RGB 1;
@@ -21,47 +21,46 @@
 
 typedef struct
 {
-	GLubyte header[12]; // TGA File Header
+    GLubyte header[12];     // TGA File Header
 } TGAHeader;
 
 typedef struct
 {
-	GLubyte header[6]; // First 6 Useful Bytes From The Header
-	GLuint bytesPerPixel;
-	GLuint imageSize;
-	GLuint temp;
-	GLuint type;
-	GLuint height;
-	GLuint width;
-	GLuint bitsPerPixel;
+    GLubyte header[6];     // First 6 Useful Bytes From The Header
+    GLuint  bytesPerPixel;
+    GLuint  imageSize;
+    GLuint  temp;
+    GLuint  type;
+    GLuint  height;
+    GLuint  width;
+    GLuint  bitsPerPixel;
 } TGAInfo;
 class TgaLoader
 {
-	public:
-		TgaLoader();
-		virtual ~TgaLoader();
+public:
+    TgaLoader();
+    virtual ~TgaLoader();
 
-		bool loadTGAFile(std::string filename);
+    bool loadTGAFile(std::string filename);
 
-		TGAInfo getTga() const
-		{
-			return tga;
-		}
+    TGAInfo getTga() const
+    {
+        return tga;
+    }
 
-		GLubyte* getImageData() const
-		{
-			return imageData;
-		}
+    GLubyte* getImageData() const
+    {
+        return imageData;
+    }
 
-	private:
+private:
+    // TGA data
+    TGAHeader tgaheader;
+    TGAInfo   tga;
+    GLubyte*  imageData;
 
-		//TGA data
-		TGAHeader tgaheader;
-		TGAInfo tga;
-		GLubyte	* imageData;
-
-		bool loadUncompressed(FILE * file);
-		bool loadCompressed(FILE * file);
+    bool loadUncompressed(FILE* file);
+    bool loadCompressed(FILE* file);
 };
 
 #endif /* TGALOADER_HPP_ */

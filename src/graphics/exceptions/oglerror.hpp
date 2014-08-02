@@ -3,15 +3,15 @@
 
 #include <stdexcept>
 
-class OGLError: public std::exception
+class OGLError : public std::exception
 {
-	public:
-		OGLError(int errorCode);
+public:
+    OGLError(int errorCode);
 
-		virtual const char * what() const throw();
+    virtual const char* what() const throw ();
 
-	protected:
-		int errorCode;
+protected:
+    int errorCode;
 };
 
 #endif /* OGLERROR_HPP_ */

@@ -36,7 +36,7 @@ private:
     // Resource Manager
     shared_ptr<ResourceManager> resourceManager;
 
-    SDL_Window*  mMainWindow;
+    SDL_Window*   mMainWindow;
     SDL_GLContext mContext;
 
     shared_ptr<FPSManager> fpsManager;

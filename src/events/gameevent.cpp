@@ -8,13 +8,12 @@
 #include "gameevent.hpp"
 
 
-GameEvent::GameEvent() {
-
-	// TODO Auto-generated constructor stub
-
+GameEvent::GameEvent()
+{
+    // TODO Auto-generated constructor stub
 }
 
-GameEvent::~GameEvent() {
-	// TODO Auto-generated destructor stub
+GameEvent::~GameEvent()
+{
+    // TODO Auto-generated destructor stub
 }
-

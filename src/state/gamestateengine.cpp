@@ -71,7 +71,8 @@ bool GameStateEngine::init()
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+                        SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 
     if (!(mMainWindow =
@@ -104,7 +105,8 @@ bool GameStateEngine::init()
         glDebugMessageCallbackARB(oglErrorCallback, NULL);
         glEnable(GL_DEBUG_OUTPUT);
     }
-    else {
+    else
+    {
         Logger::error("NO DEBUG OUTPUT!!!!");
     }
     renderer =
@@ -150,8 +152,9 @@ void GameStateEngine::handleInput()
     shared_ptr<GameState> gstate = states.back();
     while (SDL_PollEvent(&mEvent))
     {
-        if (mEvent.type == SDL_QUIT || 
-                (mEvent.type == SDL_KEYDOWN && mEvent.key.keysym.sym == SDLK_ESCAPE))
+        if (mEvent.type == SDL_QUIT ||
+            (mEvent.type == SDL_KEYDOWN && mEvent.key.keysym.sym ==
+             SDLK_ESCAPE))
         {
             quit();
         }

@@ -3,13 +3,11 @@
 #include <boost/format.hpp>
 
 OGLError::OGLError(int errorCode) :
-	errorCode(errorCode)
+    errorCode(errorCode)
 {
 }
 
-const char* OGLError::what() const throw()
+const char* OGLError::what() const throw ()
 {
-	return (boost::format("Error code: %d") % errorCode).str().c_str();
+    return (boost::format("Error code: %d") % errorCode).str().c_str();
 }
-
-

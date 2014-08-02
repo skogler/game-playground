@@ -7,4 +7,3 @@ LoggingAdapter::LoggingAdapter()
 LoggingAdapter::~LoggingAdapter()
 {
 }
-

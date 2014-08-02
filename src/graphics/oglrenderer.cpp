@@ -58,60 +58,67 @@ OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager,
 
     glUseProgram(0);
 
-	// CEGUI initialization
-	CEGUI::OpenGL3Renderer::bootstrapSystem();
+    // CEGUI initialization
+    CEGUI::OpenGL3Renderer::bootstrapSystem();
 
-	// initialise the required dirs for the DefaultResourceProvider
-	CEGUI::DefaultResourceProvider* rp = static_cast<CEGUI::DefaultResourceProvider*>
-										 (CEGUI::System::getSingleton().getResourceProvider());
+    // initialise the required dirs for the DefaultResourceProvider
+    CEGUI::DefaultResourceProvider* rp =
+        static_cast<CEGUI::DefaultResourceProvider*>
+        (CEGUI::System::getSingleton().
+         getResourceProvider());
 
-	rp->setResourceGroupDirectory("schemes", "resources/gui/schemes/");
-	CEGUI::Scheme::setDefaultResourceGroup("schemes");
+    rp->setResourceGroupDirectory("schemes", "resources/gui/schemes/");
+    CEGUI::Scheme::setDefaultResourceGroup("schemes");
 
-	rp->setResourceGroupDirectory("imagesets", "resources/gui/imagesets/");
-	CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
+    rp->setResourceGroupDirectory("imagesets", "resources/gui/imagesets/");
+    CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
 
-	rp->setResourceGroupDirectory("fonts", "resources/gui/fonts/");
-	CEGUI::Font::setDefaultResourceGroup("fonts");
+    rp->setResourceGroupDirectory("fonts", "resources/gui/fonts/");
+    CEGUI::Font::setDefaultResourceGroup("fonts");
 
-	rp->setResourceGroupDirectory("layouts", "resources/gui/layouts/");
-	CEGUI::WindowManager::setDefaultResourceGroup("layouts");
+    rp->setResourceGroupDirectory("layouts", "resources/gui/layouts/");
+    CEGUI::WindowManager::setDefaultResourceGroup("layouts");
 
-	rp->setResourceGroupDirectory("looknfeel", "resources/gui/looknfeel/");
-	CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeel");
+    rp->setResourceGroupDirectory("looknfeel", "resources/gui/looknfeel/");
+    CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeel");
 
-	rp->setResourceGroupDirectory("lua-scripts", "resources/gui/lua_scripts/");
-	CEGUI::ScriptModule::setDefaultResourceGroup("lua-scripts");
+    rp->setResourceGroupDirectory("lua-scripts", "resources/gui/lua_scripts/");
+    CEGUI::ScriptModule::setDefaultResourceGroup("lua-scripts");
 
-	rp->setResourceGroupDirectory("schemas", "resources/gui/xml_schemas/");
-	// If an XML parser with validation support is used, set the schema directory
-	CEGUI::XMLParser* parser = CEGUI::System::getSingleton().getXMLParser();
-	if (parser->isPropertyPresent("SchemaDefaultResourceGroup")) {
-		parser->setProperty("SchemaDefaultResourceGroup", "schemas");
-	}
+    rp->setResourceGroupDirectory("schemas", "resources/gui/xml_schemas/");
+    // If an XML parser with validation support is used, set the schema
+    // directory
+    CEGUI::XMLParser* parser = CEGUI::System::getSingleton().getXMLParser();
+    if (parser->isPropertyPresent("SchemaDefaultResourceGroup"))
+    {
+        parser->setProperty("SchemaDefaultResourceGroup", "schemas");
+    }
 
-	// create (load) the TaharezLook scheme file
-	// (this auto-loads the TaharezLook looknfeel and imageset files)
-	CEGUI::SchemeManager::getSingleton().createFromFile( "TaharezLook.scheme" );
-	// create (load) a font.
-	// The first font loaded automatically becomes the default font, but note
-	// that the scheme might have already loaded a font, so there may already
-	// be a default set - if we want the "DejaVuSans-10" font to definitely
-	// be the default, we should set the default explicitly afterwards.
-	CEGUI::FontManager::getSingleton().createFromFile( "DejaVuSans-10.font" );
+    // create (load) the TaharezLook scheme file
+    // (this auto-loads the TaharezLook looknfeel and imageset files)
+    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+    // create (load) a font.
+    // The first font loaded automatically becomes the default font, but note
+    // that the scheme might have already loaded a font, so there may already
+    // be a default set - if we want the "DejaVuSans-10" font to definitely
+    // be the default, we should set the default explicitly afterwards.
+    CEGUI::FontManager::getSingleton().createFromFile("DejaVuSans-10.font");
 
-	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
-	CEGUI::Window* myRoot = wmgr.createWindow("DefaultWindow", "root");
-	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
+    CEGUI::WindowManager& wmgr   = CEGUI::WindowManager::getSingleton();
+    CEGUI::Window*        myRoot = wmgr.createWindow("DefaultWindow", "root");
+    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
 
-	CEGUI::FrameWindow* fWnd = static_cast<CEGUI::FrameWindow*>(
-			wmgr.createWindow( "TaharezLook/FrameWindow", "testWindow" ));
-	// position a quarter of the way in from the top-left of parent.
-	fWnd->setPosition( CEGUI::UVector2( CEGUI::UDim( 0.25f, 0.0f ), CEGUI::UDim( 0.25f, 0.0f ) ) );
-	// set size to be half the size of the parent
-	fWnd->setSize( CEGUI::USize( CEGUI::UDim( 0.5f, 0.0f ), CEGUI::UDim( 0.5f, 0.0f ) ) );
-	fWnd->setText( "Hello World!" );
-	myRoot->addChild( fWnd );
+    CEGUI::FrameWindow* fWnd = static_cast<CEGUI::FrameWindow*>(
+        wmgr.createWindow("TaharezLook/FrameWindow", "testWindow"));
+    // position a quarter of the way in from the top-left of parent.
+    fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f,
+                                                  0.0f),
+                                      CEGUI::UDim(0.25f, 0.0f)));
+    // set size to be half the size of the parent
+    fWnd->setSize(CEGUI::USize(CEGUI::UDim(0.5f,
+                                           0.0f), CEGUI::UDim(0.5f, 0.0f)));
+    fWnd->setText("Hello World!");
+    myRoot->addChild(fWnd);
 }
 
 OGLRenderer::~OGLRenderer()
@@ -182,12 +189,14 @@ void OGLRenderer::setWindowSize(const unsigned int width,
     glViewport(0, 0, width, height);
     aspectRatio = (float) width / (float) height;
     updateProjectionMatrix();
-	CEGUI::System::getSingleton().notifyDisplaySizeChanged(CEGUI::Sizef(width, height));
+    CEGUI::System::getSingleton().notifyDisplaySizeChanged(CEGUI::Sizef(width,
+                                                                        height));
 }
 
 void OGLRenderer::startFrame()
 {
-	CEGUI::System::getSingleton().injectTimePulse(0.1f);
+    CEGUI::System::getSingleton().injectTimePulse(0.1f);
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glDisable(GL_BLEND);
@@ -219,37 +228,37 @@ void OGLRenderer::endFrame()
     glBindTexture(GL_TEXTURE_2D, 0);
     glActiveTexture(GL_TEXTURE0);
     glUseProgram(0);
-	//TODO: make this work with caching
-	CEGUI::System::getSingleton().invalidateAllCachedRendering();
-	CEGUI::System::getSingleton().renderAllGUIContexts();
-	//GLenum err (glGetError());
+    // TODO: make this work with caching
+    CEGUI::System::getSingleton().invalidateAllCachedRendering();
+    CEGUI::System::getSingleton().renderAllGUIContexts();
+    // GLenum err (glGetError());
 
-    //while (err != GL_NO_ERROR)
-    //{
-    //    std::string error;
+    // while (err != GL_NO_ERROR)
+    // {
+    // std::string error;
 
-    //    switch (err)
-    //    {
-    //      case GL_INVALID_OPERATION:
-    //          error = "INVALID_OPERATION";
-    //          break;
-    //      case GL_INVALID_ENUM:
-    //          error = "INVALID_ENUM";
-    //          break;
-    //      case GL_INVALID_VALUE:
-    //          error = "INVALID_VALUE";
-    //          break;
-    //      case GL_OUT_OF_MEMORY:
-    //          error = "OUT_OF_MEMORY";
-    //          break;
-    //      case GL_INVALID_FRAMEBUFFER_OPERATION:
-    //          error = "INVALID_FRAMEBUFFER_OPERATION";
-    //          break;
-    //    }
+    // switch (err)
+    // {
+    // case GL_INVALID_OPERATION:
+    // error = "INVALID_OPERATION";
+    // break;
+    // case GL_INVALID_ENUM:
+    // error = "INVALID_ENUM";
+    // break;
+    // case GL_INVALID_VALUE:
+    // error = "INVALID_VALUE";
+    // break;
+    // case GL_OUT_OF_MEMORY:
+    // error = "OUT_OF_MEMORY";
+    // break;
+    // case GL_INVALID_FRAMEBUFFER_OPERATION:
+    // error = "INVALID_FRAMEBUFFER_OPERATION";
+    // break;
+    // }
 
-    //    std::cerr << "OGL error: GL_" << error << std::endl;
-    //    err = glGetError();
-    //}
+    // std::cerr << "OGL error: GL_" << error << std::endl;
+    // err = glGetError();
+    // }
 }
 
 void OGLRenderer::drawDebugGrid()
@@ -257,14 +266,14 @@ void OGLRenderer::drawDebugGrid()
     debugShader->setMaterial(*debugGridMaterial);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, debugGridId);
-    glVertexAttribPointer(0,                                           // attribute
-                          3,                                           // size
-                          GL_FLOAT,                                    // type
-                          GL_FALSE,                                    // normalized?
-                          0,                                           // stride
-                          (void*) 0                                    // array
-                                                                       // buffer
-                                                                       // offset
+    glVertexAttribPointer(0,        // attribute
+                          3,        // size
+                          GL_FLOAT, // type
+                          GL_FALSE, // normalized?
+                          0,        // stride
+                          (void*) 0 // array
+                                    // buffer
+                                    // offset
                          );
     glDrawArrays(GL_LINES, 0, numDebugGridVertices);
 }
@@ -303,12 +312,12 @@ void OGLRenderer::enableTextures(const bool enable)
 
 void OGLRenderer::initDebugGrid()
 {
-    GLfloat extent      = 1000.0f;        // How far on the Z-Axis and X-Axis
-                                          // the ground extends
-    GLfloat stepSize    = 50.0f;          // The size of the separation between
-                                          // points
-    GLfloat groundLevel = -0.05f;         // Where on the Y-Axis the ground is
-                                          // drawn
+    GLfloat extent = 1000.0f;     // How far on the Z-Axis and X-Axis
+                                  // the ground extends
+    GLfloat stepSize = 50.0f;     // The size of the separation between
+                                  // points
+    GLfloat groundLevel = -0.05f; // Where on the Y-Axis the ground is
+                                  // drawn
 
     std::vector<glm::vec3> debugGridVertices;
 
@@ -337,14 +346,14 @@ void OGLRenderer::drawDebugAxes()
 {
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, debugAxesId);
-    glVertexAttribPointer(0,                                           // attribute
-                          3,                                           // size
-                          GL_FLOAT,                                    // type
-                          GL_FALSE,                                    // normalized?
-                          0,                                           // stride
-                          (void*) 0                                    // array
-                                                                       // buffer
-                                                                       // offset
+    glVertexAttribPointer(0,        // attribute
+                          3,        // size
+                          GL_FLOAT, // type
+                          GL_FALSE, // normalized?
+                          0,        // stride
+                          (void*) 0 // array
+                                    // buffer
+                                    // offset
                          );
     debugShader->setMaterial(*redMaterial);
     glDrawArrays(GL_LINES, 0, 2);

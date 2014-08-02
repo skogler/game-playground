@@ -5,9 +5,9 @@
 
 class StaticObject : public RenderedEntity
 {
-	public:
-		StaticObject();
-		virtual ~StaticObject();
+public:
+    StaticObject();
+    virtual ~StaticObject();
 };
 
 #endif /* STATICOBJECT_HPP_ */

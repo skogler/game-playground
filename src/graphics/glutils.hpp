@@ -5,12 +5,14 @@
 
 inline void checkGLErrors()
 {
-	int errorCode = glGetError();
-	if (errorCode)
-	{
-		int * crash = 0; *crash = 0;
-		throw OGLError(errorCode);
-	}
+    int errorCode = glGetError();
+
+    if (errorCode)
+    {
+        int* crash = 0;
+        *crash = 0;
+        throw OGLError(errorCode);
+    }
 }
 
 #endif /* GLUTILS_HPP_ */

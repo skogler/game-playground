@@ -7,4 +7,3 @@ RenderedEntity::RenderedEntity()
 RenderedEntity::~RenderedEntity()
 {
 }
-

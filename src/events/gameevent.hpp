@@ -8,10 +8,11 @@
 #ifndef GAMEEVENT_HPP_
 #define GAMEEVENT_HPP_
 
-class GameEvent {
-	public:
-		GameEvent();
-		virtual ~GameEvent();
+class GameEvent
+{
+public:
+    GameEvent();
+    virtual ~GameEvent();
 };
 
 #endif /* GAMEEVENT_HPP_ */
