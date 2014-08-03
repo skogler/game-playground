@@ -5,7 +5,6 @@
 #include <vector>
 #define GLM_FORCE_RADIANS
 #include "utils/tgaloader.hpp"
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 // testing struct will be removed shortly
