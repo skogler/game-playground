@@ -13,6 +13,7 @@
 #include "graphics/shaderprogram.hpp"
 
 #include <boost/mem_fn.hpp>
+#include <chrono>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -49,19 +50,20 @@ void GameStateActive::init()
     shared_ptr<Mesh> mesh = resourceManager->getMesh(meshName);
     mesh->upload();
 
-    // for (int x_coord = -30; x_coord < 30; x_coord += 5)
-    // {
-    // for (int z_coord = -30; z_coord < 30; z_coord += 5)
-    // {
-    shared_ptr<RenderedEntity> re = shared_ptr<RenderedEntity>(
-        new RenderedEntity());
-    re->setMesh(mesh);
-    glm::vec3 position(1, 0.0f, 0);
-    re->setPosition(position);
-    re->rotateX(-1.57f);
-    entities.push_back(re);
-    // }
-    // }
+    for (int x_coord = -50; x_coord < 50; x_coord += 5)
+    {
+        for (int z_coord = -50; z_coord < 50; z_coord += 5)
+        {
+            shared_ptr<RenderedEntity> re = shared_ptr<RenderedEntity>(
+                new RenderedEntity());
+            re->setMesh(mesh);
+            glm::vec3 position(x_coord, 0.0f, z_coord);
+            re->setPosition(position);
+            re->rotateX(-1.57f);
+            re->update();
+            entities.push_back(re);
+        }
+    }
     // m1 = shared_ptr<RenderedEntity>(new RenderedEntity());
     // m1->setMesh(mesh);
     // glm::vec3 position(0.0f, 5.0f, 0.0f);
@@ -76,8 +78,8 @@ void GameStateActive::init()
     whiteLight.setSquaredAttenuation(0.0f);
     renderer->addLight(whiteLight);
 
-    renderer->enableDebugGrid(true);
-    renderer->enableDebugAxes(true);
+    renderer->enableDebugGrid(false);
+    renderer->enableDebugAxes(false);
 }
 
 void GameStateActive::cleanup()
@@ -109,9 +111,10 @@ void GameStateActive::update()
 
 void GameStateActive::render()
 {
+
     renderer->startFrame();
 
-    for (auto entity : entities)
+    for (const auto& entity : entities)
     {
         renderer->renderEntity(entity);
     }

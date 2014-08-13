@@ -30,9 +30,9 @@ int main()
         return 1;
     }
 
-    shared_ptr<InputListener> guiListener = make_shared<GuiInputListener>(
-        CEGUI::System::getSingleton().getDefaultGUIContext());
-    gse.getInputManager()->addListener(guiListener);
+    //shared_ptr<InputListener> guiListener = make_shared<GuiInputListener>(
+    //    CEGUI::System::getSingleton().getDefaultGUIContext());
+    //gse.getInputManager()->addListener(guiListener);
 
     shared_ptr<GameState> gameStateActive(new GameStateActive(
                                               gse.getRenderer(),

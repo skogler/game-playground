@@ -94,10 +94,7 @@ OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager,
         parser->setProperty("SchemaDefaultResourceGroup", "schemas");
     }
 
-    // create (load) the TaharezLook scheme file
-    // (this auto-loads the TaharezLook looknfeel and imageset files)
     CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
-    // create (load) a font.
     // The first font loaded automatically becomes the default font, but note
     // that the scheme might have already loaded a font, so there may already
     // be a default set - if we want the "DejaVuSans-10" font to definitely
@@ -105,20 +102,8 @@ OGLRenderer::OGLRenderer(shared_ptr<ResourceManager> resourceManager,
     CEGUI::FontManager::getSingleton().createFromFile("DejaVuSans-10.font");
 
     CEGUI::WindowManager& wmgr   = CEGUI::WindowManager::getSingleton();
-    CEGUI::Window*        myRoot = wmgr.createWindow("DefaultWindow", "root");
+    CEGUI::Window*        myRoot = wmgr.loadLayoutFromFile("HUD.layout");
     CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
-
-    CEGUI::FrameWindow* fWnd = static_cast<CEGUI::FrameWindow*>(
-        wmgr.createWindow("TaharezLook/FrameWindow", "testWindow"));
-    // position a quarter of the way in from the top-left of parent.
-    fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f,
-                                                  0.0f),
-                                      CEGUI::UDim(0.25f, 0.0f)));
-    // set size to be half the size of the parent
-    fWnd->setSize(CEGUI::USize(CEGUI::UDim(0.5f,
-                                           0.0f), CEGUI::UDim(0.5f, 0.0f)));
-    fWnd->setText("Hello World!");
-    myRoot->addChild(fWnd);
 }
 
 OGLRenderer::~OGLRenderer()
@@ -202,6 +187,7 @@ void OGLRenderer::startFrame()
     glDisable(GL_BLEND);
     glDepthFunc(GL_LESS);
     glUseProgram(0);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     colorShader->bind();
@@ -228,37 +214,8 @@ void OGLRenderer::endFrame()
     glBindTexture(GL_TEXTURE_2D, 0);
     glActiveTexture(GL_TEXTURE0);
     glUseProgram(0);
-    // TODO: make this work with caching
-    CEGUI::System::getSingleton().invalidateAllCachedRendering();
+
     CEGUI::System::getSingleton().renderAllGUIContexts();
-    // GLenum err (glGetError());
-
-    // while (err != GL_NO_ERROR)
-    // {
-    // std::string error;
-
-    // switch (err)
-    // {
-    // case GL_INVALID_OPERATION:
-    // error = "INVALID_OPERATION";
-    // break;
-    // case GL_INVALID_ENUM:
-    // error = "INVALID_ENUM";
-    // break;
-    // case GL_INVALID_VALUE:
-    // error = "INVALID_VALUE";
-    // break;
-    // case GL_OUT_OF_MEMORY:
-    // error = "OUT_OF_MEMORY";
-    // break;
-    // case GL_INVALID_FRAMEBUFFER_OPERATION:
-    // error = "INVALID_FRAMEBUFFER_OPERATION";
-    // break;
-    // }
-
-    // std::cerr << "OGL error: GL_" << error << std::endl;
-    // err = glGetError();
-    // }
 }
 
 void OGLRenderer::drawDebugGrid()

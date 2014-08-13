@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout version="4">
+    <Window type="TaharezLook/FrameWindow" name="Root" >
+        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="InheritsAlpha" value="False" />
+        <Property name="Alpha" value="0.0" />
+
+        <Window name="player-name" type="TaharezLook/Label">
+            <Property name="InheritsAlpha" value="False" />
+            <Property name="Position" value="{{0,0},{0,0}}" />
+            <Property name="Text" value="PlayerName: Dummy." />
+        </Window>
+    </Window>
+</GUILayout>
