@@ -20,6 +20,12 @@
 #define MSG_INVALID_M42_FILE "Model file is not a valid M42 file"
 #define MSG_CANNOT_OPEN_FILE "Could not open file"
 
+static const char M42_MAGIC[] =
+{
+    '\x42', 'M', '4', '2', '\r', '\n', '\032', '\n'
+};
+
+
 #include <iostream>
 
 using namespace std;
@@ -143,15 +149,22 @@ void Mesh::load(const boost::filesystem::path& path)
     // should be no problem since our machines are all little endian
     ifstream file(path.c_str(), std::ios::binary);
 
-    file.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
-    if (!file.is_open())
+    // file.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
+    file.exceptions(ifstream::eofbit);
+    if (!file.good())
     {
         throw InvalidResourceError(path.string(), string(MSG_CANNOT_OPEN_FILE));
     }
-    char m42MagicHeader[] = "M42\0";
-    char magicHeader[4];
-    file.get(magicHeader, 4);
-    if (strcmp(m42MagicHeader, magicHeader))
+    char magicHeader[sizeof(M42_MAGIC)];
+    file.read(magicHeader, sizeof(magicHeader));
+    if (strncmp(M42_MAGIC, magicHeader, sizeof(M42_MAGIC)))
+    {
+        throw InvalidResourceError(path.string(),
+                                   string(MSG_INVALID_M42_FILE));
+    }
+    uint8_t version = 0;
+    file.read((char*) &version, sizeof(version));
+    if (version != 1)
     {
         throw InvalidResourceError(path.string(),
                                    string(MSG_INVALID_M42_FILE));
